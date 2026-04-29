@@ -17,8 +17,21 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->integer('is_user')->default(true)->nullable();
+            $table->integer('is_admin')->nullable();
+            $table->integer('is_super_admin')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('avatar')->nullable();
+            $table->unsignedBigInteger('job_title_id')->nullable();
+            $table->integer('is_real')->default(true);
+            $table->json('meta')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('restored_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('restored_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

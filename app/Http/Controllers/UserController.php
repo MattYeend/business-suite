@@ -24,15 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        // Empty
     }
 
     /**
@@ -68,32 +60,32 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    // public function show(string $id)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    // public function update(Request $request, string $id)
+    // {
+    //     // Empty
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+    // public function destroy(string $id)
+    // {
+    //     // Empty
+    // }
+
+    /**
+     * Restore the specified resource from storage.
+     */
+    // public function restore(string $id)
+    // {
+    //     // Empty
+    // }
 }
