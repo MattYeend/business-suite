@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->integer('is_user')->default(true)->nullable();
-            $table->integer('is_admin')->nullable();
-            $table->integer('is_super_admin')->nullable();
+            $table->integer('is_admin')->default(false)->nullable();
+            $table->integer('is_super_admin')->default(false)->nullable();
             $table->string('phone')->nullable();
             $table->string('avatar')->nullable();
             $table->unsignedBigInteger('job_title_id')->nullable();
