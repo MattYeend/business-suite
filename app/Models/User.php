@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 #[Fillable([
     'name',
@@ -44,13 +45,15 @@ class User extends Authenticatable
     /**
      * @use HasFactory<UserFactory>
      * @use Notifiable<Notifiable>
-     * @use TwoFactorAuthentication<TwoFactorAuthentication>
+     * @use TwoFactorAuthenticatable<TwoFactorAuthenticatable>
      * @use SoftDeletes<SoftDeletes>
+     * @use HasRoles<HasRoles>
      */
     use HasFactory,
         Notifiable,
         TwoFactorAuthenticatable,
-        SoftDeletes;
+        SoftDeletes,
+        HasRoles;
 
     /**
      * Check if the user has standard user permissions.
