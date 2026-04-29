@@ -26,7 +26,7 @@ class WelcomeEmail extends Mailable
      * @param  User $user The newly registered user to send the welcome
      * email to.
      */
-    public function __construct(public User $user, public string $password)
+    public function __construct(public User $user, public ?string $password)
     {
         // Currently Empty
     }

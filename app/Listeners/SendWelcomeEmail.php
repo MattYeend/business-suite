@@ -37,6 +37,6 @@ class SendWelcomeEmail
     public function handle(Registered $event): void
     {
         Mail::to($event->user->email)
-            ->queue(new WelcomeEmail($event->user));
+            ->send(new WelcomeEmail($event->user, null));
     }
 }
