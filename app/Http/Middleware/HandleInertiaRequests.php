@@ -20,11 +20,13 @@ class HandleInertiaRequests extends Middleware
      * Determines the current asset version.
      *
      * @see https://inertiajs.com/asset-versioning
+     *
+     * Currently commented out for the time being
      */
-    public function version(Request $request): ?string
-    {
-        return parent::version($request);
-    }
+    // public function version(Request $request): ?string
+    // {
+    //     return parent::version($request);
+    // }
 
     /**
      * Define the props that are shared by default.
@@ -41,7 +43,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'sidebarOpen' => ! $request->hasCookie('sidebar_state') ||
+                $request->cookie('sidebar_state') === 'true',
         ];
     }
 }
