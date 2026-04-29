@@ -19,26 +19,36 @@ class SecurityController extends Controller implements HasMiddleware
      */
     public static function middleware(): array
     {
-        return Features::canManageTwoFactorAuthentication()
-            && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
-                ? [new Middleware('password.confirm', only: ['edit'])]
-                : [];
+        $canManage = Features::canManageTwoFactorAuthentication();
+        $requiresConfirm = Features::optionEnabled(
+            Features::twoFactorAuthentication(),
+            'confirmPassword'
+        );
+
+        return $canManage && $requiresConfirm
+            ? [new Middleware('password.confirm', only: ['edit'])]
+            : [];
     }
 
     /**
      * Show the user's security settings page.
      */
-    public function edit(TwoFactorAuthenticationRequest $request): Response
-    {
-        $props = [
-            'canManageTwoFactor' => Features::canManageTwoFactorAuthentication(),
-        ];
+    public function edit(
+        TwoFactorAuthenticationRequest $request
+    ): Response {
+        $canManageTwoFactor = Features::canManageTwoFactorAuthentication();
+        $props = ['canManageTwoFactor' => $canManageTwoFactor];
 
         if (Features::canManageTwoFactorAuthentication()) {
             $request->ensureStateIsValid();
 
-            $props['twoFactorEnabled'] = $request->user()->hasEnabledTwoFactorAuthentication();
-            $props['requiresConfirmation'] = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm');
+            $user = $request->user();
+            $props['twoFactorEnabled'] =
+                $user->hasEnabledTwoFactorAuthentication();
+            $props['requiresConfirmation'] = Features::optionEnabled(
+                Features::twoFactorAuthentication(),
+                'confirm'
+            );
         }
 
         return Inertia::render('settings/Security', $props);
@@ -47,13 +57,20 @@ class SecurityController extends Controller implements HasMiddleware
     /**
      * Update the user's password.
      */
-    public function update(PasswordUpdateRequest $request): RedirectResponse
-    {
+    public function update(
+        PasswordUpdateRequest $request
+    ): RedirectResponse {
         $request->user()->update([
             'password' => $request->password,
         ]);
 
-        Inertia::flash('toast', ['type' => 'success', 'message' => __('Password updated.')]);
+        Inertia::flash(
+            'toast',
+            [
+                'type' => 'success',
+                'message' => __('Password updated.'),
+            ]
+        );
 
         return back();
     }
