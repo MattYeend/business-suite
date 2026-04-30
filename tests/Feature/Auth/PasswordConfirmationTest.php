@@ -1,9 +1,15 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
+use Spatie\Permission\Models\Role;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(LazilyRefreshDatabase::class);
+
+beforeEach(function () {
+    Role::firstOrCreate(['name' => 'user']);
+});
 
 test('confirm password screen can be rendered', function () {
     $user = User::factory()->create();

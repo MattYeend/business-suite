@@ -1,8 +1,14 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Spatie\Permission\Models\Role;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(LazilyRefreshDatabase::class);
+
+beforeEach(function () {
+    Role::firstOrCreate(['name' => 'user']);
+});
 
 test('profile page is displayed', function () {
     $user = User::factory()->create();
