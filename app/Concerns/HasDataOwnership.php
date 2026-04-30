@@ -2,14 +2,20 @@
 
 namespace App\Concerns;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 trait HasDataOwnership
 {
     /**
      * Scope a query to only include records owned by the user.
+     *
+     * @param  Builder $query
+     * @param  int $userId
+     *
+     * @return Builder
      */
-    public function scopeOwnedBy(Builder $query, $userId): Builder
+    public function scopeOwnedBy(Builder $query, int $userId): Builder
     {
         return $query->where(function ($q) use ($userId) {
             $q->where('created_by', $userId)
@@ -22,8 +28,13 @@ trait HasDataOwnership
 
     /**
      * Scope a query based on user's data access level.
+     *
+     * @param  Builder $query
+     * @param  User $user
+     *
+     * @return Builder
      */
-    public function scopeAccessibleBy(Builder $query, $user): Builder
+    public function scopeAccessibleBy(Builder $query, User $user): Builder
     {
         // Super admin and those with "view all data" see everything
         if ($user->hasRole('super-admin') || $user->can('view all data')) {

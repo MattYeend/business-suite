@@ -137,6 +137,62 @@ class UserSeeder extends Seeder
         ]);
         $user3->assignRole('user');
 
+                $salesManager = User::create([
+            'name' => 'Sarah Sales Manager',
+            'email' => 'sarah.sales@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'is_user' => true,  // Base role
+            'is_admin' => false,
+            'is_super_admin' => false,
+            'phone' => '+44 7700 900010',
+            'is_real' => true,
+            'meta' => json_encode([
+                'department' => 'Sales',
+                'office_location' => 'Head Office',
+            ]),
+            'created_by' => $superAdmin->id,
+        ]);
+        $salesManager->assignRole(['user', 'sales-manager']); // Base + Specialised
+
+        // Create an HR Manager
+        $hrManager = User::create([
+            'name' => 'Henry HR Manager',
+            'email' => 'henry.hr@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'is_user' => true,
+            'is_admin' => false,
+            'is_super_admin' => false,
+            'phone' => '+44 7700 900011',
+            'is_real' => true,
+            'meta' => json_encode([
+                'department' => 'Human Resources',
+                'office_location' => 'Head Office',
+            ]),
+            'created_by' => $superAdmin->id,
+        ]);
+        $hrManager->assignRole(['user', 'hr-manager']);
+
+        // Create a System Administrator
+        $sysAdmin = User::create([
+            'name' => 'Steve SysAdmin',
+            'email' => 'steve.sysadmin@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'is_user' => false,
+            'is_admin' => true,  // Admin-level access
+            'is_super_admin' => false,
+            'phone' => '+44 7700 900012',
+            'is_real' => true,
+            'meta' => json_encode([
+                'department' => 'IT',
+                'office_location' => 'Head Office',
+            ]),
+            'created_by' => $superAdmin->id,
+        ]);
+        $sysAdmin->assignRole(['admin', 'system-administrator']);
+
         $testUser = User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',

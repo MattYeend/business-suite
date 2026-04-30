@@ -250,9 +250,9 @@ class RolesAndPermissionsSeeder extends Seeder
             'view recruitment', 'edit recruitment',
         ]);
 
-        // 8. EMPLOYEE (Regular employee)
-        $employee = Role::create(['name' => 'employee']);
-        $employee->givePermissionTo([
+        // 8. EMPLOYER (Regular employer)
+        $employer = Role::create(['name' => 'employer']);
+        $employer->givePermissionTo([
             'manage own data only',
             'view employees', // Can view other employees
             'view departments',
@@ -316,11 +316,27 @@ class RolesAndPermissionsSeeder extends Seeder
             'view tasks', 'view activities',
         ]);
 
+        // 14. USER (Basic CRM/System User)
+        $user = Role::create(['name' => 'user']);
+        $user->givePermissionTo([
+            'manage own data only',
+            'view companies', 'view contacts',
+            'view deals', 'view leads',
+            'view quotes', 'view invoices',
+            'view products',
+            'view tasks', 'create tasks', 'edit tasks',
+            'view activities', 'create activities', 'edit activities',
+            'view calls', 'create calls', 'edit calls',
+            'view meetings', 'create meetings', 'edit meetings',
+            'view emails', 'create emails',
+            'view documents', 'create documents',
+        ]);
+
         // ===========================
         // IT DEPARTMENT ROLES
         // ===========================
 
-        // 14. IT DIRECTOR
+        // 15. IT DIRECTOR
         $itDirector = Role::create(['name' => 'it-director']);
         $itDirector->givePermissionTo([
             'view users', 'create users', 'edit users',
@@ -344,7 +360,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export assets', 'export licenses', 'export tickets',
         ]);
 
-        // 15. SYSTEM ADMINISTRATOR
+        // 16. SYSTEM ADMINISTRATOR
         $sysAdmin = Role::create(['name' => 'system-administrator']);
         $sysAdmin->givePermissionTo([
             'view users', 'create users', 'edit users',
@@ -370,7 +386,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view error logs',
         ]);
 
-        // 16. NETWORK ADMINISTRATOR
+        // 17. NETWORK ADMINISTRATOR
         $networkAdmin = Role::create(['name' => 'network-administrator']);
         $networkAdmin->givePermissionTo([
             'view tickets', 'create tickets', 'edit tickets',
@@ -382,7 +398,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export assets',
         ]);
 
-        // 17. DATABASE ADMINISTRATOR
+        // 18. DATABASE ADMINISTRATOR
         $dbaAdmin = Role::create(['name' => 'database-administrator']);
         $dbaAdmin->givePermissionTo([
             'view tickets', 'create tickets', 'edit tickets',
@@ -396,7 +412,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'run migrations',
         ]);
 
-        // 18. IT SUPPORT SPECIALIST
+        // 19. IT SUPPORT SPECIALIST
         $itSupport = Role::create(['name' => 'it-support-specialist']);
         $itSupport->givePermissionTo([
             'view users', 'edit users',
@@ -407,7 +423,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view departments',
         ]);
 
-        // 19. SECURITY ANALYST
+        // 20. SECURITY ANALYST
         $securityAnalyst = Role::create(['name' => 'security-analyst']);
         $securityAnalyst->givePermissionTo([
             'view users',
@@ -420,7 +436,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export security_logs',
         ]);
 
-        // 20. DevOps ENGINEER
+        // 21. DevOps ENGINEER
         $devOps = Role::create(['name' => 'devops-engineer']);
         $devOps->givePermissionTo([
             'view tickets', 'create tickets', 'edit tickets',
@@ -440,7 +456,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // FINANCE/ERP ROLES
         // ===========================
 
-        // 21. CHIEF FINANCIAL OFFICER (CFO)
+        // 22. CHIEF FINANCIAL OFFICER (CFO)
         $cfo = Role::create(['name' => 'cfo']);
         $cfo->givePermissionTo([
             'view all data',
@@ -460,7 +476,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export data',
         ]);
 
-        // 22. FINANCIAL CONTROLLER
+        // 23. FINANCIAL CONTROLLER
         $controller = Role::create(['name' => 'financial-controller']);
         $controller->givePermissionTo([
             'view companies', 'view contacts',
@@ -478,7 +494,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export invoices', 'export payments', 'export expenses',
         ]);
 
-        // 23. ACCOUNTS PAYABLE CLERK
+        // 24. ACCOUNTS PAYABLE CLERK
         $apClerk = Role::create(['name' => 'accounts-payable-clerk']);
         $apClerk->givePermissionTo([
             'view vendors', 'create vendors', 'edit vendors',
@@ -489,7 +505,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export expenses', 'export payments',
         ]);
 
-        // 24. ACCOUNTS RECEIVABLE CLERK
+        // 25. ACCOUNTS RECEIVABLE CLERK
         $arClerk = Role::create(['name' => 'accounts-receivable-clerk']);
         $arClerk->givePermissionTo([
             'view companies', 'view contacts',
@@ -499,7 +515,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export invoices', 'export payments',
         ]);
 
-        // 25. BUDGET ANALYST
+        // 26. BUDGET ANALYST
         $budgetAnalyst = Role::create(['name' => 'budget-analyst']);
         $budgetAnalyst->givePermissionTo([
             'view budgets', 'create budgets', 'edit budgets',
@@ -509,7 +525,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export budgets', 'export expenses',
         ]);
 
-        // 26. TAX SPECIALIST
+        // 27. TAX SPECIALIST
         $taxSpecialist = Role::create(['name' => 'tax-specialist']);
         $taxSpecialist->givePermissionTo([
             'view companies', 'view contacts',
@@ -524,7 +540,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // PROCUREMENT & OPERATIONS
         // ===========================
 
-        // 27. PROCUREMENT MANAGER
+        // 28. PROCUREMENT MANAGER
         $procurementManager = Role::create(['name' => 'procurement-manager']);
         $procurementManager->givePermissionTo([
             'view all data',
@@ -542,7 +558,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export purchase_orders', 'export vendors',
         ]);
 
-        // 28. PROCUREMENT SPECIALIST
+        // 29. PROCUREMENT SPECIALIST
         $procurementSpecialist = Role::create(['name' => 'procurement-specialist']);
         $procurementSpecialist->givePermissionTo([
             'view vendors', 'create vendors', 'edit vendors',
@@ -555,7 +571,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export purchase_orders',
         ]);
 
-        // 29. INVENTORY MANAGER
+        // 30. INVENTORY MANAGER
         $inventoryManager = Role::create(['name' => 'inventory-manager']);
         $inventoryManager->givePermissionTo([
             'view products', 'create products', 'edit products', 'delete products',
@@ -569,7 +585,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export inventory', 'export products',
         ]);
 
-        // 30. WAREHOUSE SUPERVISOR
+        // 31. WAREHOUSE SUPERVISOR
         $warehouseSupervisor = Role::create(['name' => 'warehouse-supervisor']);
         $warehouseSupervisor->givePermissionTo([
             'view products',
@@ -581,7 +597,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export inventory',
         ]);
 
-        // 31. WAREHOUSE STAFF
+        // 32. WAREHOUSE STAFF
         $warehouseStaff = Role::create(['name' => 'warehouse-staff']);
         $warehouseStaff->givePermissionTo([
             'view products',
@@ -590,7 +606,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view returns', 'create returns',
         ]);
 
-        // 32. LOGISTICS COORDINATOR
+        // 33. LOGISTICS COORDINATOR
         $logisticsCoordinator = Role::create(['name' => 'logistics-coordinator']);
         $logisticsCoordinator->givePermissionTo([
             'view products', 'view inventory',
@@ -605,7 +621,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // MARKETING ROLES
         // ===========================
 
-        // 33. MARKETING DIRECTOR
+        // 34. MARKETING DIRECTOR
         $marketingDirector = Role::create(['name' => 'marketing-director']);
         $marketingDirector->givePermissionTo([
             'view all data',
@@ -621,7 +637,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export campaigns', 'export leads',
         ]);
 
-        // 34. MARKETING MANAGER
+        // 35. MARKETING MANAGER
         $marketingManager = Role::create(['name' => 'marketing-manager']);
         $marketingManager->givePermissionTo([
             'view companies', 'view contacts', 'view leads',
@@ -634,7 +650,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export campaigns', 'export leads',
         ]);
 
-        // 35. CONTENT CREATOR
+        // 36. CONTENT CREATOR
         $contentCreator = Role::create(['name' => 'content-creator']);
         $contentCreator->givePermissionTo([
             'view campaigns',
@@ -643,7 +659,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view documents', 'create documents', 'edit documents',
         ]);
 
-        // 36. SOCIAL MEDIA MANAGER
+        // 37. SOCIAL MEDIA MANAGER
         $socialMediaManager = Role::create(['name' => 'social-media-manager']);
         $socialMediaManager->givePermissionTo([
             'view campaigns',
@@ -653,7 +669,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export social_media',
         ]);
 
-        // 37. EMAIL MARKETING SPECIALIST
+        // 38. EMAIL MARKETING SPECIALIST
         $emailMarketing = Role::create(['name' => 'email-marketing-specialist']);
         $emailMarketing->givePermissionTo([
             'view contacts', 'view leads',
@@ -665,7 +681,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export campaigns',
         ]);
 
-        // 38. EVENT COORDINATOR
+        // 39. EVENT COORDINATOR
         $eventCoordinator = Role::create(['name' => 'event-coordinator']);
         $eventCoordinator->givePermissionTo([
             'view contacts', 'view leads',
@@ -676,10 +692,10 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
 
         // ===========================
-        // ADDITIONAL SPECIALIZED ROLES
+        // ADDITIONAL SPECIALISED ROLES
         // ===========================
 
-        // 39. RECRUITER
+        // 40. RECRUITER
         $recruiter = Role::create(['name' => 'recruiter']);
         $recruiter->givePermissionTo([
             'view employees',
@@ -691,7 +707,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export recruitment',
         ]);
 
-        // 40. PAYROLL SPECIALIST
+        // 41. PAYROLL SPECIALIST
         $payrollSpecialist = Role::create(['name' => 'payroll-specialist']);
         $payrollSpecialist->givePermissionTo([
             'view employees',
@@ -701,7 +717,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export payroll', 'export attendance',
         ]);
 
-        // 41. BUSINESS ANALYST
+        // 42. BUSINESS ANALYST
         $businessAnalyst = Role::create(['name' => 'business-analyst']);
         $businessAnalyst->givePermissionTo([
             'view companies', 'view contacts',
@@ -714,7 +730,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export data',
         ]);
 
-        // 42. DATA ANALYST
+        // 43. DATA ANALYST
         $dataAnalyst = Role::create(['name' => 'data-analyst']);
         $dataAnalyst->givePermissionTo([
             'view all data',
@@ -722,7 +738,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export data',
         ]);
 
-        // 43. COMPLIANCE OFFICER
+        // 44. COMPLIANCE OFFICER
         $complianceOfficer = Role::create(['name' => 'compliance-officer']);
         $complianceOfficer->givePermissionTo([
             'view users', 'view employees',
@@ -736,7 +752,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export data',
         ]);
 
-        // 44. QUALITY ASSURANCE MANAGER
+        // 45. QUALITY ASSURANCE MANAGER
         $qaManager = Role::create(['name' => 'qa-manager']);
         $qaManager->givePermissionTo([
             'view products', 'view inventory',
@@ -747,7 +763,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export quality_control',
         ]);
 
-        // 45. CUSTOMER SUCCESS MANAGER
+        // 46. CUSTOMER SUCCESS MANAGER
         $csManager = Role::create(['name' => 'customer-success-manager']);
         $csManager->givePermissionTo([
             'view all data',
@@ -762,7 +778,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'access reports', 'access analytics',
         ]);
 
-        // 46. TEAM LEAD
+        // 47. TEAM LEAD
         $teamLead = Role::create(['name' => 'team-lead']);
         $teamLead->givePermissionTo([
             'view users', 'view employees',
@@ -774,7 +790,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'access reports',
         ]);
 
-        // 47. OPERATIONS MANAGER
+        // 48. OPERATIONS MANAGER
         $opsManager = Role::create(['name' => 'operations-manager']);
         $opsManager->givePermissionTo([
             'view all data',
@@ -789,7 +805,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'export inventory', 'export shipments',
         ]);
 
-        // 48. EXECUTIVE ASSISTANT
+        // 49. EXECUTIVE ASSISTANT
         $execAssistant = Role::create(['name' => 'executive-assistant']);
         $execAssistant->givePermissionTo([
             'view companies', 'view contacts',
@@ -803,7 +819,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view employees', 'view departments',
         ]);
 
-        // 49. INTERN
+        // 50. INTERN
         $intern = Role::create(['name' => 'intern']);
         $intern->givePermissionTo([
             'manage own data only',
@@ -815,7 +831,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'view courses', 'view lessons',
         ]);
 
-        // 50. CONTRACTOR
+        // 51. CONTRACTOR
         $contractor = Role::create(['name' => 'contractor']);
         $contractor->givePermissionTo([
             'manage own data only',

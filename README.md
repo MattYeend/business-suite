@@ -20,8 +20,15 @@ A Laravel 13 CRM, ERP, HR, LMS system
     2. [Maintainer Merge Strategy](#maintainer-merge-strategy)
 5. [General CLI Commands](#general-cli-commands)
 6. [Specific CLI Commands](#specific-cli-commands)
-7. [Events And Listeners](#events-and-listeners)
-8. [Sponsor The Project](#sponsor-the-project)
+7. [Events and Listeners](#events-and-listeners)
+8. [Roles and Permissions](#roles-and-permissions)
+    1. [Assign Role To User](#assign-role-to-user)
+    2. [Assign Permission to Role](#assign-permission-to-role)
+    3. [Assign Permission Directly to User](#assign-permission-directly-to-user)
+    4. [Checking Permissions](#checking-permissions)
+    5. [Blade Directives](#blade-directives)
+    6. [CLI commands](#cli-commands)
+9. [Sponsor The Project](#sponsor-the-project)
 <!-- /TOC -->
 
 ---
@@ -228,6 +235,7 @@ The `main` and `develop` branches are protected and should never be pushed to di
 | `php artisan make:rule RuleName` | Create a new rule |
 | `php artisan make:test TestName` | Create a new test |
 | `php artisan queue:work` | Starts the queue worker to process queued jobs (e.g. emails, notifications) |
+| `php artisan make:trait TraitName` | Creates a new trait |
 
 For further CLI commands, visit <a href="https://artisan.page/">here</a>
 
@@ -244,7 +252,7 @@ For further CLI commands, visit <a href="https://artisan.page/">here</a>
 
 ---
 
-## Events And Listeners
+## Events and Listeners
 
 The system uses Laravel Events & Listeners to handle asynchronous workflows.
 
@@ -253,6 +261,87 @@ Event listeners are registered in `AppServiceProvider::boot()` using `Event::lis
 | Event | Listener | Description |
 | --- | --- | --- |
 | `Illuminate\Auth\Events\Registered` | `App\Listeners\SendWelcomeEmail` | Sends a welcome email to newly created users including their login credentials |
+
+---
+
+## Roles and Permissions
+
+This project uses the Spatie Laravel Permission package to manage roles and permissions in a flexible and scalable way.
+
+It provides a robust Role-Based Access Control (RBAC) system that allows assigning permissions to roles and roles to users.
+
+Key Concepts
+
+- Role:
+  - A collection of permissions (e.g. `Super Admin`, `Admin`, `User`, `viewer`)
+- Permission:
+  - A specific action (e.g. `create leads`, `edit invoices`, `view reports`)
+- User Assignment:
+  - Users can have one or multiple roles
+  - Roles can have multiple permissions
+
+### Assign Role to User
+
+```php
+$user->assignRole('Admin');
+```
+
+### Assign Permission to Role
+
+```php
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
+$role = Role::findByName('Admin');
+$permission = Permission::findByName('edit invoices');
+
+$role->givePermissionTo($permission);
+```
+
+### Assign Permission Directly to User
+
+```php
+$user->givePermissionTo('create leads');
+```
+
+### Checking Permissions
+
+```php
+$user->hasRole('Admin');
+
+$user->can('edit invoices');
+
+$user->hasPermissionTo('view reports');
+```
+
+### Blade Directives
+
+```php
+@role('Admin')
+    // Admin content
+@endrole
+
+@can('edit invoices')
+    // Permission-based content
+@endcan
+```
+
+### CLI commands
+
+Core Roles
+| Role | Description |
+| `super-admin` | Full unrestricted system access |
+| `admin` | Broad access excluding dangerous/system-critical actions |
+| `user` | Default system user with standard access |
+
+Business Roles (Examples)
+| Role | Description |
+| `sales-manager` | Full CRM oversight and approvals |
+| `sales-rep` | Own data CRM access |
+| `accountant` | Financial operations |
+| `hr-manager` | Full HR control |
+| `project-manager` | Projects, tasks, documents |
+| `support-agent` | Customer support activities |
 
 ---
 

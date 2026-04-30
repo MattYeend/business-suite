@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Collection;
 
 #[Fillable([
     'name',
@@ -174,6 +175,55 @@ class User extends Authenticatable
             return 'User';
         }
         return 'Unknown';
+    }
+
+    /**
+     * Assign a specialised role to the user (in addition to base role).
+     *
+     * @param string|array $roles
+     *
+     * @return self
+     */
+    public function assignSpecialisedRole(string|array $roles): self
+    {
+        $this->assignRole($roles);
+        return $this;
+    }
+
+    /**
+     * Remove a specialised role from the user.
+     *
+     * @param string|array $roles
+     *
+     * @return self
+     */
+    public function removeSpecialisedRole(string|array $roles): self
+    {
+        $this->removeRole($roles);
+        return $this;
+    }
+
+    /**
+     * Get all specialised roles (excluding base roles).
+     *
+     * @return Collection
+     */
+    public function getSpecialisedRolesAttribute()
+    {
+        $baseRoles = ['super-admin', 'admin', 'user'];
+        return $this->roles->filter(function ($role) use ($baseRoles) {
+            return !in_array($role->name, $baseRoles);
+        });
+    }
+
+    /**
+     * Check if user has any specialised role.
+     *
+     * @return bool
+     */
+    public function hasSpecialisedRoles(): bool
+    {
+        return $this->specialisedRoles->isNotEmpty();
     }
 
     /**
