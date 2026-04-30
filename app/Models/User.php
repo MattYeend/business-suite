@@ -23,7 +23,6 @@ use Spatie\Permission\Traits\HasRoles;
     'is_super_admin',
     'phone',
     'avatar',
-    'job_title_id',
     'meta',
     'created_at',
     'created_by',

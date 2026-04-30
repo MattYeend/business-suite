@@ -23,7 +23,6 @@ return new class extends Migration
             $table->integer('is_super_admin')->default(false)->nullable();
             $table->string('phone')->nullable();
             $table->string('avatar')->nullable();
-            $table->unsignedBigInteger('job_title_id')->nullable();
             $table->integer('is_real')->default(true);
             $table->json('meta')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
