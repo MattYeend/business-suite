@@ -21,14 +21,39 @@ A Laravel 13 CRM, ERP, HR, LMS system
 5. [General CLI Commands](#general-cli-commands)
 6. [Specific CLI Commands](#specific-cli-commands)
 7. [Events and Listeners](#events-and-listeners)
+    1. [Registered Events](#registered-events)
+    2. [Model Observers](#model-observers)
 8. [Roles and Permissions](#roles-and-permissions)
-    1. [Assign Role To User](#assign-role-to-user)
-    2. [Assign Permission to Role](#assign-permission-to-role)
-    3. [Assign Permission Directly to User](#assign-permission-directly-to-user)
-    4. [Checking Permissions](#checking-permissions)
-    5. [Blade Directives](#blade-directives)
-    6. [CLI commands](#cli-commands)
+    1. [Key Concepts](#key-concepts)
+    2. [Permission Structure](#permission-structure)
+    3. [Core System Roles](#core-system-roles)
+    4. [Department-Specific Roles](#department-specific-roles)
+        1. [Sales & CRM](#sales--crm)
+        2. [Finance & Accounting](#finance--accounting)
+        3. [Human Resources](#human-resources)
+        4. [IT Department](#it-department)
+        5. [Operations & Procurement](#operations--procurement)
+        6. [Marketing](#marketing)
+        7. [Learning & Development](#learning--development)
+        8. [Project Management](#project-management)
+        9. [Specialised Roles](#specialised-roles)
+    5. [Data Access Control](#data-access-control)
+    6. [Usage Examples](#usage-examples)
+        1. [Assign Role to User](#assign-role-to-user)
+        2. [Assign Permission to Role](#assign-permission-to-role)
+        3. [Assign Permission Directly to User](#assign-permission-directly-to-user)
+        4. [Checking Permissions](#checking-permissions)
+        5. [Controller Authorization](#controller-authorization)
+        6. [Blade/Vue Directives](#bladevue-directives)
+        7. [Route Middleware](#route-middleware)
+    7. [CLI Commands](#cli-commands)
+        1. [Sync User Roles](#sync-user-roles)
+        2. [Clear Permission Cache](#clear-permission-cache)
+    8. [Seeding Roles and Permissions](#seeding-roles-and-permissions)
+    9. [Best Practices](#best-practices)
+    10. [Architecture Notes](#architecture-notes)
 9. [Sponsor The Project](#sponsor-the-project)
+<!-- /TOC -->
 <!-- /TOC -->
 
 ---
@@ -246,102 +271,419 @@ For further CLI commands, visit <a href="https://artisan.page/">here</a>
 | Command | Description |
 | --- | --- |
 | `php artisan make:service ServiceName` | Creates a new service class |
-| `php artisan make:class NameRegistry` |  Creates a custom class (e.g. registry/helper/service class such as a NameRegistry) |
-| `php artisan permission:clear` | Clear permissions if changed |
+| `php artisan make:class NameRegistry` | Creates a custom class (e.g. registry/helper/service class such as a NameRegistry) |
 | `php artisan insights` | Run insights package |
 
 ---
 
 ## Events and Listeners
 
-The system uses Laravel Events & Listeners to handle asynchronous workflows.
+The system uses Laravel Events & Listeners to handle asynchronous workflows and maintain separation of concerns.
 
 Event listeners are registered in `AppServiceProvider::boot()` using `Event::listen()`.
+
+### Registered Events
 
 | Event | Listener | Description |
 | --- | --- | --- |
 | `Illuminate\Auth\Events\Registered` | `App\Listeners\SendWelcomeEmail` | Sends a welcome email to newly created users including their login credentials |
 
+### Model Observers
+
+The system uses observers to automatically handle role synchronization and data ownership:
+
+| Model | Observer | Description |
+| --- | --- | --- |
+| `App\Models\User` | `App\Observers\UserObserver` | Automatically syncs Spatie roles based on boolean flags (`is_user`, `is_admin`, `is_super_admin`) when users are created or updated |
+
+**UserObserver Behavior:**
+
+- On user creation: Assigns appropriate role based on boolean flags
+- On user update: Re-syncs roles if boolean flags change
+- Sync order: `is_super_admin` -> `super-admin` role, `is_admin` -> `admin` role, `is_user` -> `user` role
+
 ---
 
 ## Roles and Permissions
 
-This project uses the Spatie Laravel Permission package to manage roles and permissions in a flexible and scalable way.
+This project uses the [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission) package to manage roles and permissions in a flexible and scalable way.
 
-It provides a robust Role-Based Access Control (RBAC) system that allows assigning permissions to roles and roles to users.
+It provides a robust Role-Based Access Control (RBAC) system suitable for complex ERP/CRM/HR/LMS environments with multiple departments and varying access levels.
 
-Key Concepts
+### Key Concepts
 
-- Role:
-  - A collection of permissions (e.g. `Super Admin`, `Admin`, `User`, `viewer`)
-- Permission:
-  - A specific action (e.g. `create leads`, `edit invoices`, `view reports`)
-- User Assignment:
-  - Users can have one or multiple roles
-  - Roles can have multiple permissions
+- **Role**: A collection of permissions (e.g., `super-admin`, `sales-manager`, `hr-staff`)
+- **Permission**: A specific action (e.g., `create leads`, `edit invoices`, `view reports`, `approve payments`)
+- **User Assignment**: Users can have one or multiple roles
+- **Role Permissions**: Roles can have multiple permissions
+- **Direct Permissions**: Individual permissions can be assigned directly to users for exceptions
 
-### Assign Role to User
+### Permission Structure
+
+Permissions follow a consistent naming convention: `{action} {module}`
+
+**Actions**: `view`, `create`, `edit`, `delete`, `export`
+
+**Modules**:
+
+- CRM: `companies`, `contacts`, `deals`, `leads`, `opportunities`, `quotes`, `invoices`, `payments`
+- Projects: `projects`, `tasks`, `activities`, `documents`
+- HR: `employees`, `departments`, `positions`, `attendance`, `payroll`, `leaves`, `performance`, `recruitment`
+- LMS: `courses`, `lessons`, `assessments`, `certifications`, `learning_paths`
+- IT: `tickets`, `assets`, `licenses`, `backups`, `servers`, `networks`, `security_logs`
+- Finance: `budgets`, `expenses`, `purchase_orders`, `accounts`, `journals`, `tax_records`
+- Operations: `inventory`, `warehouses`, `shipments`, `vendors`, `suppliers`
+- Marketing: `campaigns`, `newsletters`, `events`, `social_media`, `content`
+
+**Special Permissions**:
+
+- `manage settings`, `manage roles`, `manage permissions`
+- `view all data`, `manage own data only`
+- `approve quotes`, `approve invoices`, `approve payments`, `approve leaves`, `approve expenses`
+- `access reports`, `access analytics`, `export data`, `import data`
+- `delete permanently`, `restore deleted`, `view audit logs`
+- `impersonate users`, `manage integrations`, `manage api keys`
+
+### Core System Roles
+
+| Role | Description | Key Permissions |
+| --- | --- | --- |
+| `super-admin` | Full unrestricted system access | All permissions |
+| `admin` | Broad access excluding dangerous operations | Most permissions except system-critical actions |
+| `user` | Basic authenticated system user | View and manage own data, basic CRM operations |
+| `viewer` | Read-only access | View-only permissions across modules |
+
+### Department-Specific Roles
+
+#### Sales & CRM
+
+| Role | Description |
+| --- | --- |
+| `sales-manager` | Full CRM oversight, team management, approvals |
+| `sales-rep` | Own data CRM access, lead/deal management |
+| `customer-success-manager` | Customer relationship management, support oversight |
+
+#### Finance & Accounting
+
+| Role | Description |
+| --- | --- |
+| `cfo` | Financial oversight, budget approvals, strategic planning |
+| `financial-controller` | Accounting operations, financial reporting |
+| `accountant` | Invoice and payment processing |
+| `accounts-payable-clerk` | Vendor payments, expense processing |
+| `accounts-receivable-clerk` | Customer invoicing, payment tracking |
+| `budget-analyst` | Budget planning and analysis |
+| `tax-specialist` | Tax compliance and reporting |
+
+#### Human Resources
+
+| Role | Description |
+| --- | --- |
+| `hr-manager` | Full HR control, policy management |
+| `hr-staff` | Employee records, attendance, leave management |
+| `recruiter` | Recruitment and candidate management |
+| `payroll-specialist` | Payroll processing and reporting |
+
+#### IT Department
+
+| Role | Description |
+| --- | --- |
+| `it-director` | IT strategy, team oversight, system access control |
+| `system-administrator` | Server management, system configuration, deployments |
+| `network-administrator` | Network infrastructure and security |
+| `database-administrator` | Database management, backups, queries |
+| `it-support-specialist` | User support, ticket management |
+| `security-analyst` | Security monitoring, audit logs, compliance |
+| `devops-engineer` | Deployments, CI/CD, infrastructure automation |
+
+#### Operations & Procurement
+
+| Role | Description |
+| --- | --- |
+| `operations-manager` | Operations oversight, inventory management |
+| `procurement-manager` | Vendor management, purchase approvals |
+| `procurement-specialist` | Purchase orders, requisitions |
+| `inventory-manager` | Stock control, warehouse management |
+| `warehouse-supervisor` | Warehouse operations, shipments |
+| `warehouse-staff` | Inventory handling, stock updates |
+| `logistics-coordinator` | Shipment coordination and tracking |
+
+#### Marketing
+
+| Role | Description |
+| --- | --- |
+| `marketing-director` | Marketing strategy, campaign oversight, budget approvals |
+| `marketing-manager` | Campaign management, content coordination |
+| `content-creator` | Content creation and editing |
+| `social-media-manager` | Social media strategy and posting |
+| `email-marketing-specialist` | Email campaigns and newsletters |
+| `event-coordinator` | Event planning and management |
+
+#### Learning & Development
+
+| Role | Description |
+| --- | --- |
+| `training-manager` | LMS administration, course management |
+| `instructor` | Course delivery, assessments |
+| `employee` | Course access, learning participation |
+
+#### Project Management
+
+| Role | Description |
+| --- | --- |
+| `project-manager` | Project oversight, task assignment, resource allocation |
+| `team-lead` | Team coordination, performance tracking |
+
+#### Specialised Roles
+
+| Role | Description |
+| --- | --- |
+| `business-analyst` | Data analysis, reporting across modules |
+| `data-analyst` | Advanced analytics, data exports |
+| `compliance-officer` | Regulatory compliance, audit support |
+| `qa-manager` | Quality control and assurance |
+| `executive-assistant` | Administrative support, calendar management |
+| `intern` | Limited access for learning purposes |
+| `contractor` | Project-specific access only |
+
+### Data Access Control
+
+The system implements two levels of data access:
+
+- **`view all data`** - Users can see all records regardless of ownership (typically for managers)
+- **`manage own data only`** - Users can only see records they created or are assigned to (default for staff)
+
+This is implemented through the `HasDataOwnership` trait:
 
 ```php
-$user->assignRole('Admin');
+use App\Concerns\HasDataOwnership;
+
+class Deal extends Model
+{
+    use HasDataOwnership;
+
+    protected static function booted()
+    {
+        if (auth()->check()) {
+            static::addGlobalScope('accessible', function ($query) {
+                $query->accessibleBy(auth()->user());
+            });
+        }
+    }
+}
 ```
 
-### Assign Permission to Role
+### Usage Examples
+
+#### Assign Role to User
+
+```php
+$user->assignRole('sales-manager');
+
+// Multiple roles
+$user->assignRole(['sales-rep', 'project-manager']);
+```
+
+#### Assign Permission to Role
 
 ```php
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-$role = Role::findByName('Admin');
+$role = Role::findByName('accountant');
 $permission = Permission::findByName('edit invoices');
 
 $role->givePermissionTo($permission);
+
+// Multiple permissions
+$role->givePermissionTo(['edit invoices', 'delete invoices']);
 ```
 
-### Assign Permission Directly to User
+#### Assign Permission Directly to User
 
 ```php
-$user->givePermissionTo('create leads');
+// Give extra permissions beyond role
+$user->givePermissionTo('approve budgets');
+
+// Remove direct permission
+$user->revokePermissionTo('approve budgets');
 ```
 
-### Checking Permissions
+#### Checking Permissions
 
 ```php
-$user->hasRole('Admin');
+// Check role
+if ($user->hasRole('admin')) {
+    // User is an admin
+}
 
-$user->can('edit invoices');
+// Check specific permission
+if ($user->can('edit invoices')) {
+    // User can edit invoices
+}
 
-$user->hasPermissionTo('view reports');
+// Check any role
+if ($user->hasAnyRole(['sales-manager', 'admin'])) {
+    // User has at least one of these roles
+}
+
+// Check all roles
+if ($user->hasAllRoles(['sales-rep', 'project-manager'])) {
+    // User has both roles
+}
+
+// Check direct permission (not from role)
+if ($user->hasDirectPermission('approve budgets')) {
+    // User was directly assigned this permission
+}
 ```
 
-### Blade Directives
+#### Controller Authorization
 
 ```php
-@role('Admin')
-    // Admin content
+class DealController extends Controller
+{
+    public function index()
+    {
+        $this->authorize('viewAny', Deal::class);
+        
+        // Only accessible deals returned automatically
+        $deals = Deal::latest()->paginate(20);
+        
+        return inertia('Deals/Index', compact('deals'));
+    }
+
+    public function store(Request $request)
+    {
+        $this->authorize('create', Deal::class);
+        
+        $deal = Deal::create([
+            ...$request->validated(),
+            'created_by' => auth()->id(),
+        ]);
+        
+        return redirect()->route('deals.show', $deal);
+    }
+}
+```
+
+#### Blade/Vue Directives
+
+**Blade:**
+
+```blade
+@role('admin')
+    <button>Admin Panel</button>
 @endrole
 
 @can('edit invoices')
-    // Permission-based content
+    <button>Edit Invoice</button>
 @endcan
+
+@hasanyrole('sales-manager|admin')
+    <a href="/reports">View Reports</a>
+@endhasanyrole
 ```
 
-### CLI commands
+**Vue (Inertia):**
 
-Core Roles
-| Role | Description |
-| `super-admin` | Full unrestricted system access |
-| `admin` | Broad access excluding dangerous/system-critical actions |
-| `user` | Default system user with standard access |
+```vue
+<template>
+  <div>
+    <button v-if="$page.props.auth.can['create deals']">
+      Create Deal
+    </button>
+    
+    <button v-if="$page.props.auth.can.is_admin">
+      Admin Settings
+    </button>
+  </div>
+</template>
+```
 
-Business Roles (Examples)
-| Role | Description |
-| `sales-manager` | Full CRM oversight and approvals |
-| `sales-rep` | Own data CRM access |
-| `accountant` | Financial operations |
-| `hr-manager` | Full HR control |
-| `project-manager` | Projects, tasks, documents |
-| `support-agent` | Customer support activities |
+#### Route Middleware
+
+```php
+// Role-based routes
+Route::middleware(['role:admin'])->group(function () {
+    Route::resource('users', UserController::class);
+});
+
+// Permission-based routes
+Route::middleware(['permission:view reports'])->group(function () {
+    Route::get('/reports/sales', [ReportController::class, 'sales']);
+});
+
+// Multiple roles
+Route::middleware(['role:sales-manager|admin'])->group(function () {
+    Route::resource('deals', DealController::class);
+});
+```
+
+### CLI Commands
+
+#### Sync User Roles
+
+Synchronizes Spatie roles with user boolean flags:
+
+```bash
+php artisan app:sync-user-roles
+```
+
+This command:
+
+- Reads all users' `is_super_admin`, `is_admin`, `is_user` flags
+- Assigns corresponding Spatie roles (`super-admin`, `admin`, `user`)
+- Useful after bulk user imports or flag changes
+
+#### Clear Permission Cache
+
+```bash
+php artisan permission:cache-reset
+```
+
+Run this after modifying permissions or roles in the database.
+
+### Seeding Roles and Permissions
+
+Roles and permissions are seeded via:
+
+```bash
+php artisan db:seed --class=RolesAndPermissionsSeeder
+```
+
+This creates:
+
+- 50+ predefined roles across all departments
+- 300+ granular permissions following the `{action} {module}` pattern
+- Role-permission assignments based on job functions
+
+To assign roles to existing users:
+
+```bash
+php artisan db:seed --class=AssignRolesToUsersSeeder
+```
+
+### Best Practices
+
+**Use roles as the foundation** - Assign standard permission sets via roles  
+**Use direct permissions sparingly** - Only for exceptions or temporary access  
+**Check permissions in policies** - Centralize authorization logic  
+**Use scopes for data filtering** - Implement `HasDataOwnership` trait  
+**Protect routes with middleware** - Layer security at the route level  
+**Share permissions with frontend** - Make authorization decisions in both backend and UI  
+**Document custom permissions** - Maintain clarity on what each permission controls  
+**Regular permission audits** - Review and clean up unused permissions  
+**Test permission boundaries** - Ensure users can't access unauthorized resources
+
+### Architecture Notes
+
+- **Hybrid Model**: Combines role-based and permission-based access control
+- **Data Isolation**: Users with `manage own data only` see only their assigned records
+- **Automatic Sync**: User roles automatically sync with boolean flags via observers
+- **Policy-Based**: Complex authorization logic lives in dedicated Policy classes
+- **Auditable**: Permission checks can be logged via audit logs for compliance
+- **Scalable**: Supports 50+ roles and 300+ permissions without performance impact
 
 ---
 
