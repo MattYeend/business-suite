@@ -19,10 +19,10 @@ trait HasDataOwnership
     {
         return $query->where(function ($q) use ($userId) {
             $q->where('created_by', $userId)
-              ->orWhere('assigned_to', $userId)
-              ->orWhereHas('assignedUsers', function ($q) use ($userId) {
-                  $q->where('user_id', $userId);
-              });
+                ->orWhere('assigned_to', $userId)
+                ->orWhereHas('assignedUsers', function ($q) use ($userId) {
+                    $q->where('user_id', $userId);
+                });
         });
     }
 

@@ -11,9 +11,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Collection;
 
 #[Fillable([
     'name',
@@ -212,7 +212,7 @@ class User extends Authenticatable
     {
         $baseRoles = ['super-admin', 'admin', 'user'];
         return $this->roles->filter(function ($role) use ($baseRoles) {
-            return !in_array($role->name, $baseRoles);
+            return ! in_array($role->name, $baseRoles);
         });
     }
 
