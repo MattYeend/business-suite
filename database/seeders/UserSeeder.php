@@ -137,7 +137,7 @@ class UserSeeder extends Seeder
         ]);
         $user3->assignRole('user');
 
-                $salesManager = User::create([
+        $salesManager = User::create([
             'name' => 'Sarah Sales Manager',
             'email' => 'sarah.sales@example.com',
             'email_verified_at' => now(),
