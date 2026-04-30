@@ -132,8 +132,8 @@ Follow these steps to set up the project locally:
 1. Clone the repository
 
 ```bash
-git clone https://github.com/MattYeend/CRM.git
-cd CRM
+git clone https://github.com/MattYeend/business-suite.git
+cd business-suite
 ```
 
 2. Install PHP dependencies
