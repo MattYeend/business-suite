@@ -15,10 +15,10 @@ class SetTeamContext
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! empty(auth()->user())) {
-            if (auth()->user()->team_id) {
-                setPermissionsTeamId(auth()->user()->team_id);
-            }
+        $user = auth()->user();
+
+        if ($user !== null && $user->team_id !== null) {
+            setPermissionsTeamId($user->team_id);
         }
 
         return $next($request);

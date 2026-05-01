@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Concerns\HasTeam;
+use App\Concerns\HasUserRoles;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -11,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
+// use Illuminate\Support\Collection;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -44,6 +47,9 @@ use Spatie\Permission\Traits\HasRoles;
     'two_factor_recovery_codes',
     'remember_token',
 ])]
+/**
+ * @mixin \Spatie\Permission\Traits\HasRoles
+ */
 class User extends Authenticatable
 {
     /**
@@ -57,7 +63,9 @@ class User extends Authenticatable
         Notifiable,
         TwoFactorAuthenticatable,
         SoftDeletes,
-        HasRoles;
+        HasRoles,
+        HasTeam,
+        HasUserRoles;
 
     /**
      * Check if the user has standard user permissions.
@@ -100,62 +108,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if user belongs to a team.
-     *
-     * @return bool
-     */
-    public function hasTeam(): bool
-    {
-        return ! is_null($this->team_id);
-    }
-
-    /**
-     * Get the team ID for Spatie Permission package.
-     * This method is REQUIRED for team-based permissions to work.
-     *
-     * @return int|null
-     */
-    public function getTeamId()
-    {
-        return $this->team_id;
-    }
-
-    /**
-     * Set the team for the user.
-     *
-     * @param  int|null $teamId
-     *
-     * @return self
-     */
-    public function setTeam(?int $teamId): self
-    {
-        $this->team_id = $teamId;
-        $this->save();
-
-        // Clear permission cache when team changes
-        $this->forgetCachedPermissions();
-
-        return $this;
-    }
-
-    /**
-     * Switch user's context to a different team.
-     *
-     * This is a helper method that combines setTeam with any
-     * additional logic needed when switching teams.
-     * For example, you might want to clear session data or reset
-     * certain attributes when switching teams.
-     * In this basic implementation, it simply calls setTeam,
-     * but you can expand it as needed.
-     *
-     * @return self
-     */
-    public function switchTeam(int $teamId): self
-    {
-        return $this->setTeam($teamId);
-    }
-
-    /**
      * Get team name/identifier.
      *
      * This is a helper method to get a human-readable
@@ -177,31 +129,6 @@ class User extends Authenticatable
             6 => 'Marketing Department',
             default => 'Team ' . $this->team_id,
         };
-    }
-
-    /**
-     * Scope a query to only include users in a specific team.
-     *
-     * @param  Builder $query
-     * @param  int $teamId
-     *
-     * @return Builder
-     */
-    public function scopeInTeam($query, int $teamId)
-    {
-        return $query->where('team_id', $teamId);
-    }
-
-    /**
-     * Scope a query to only include users without a team.
-     *
-     * @param  Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeWithoutTeam($query)
-    {
-        return $query->whereNull('team_id');
     }
 
     /**
@@ -310,55 +237,6 @@ class User extends Authenticatable
     public function getRolesListAttribute(): string
     {
         return $this->roles->pluck('name')->implode(', ');
-    }
-
-    /**
-     * Assign a specialised role to the user (in addition to base role).
-     *
-     * @param string|array $roles
-     *
-     * @return self
-     */
-    public function assignSpecialisedRole(string|array $roles): self
-    {
-        $this->assignRole($roles);
-        return $this;
-    }
-
-    /**
-     * Remove a specialised role from the user.
-     *
-     * @param string|array $roles
-     *
-     * @return self
-     */
-    public function removeSpecialisedRole(string|array $roles): self
-    {
-        $this->removeRole($roles);
-        return $this;
-    }
-
-    /**
-     * Get all specialised roles (excluding base roles).
-     *
-     * @return Collection
-     */
-    public function getSpecialisedRolesAttribute()
-    {
-        $baseRoles = ['super-admin', 'admin', 'user'];
-        return $this->roles->filter(function ($role) use ($baseRoles) {
-            return ! in_array($role->name, $baseRoles);
-        });
-    }
-
-    /**
-     * Check if user has any specialised role.
-     *
-     * @return bool
-     */
-    public function hasSpecialisedRoles(): bool
-    {
-        return $this->specialisedRoles->isNotEmpty();
     }
 
     /**
