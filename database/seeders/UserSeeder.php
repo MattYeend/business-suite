@@ -14,7 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create Super Admin User
+        // Team IDs
+        // 1 = Head Office
+        // 2 = Sales Department
+        // 3 = IT Department
+        // 4 = HR Department
+        // 5 = Finance Department
+        // 6 = Marketing Department
+
+         // Create Super Admin User (No team - global access)
         $superAdmin = User::create([
             'name' => 'Super Admin',
             'email' => 'superadmin@example.com',
@@ -25,15 +33,16 @@ class UserSeeder extends Seeder
             'is_super_admin' => true,
             'phone' => '+44 7700 900000',
             'avatar' => null,
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => null, // Super admins don't belong to a team
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Management',
                 'office_location' => 'Head Office',
             ]),
             'created_by' => null,
-            'updated_by' => null,
         ]);
-        $superAdmin->assignRole('super-admin');
 
         // Create Admin Users
         $admin1 = User::create([
@@ -46,15 +55,16 @@ class UserSeeder extends Seeder
             'is_super_admin' => false,
             'phone' => '+44 7700 900001',
             'avatar' => null,
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 1, // Head Office
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Administration',
                 'office_location' => 'Head Office',
             ]),
             'created_by' => $superAdmin->id,
-            'updated_by' => null,
         ]);
-        $admin1->assignRole('admin');
 
         $admin2 = User::create([
             'name' => 'John Admin',
@@ -66,15 +76,16 @@ class UserSeeder extends Seeder
             'is_super_admin' => false,
             'phone' => '+44 7700 900002',
             'avatar' => null,
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 2, // Sales Department
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Sales',
                 'office_location' => 'Regional Office',
             ]),
             'created_by' => $superAdmin->id,
-            'updated_by' => null,
         ]);
-        $admin2->assignRole('admin');
 
         // Create Regular Users
         $user1 = User::create([
@@ -87,15 +98,16 @@ class UserSeeder extends Seeder
             'is_super_admin' => false,
             'phone' => '+44 7700 900003',
             'avatar' => null,
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 2, // Sales Department
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Sales',
                 'office_location' => 'Regional Office',
             ]),
             'created_by' => $admin1->id,
-            'updated_by' => null,
         ]);
-        $user1->assignRole('user');
 
         $user2 = User::create([
             'name' => 'Jane Smith',
@@ -107,15 +119,16 @@ class UserSeeder extends Seeder
             'is_super_admin' => false,
             'phone' => '+44 7700 900004',
             'avatar' => null,
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 6, // Marketing Department
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Marketing',
                 'office_location' => 'Head Office',
             ]),
             'created_by' => $admin1->id,
-            'updated_by' => null,
         ]);
-        $user2->assignRole('user');
 
         $user3 = User::create([
             'name' => 'Bob Johnson',
@@ -127,25 +140,30 @@ class UserSeeder extends Seeder
             'is_super_admin' => false,
             'phone' => '+44 7700 900005',
             'avatar' => null,
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 1, // Head Office
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Support',
                 'office_location' => 'Remote',
             ]),
             'created_by' => $admin2->id,
-            'updated_by' => null,
         ]);
-        $user3->assignRole('user');
 
+        // Sales Manager
         $salesManager = User::create([
             'name' => 'Sarah Sales Manager',
             'email' => 'sarah.sales@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
-            'is_user' => true,  // Base role
+            'is_user' => true,
             'is_admin' => false,
             'is_super_admin' => false,
             'phone' => '+44 7700 900010',
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 2, // Sales Department
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Sales',
@@ -153,9 +171,8 @@ class UserSeeder extends Seeder
             ]),
             'created_by' => $superAdmin->id,
         ]);
-        $salesManager->assignRole(['user', 'sales-manager']); // Base + Specialised
 
-        // Create an HR Manager
+        // HR Manager
         $hrManager = User::create([
             'name' => 'Henry HR Manager',
             'email' => 'henry.hr@example.com',
@@ -165,6 +182,9 @@ class UserSeeder extends Seeder
             'is_admin' => false,
             'is_super_admin' => false,
             'phone' => '+44 7700 900011',
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 4, // HR Department
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'Human Resources',
@@ -172,18 +192,20 @@ class UserSeeder extends Seeder
             ]),
             'created_by' => $superAdmin->id,
         ]);
-        $hrManager->assignRole(['user', 'hr-manager']);
 
-        // Create a System Administrator
+        // System Administrator
         $sysAdmin = User::create([
             'name' => 'Steve SysAdmin',
             'email' => 'steve.sysadmin@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'is_user' => false,
-            'is_admin' => true,  // Admin-level access
+            'is_admin' => true,
             'is_super_admin' => false,
             'phone' => '+44 7700 900012',
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 3, // IT Department
             'is_real' => true,
             'meta' => json_encode([
                 'department' => 'IT',
@@ -191,8 +213,29 @@ class UserSeeder extends Seeder
             ]),
             'created_by' => $superAdmin->id,
         ]);
-        $sysAdmin->assignRole(['admin', 'system-administrator']);
 
+        // Accountant
+        $accountant = User::create([
+            'name' => 'Alice Accountant',
+            'email' => 'alice.accountant@example.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'is_user' => true,
+            'is_admin' => false,
+            'is_super_admin' => false,
+            'phone' => '+44 7700 900013',
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 5, // Finance Department
+            'is_real' => true,
+            'meta' => json_encode([
+                'department' => 'Finance',
+                'office_location' => 'Head Office',
+            ]),
+            'created_by' => $superAdmin->id,
+        ]);
+
+        // Test User
         $testUser = User::create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -203,17 +246,20 @@ class UserSeeder extends Seeder
             'is_super_admin' => false,
             'phone' => '+44 7700 900099',
             'avatar' => null,
+            'timezone' => 'Europe/London',
+            'locale' => 'en',
+            'team_id' => 1, // Head Office
             'is_real' => false,
             'meta' => json_encode([
                 'department' => 'Testing',
                 'office_location' => 'Test Environment',
             ]),
             'created_by' => $superAdmin->id,
-            'updated_by' => null,
         ]);
-        $testUser->assignRole('user');
 
-        // Generate additional random users using factory
+        // Generate additional random users in various teams
+        $teams = [1, 2, 3, 4, 5, 6]; // Team IDs
+        
         User::factory()
             ->count(10)
             ->create([
@@ -223,27 +269,34 @@ class UserSeeder extends Seeder
                 'is_real' => true,
                 'created_by' => $admin1->id,
             ])
-            ->each(function ($user) {
-                $user->assignRole('user');
+            ->each(function ($user) use ($teams) {
+                // Randomly assign to a team
+                $user->update(['team_id' => $teams[array_rand($teams)]]);
             });
 
-        // Generate some test users using factory
+        // Generate some test users
         User::factory()
             ->count(5)
             ->create([
                 'is_user' => true,
                 'is_admin' => false,
                 'is_super_admin' => false,
-                'is_real' => false, // Test users
+                'is_real' => false,
+                'team_id' => 1, // Head Office
                 'created_by' => $admin1->id,
-            ])
-            ->each(function ($user) {
-                $user->assignRole('user');
-            });
+            ]);
 
         $this->command->info('Users created successfully!');
         $this->command->info('Super Admin: superadmin@example.com / password');
         $this->command->info('Admin: admin@example.com / password');
         $this->command->info('User: user@example.com / password');
+        $this->command->info('');
+        $this->command->info('Team IDs:');
+        $this->command->info('1 = Head Office');
+        $this->command->info('2 = Sales Department');
+        $this->command->info('3 = IT Department');
+        $this->command->info('4 = HR Department');
+        $this->command->info('5 = Finance Department');
+        $this->command->info('6 = Marketing Department');
     }
 }

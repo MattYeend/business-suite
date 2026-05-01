@@ -8,12 +8,12 @@ enum RolesEnum: string
     case SUPER_ADMIN = 'super-admin';
     case ADMIN = 'admin';
     case USER = 'user';
-    
+
     // Sales Roles
     case SALES_MANAGER = 'sales-manager';
     case SALES_REP = 'sales-rep';
     case CUSTOMER_SUCCESS_MANAGER = 'customer-success-manager';
-    
+
     // Finance Roles
     case ACCOUNTANT = 'accountant';
     case CFO = 'cfo';
@@ -22,18 +22,18 @@ enum RolesEnum: string
     case ACCOUNTS_RECEIVABLE_CLERK = 'accounts-receivable-clerk';
     case BUDGET_ANALYST = 'budget-analyst';
     case TAX_SPECIALIST = 'tax-specialist';
-    
+
     // HR Roles
     case HR_MANAGER = 'hr-manager';
     case HR_STAFF = 'hr-staff';
     case EMPLOYER = 'employer';
     case RECRUITER = 'recruiter';
     case PAYROLL_SPECIALIST = 'payroll-specialist';
-    
+
     // LMS Roles
     case TRAINING_MANAGER = 'training-manager';
     case INSTRUCTOR = 'instructor';
-    
+
     // IT Roles
     case IT_DIRECTOR = 'it-director';
     case SYSTEM_ADMINISTRATOR = 'system-administrator';
@@ -42,7 +42,7 @@ enum RolesEnum: string
     case IT_SUPPORT_SPECIALIST = 'it-support-specialist';
     case SECURITY_ANALYST = 'security-analyst';
     case DEVOPS_ENGINEER = 'devops-engineer';
-    
+
     // Project & Operations Roles
     case PROJECT_MANAGER = 'project-manager';
     case SUPPORT_AGENT = 'support-agent';
@@ -50,7 +50,7 @@ enum RolesEnum: string
     case TEAM_LEAD = 'team-lead';
     case OPERATIONS_MANAGER = 'operations-manager';
     case EXECUTIVE_ASSISTANT = 'executive-assistant';
-    
+
     // Procurement & Warehouse Roles
     case PROCUREMENT_MANAGER = 'procurement-manager';
     case PROCUREMENT_SPECIALIST = 'procurement-specialist';
@@ -58,7 +58,7 @@ enum RolesEnum: string
     case WAREHOUSE_SUPERVISOR = 'warehouse-supervisor';
     case WAREHOUSE_STAFF = 'warehouse-staff';
     case LOGISTICS_COORDINATOR = 'logistics-coordinator';
-    
+
     // Marketing Roles
     case MARKETING_DIRECTOR = 'marketing-director';
     case MARKETING_MANAGER = 'marketing-manager';
@@ -66,13 +66,13 @@ enum RolesEnum: string
     case SOCIAL_MEDIA_MANAGER = 'social-media-manager';
     case EMAIL_MARKETING_SPECIALIST = 'email-marketing-specialist';
     case EVENT_COORDINATOR = 'event-coordinator';
-    
+
     // Analysis & Compliance Roles
     case BUSINESS_ANALYST = 'business-analyst';
     case DATA_ANALYST = 'data-analyst';
     case COMPLIANCE_OFFICER = 'compliance-officer';
     case QA_MANAGER = 'qa-manager';
-    
+
     // Other Roles
     case INTERN = 'intern';
     case CONTRACTOR = 'contractor';

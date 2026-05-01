@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
+use Spatie\Permission\PermissionRegistrar;
 
 class UserObserver
 {
@@ -99,6 +100,11 @@ class UserObserver
      */
     private function syncBaseRoleWithFlags(User $user): void
     {
+        if ($user->team_id) {
+            app(PermissionRegistrar::class)->setPermissionsTeamId($user->team_id);
+        } else {
+            return;
+        }
         // Get current roles
         $currentRoles = $user->roles->pluck('name')->toArray();
         

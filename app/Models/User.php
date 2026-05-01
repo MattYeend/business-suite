@@ -24,6 +24,10 @@ use Spatie\Permission\Traits\HasRoles;
     'is_super_admin',
     'phone',
     'avatar',
+    'timezone',
+    'locale',
+    'team_id',
+    'is_real',
     'meta',
     'created_at',
     'created_by',
@@ -96,9 +100,114 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user belongs to a team.
+     *
+     * @return bool
+     */
+    public function hasTeam(): bool
+    {
+        return ! is_null($this->team_id);
+    }
+
+    /**
+     * Get the team ID for Spatie Permission package.
+     * This method is REQUIRED for team-based permissions to work.
+     *
+     * @return int|null
+     */
+    public function getTeamId()
+    {
+        return $this->team_id;
+    }
+
+    /**
+     * Set the team for the user.
+     *
+     * @param  int|null $teamId
+     *
+     * @return self
+     */
+    public function setTeam(?int $teamId): self
+    {
+        $this->team_id = $teamId;
+        $this->save();
+
+        // Clear permission cache when team changes
+        $this->forgetCachedPermissions();
+
+        return $this;
+    }
+
+    /**
+     * Switch user's context to a different team.
+     *
+     * This is a helper method that combines setTeam with any
+     * additional logic needed when switching teams.
+     * For example, you might want to clear session data or reset
+     * certain attributes when switching teams.
+     * In this basic implementation, it simply calls setTeam,
+     * but you can expand it as needed.
+     *
+     * @return self
+     */
+    public function switchTeam(int $teamId): self
+    {
+        return $this->setTeam($teamId);
+    }
+
+    /**
+     * Get team name/identifier.
+     *
+     * This is a helper method to get a human-readable
+     * team name based on team_id.
+     * You can customise this method to fit your actual
+     * team structure and naming conventions.
+     *
+     * @return string
+     */
+    public function getTeamNameAttribute(): string
+    {
+        // You can customise this based on your team naming convention
+        return match ($this->team_id) {
+            1 => 'Head Office',
+            2 => 'Sales Department',
+            3 => 'IT Department',
+            4 => 'HR Department',
+            5 => 'Finance Department',
+            6 => 'Marketing Department',
+            default => 'Team ' . $this->team_id,
+        };
+    }
+
+    /**
+     * Scope a query to only include users in a specific team.
+     *
+     * @param  Builder $query
+     * @param  int $teamId
+     *
+     * @return Builder
+     */
+    public function scopeInTeam($query, int $teamId)
+    {
+        return $query->where('team_id', $teamId);
+    }
+
+    /**
+     * Scope a query to only include users without a team.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithoutTeam($query)
+    {
+        return $query->whereNull('team_id');
+    }
+
+    /**
      * Scope a query to only include regular users.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -110,7 +219,7 @@ class User extends Authenticatable
     /**
      * Scope a query to only include admin users.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -122,7 +231,7 @@ class User extends Authenticatable
     /**
      * Scope a query to only include super admin users.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -134,7 +243,7 @@ class User extends Authenticatable
     /**
      * Scope a query to only include real users.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -175,6 +284,32 @@ class User extends Authenticatable
             return 'User';
         }
         return 'Unknown';
+    }
+
+    /**
+     * Get the user's primary role name.
+     *
+     * This is a helper method to get the name of the user's primary
+     * role (the first role assigned).
+     *
+     * @return string|null
+     */
+    public function getPrimaryRoleAttribute(): ?string
+    {
+        return $this->roles->first()?->name;
+    }
+
+    /**
+     * Get all roles as a comma-separated string.
+     *
+     * This is a helper method to get a list of all roles assigned to
+     * the user in a human-readable format.
+     *
+     * @return string
+     */
+    public function getRolesListAttribute(): string
+    {
+        return $this->roles->pluck('name')->implode(', ');
     }
 
     /**
@@ -224,6 +359,80 @@ class User extends Authenticatable
     public function hasSpecialisedRoles(): bool
     {
         return $this->specialisedRoles->isNotEmpty();
+    }
+
+    /**
+     * Assign role within team context.
+     *
+     * This is a helper method to assign a role to the user while
+     * automatically setting the team context for permissions.
+     * It ensures that the role is assigned within the correct
+     * team scope, which is essential for team-based permissions
+     * to work correctly.
+     *
+     * @param string|array $roles
+     * @param int|null $teamId
+     *
+     * @return self
+     */
+    public function assignRoleInTeam(
+        string|array $roles,
+        ?int $teamId = null
+    ): self {
+        $teamId = $teamId ?? $this->team_id;
+
+        if ($teamId) {
+            setPermissionsTeamId($teamId);
+        }
+
+        $this->assignRole($roles);
+
+        if ($teamId) {
+            setPermissionsTeamId(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Check if user has permission in their current team.
+     *
+     * @param  string $permission
+     *
+     * @return bool
+     */
+    public function hasPermissionInTeam(string $permission): bool
+    {
+        if ($this->team_id) {
+            setPermissionsTeamId($this->team_id);
+            $hasPermission = $this->hasPermissionTo($permission);
+            setPermissionsTeamId(null);
+            return $hasPermission;
+        }
+
+        return $this->hasPermissionTo($permission);
+    }
+
+    /**
+     * Check if user has role in their current team.
+     *
+     * This is a helper method that checks if the user has a specific
+     * role within the context of their current team.
+     *
+     * @param  string $role
+     *
+     * @return bool
+     */
+    public function hasRoleInTeam(string $role): bool
+    {
+        if ($this->team_id) {
+            setPermissionsTeamId($this->team_id);
+            $hasRole = $this->hasRole($role);
+            setPermissionsTeamId(null);
+            return $hasRole;
+        }
+
+        return $this->hasRole($role);
     }
 
     /**
