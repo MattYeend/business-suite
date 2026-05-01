@@ -3,42 +3,51 @@
 namespace App\Concerns;
 
 use Illuminate\Support\Collection;
+use Spatie\Permission\Contracts\Role;
 
 /**
- * @mixin \App\Models\User
+ * Trait for managing specialized user roles beyond base admin/user roles.
+ * 
+ * This trait requires the model to use Spatie\Permission\Traits\HasRoles.
+ * The assignRole() and removeRole() methods are provided by that trait.
+ * 
  * @mixin \Spatie\Permission\Traits\HasRoles
  *
- * @method $this assignRole(string|array $roles)
- * @method $this removeRole(string|array $roles)
- *
  * @property \Illuminate\Support\Collection $roles
- *
  * @property-read \Illuminate\Support\Collection $specialisedRoles
  */
 trait HasUserRoles
 {
     /**
      * Assign one or more specialised roles to the user.
+     * 
+     * This method wraps the HasRoles::assignRole() method from Spatie.
      *
-     * @param  string|array $roles Role name(s) to assign.
+     * @param  string|array|Role|\Illuminate\Support\Collection $roles Role name(s) to assign.
      *
      * @return self
      */
-    public function assignSpecialisedRole(string|array $roles): self
+    public function assignSpecialisedRole(string|array|Role|Collection $roles): self
     {
+        // Call parent trait method - provided by Spatie\Permission\Traits\HasRoles
+        /** @var \Spatie\Permission\Traits\HasRoles $this */
         $this->assignRole($roles);
         return $this;
     }
 
     /**
      * Remove one or more specialised roles from the user.
+     * 
+     * This method wraps the HasRoles::removeRole() method from Spatie.
      *
-     * @param  string|array $roles Role name(s) to remove.
+     * @param  string|array|Role $roles Role name(s) to remove.
      *
      * @return self
      */
-    public function removeSpecialisedRole(string|array $roles): self
+    public function removeSpecialisedRole(string|array|Role $roles): self
     {
+        // Call parent trait method - provided by Spatie\Permission\Traits\HasRoles
+        /** @var \Spatie\Permission\Traits\HasRoles $this */
         $this->removeRole($roles);
         return $this;
     }

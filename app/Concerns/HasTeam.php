@@ -5,9 +5,12 @@ namespace App\Concerns;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @mixin \App\Models\User
- *
- * @method void forgetCachedPermissions()
+ * Trait for managing team context on User models.
+ * 
+ * This trait requires the model to use Spatie\Permission\Traits\HasRoles
+ * for the forgetCachedPermissions() method.
+ * 
+ * @mixin \Spatie\Permission\Traits\HasRoles
  *
  * @property int|null $team_id
  */
@@ -56,6 +59,9 @@ trait HasTeam
     public function switchTeam(int $teamId): self
     {
         $this->team_id = $teamId;
+        
+        // Call parent trait method - provided by Spatie\Permission\Traits\HasRoles
+        /** @var \Spatie\Permission\Traits\HasRoles $this */
         $this->forgetCachedPermissions();
 
         return $this;
