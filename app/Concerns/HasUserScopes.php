@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Trait providing query scopes for User model filtering.
- * 
+ *
  * @mixin \App\Models\User
  */
 trait HasUserScopes

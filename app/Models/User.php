@@ -46,9 +46,9 @@ use Spatie\Permission\Traits\HasRoles;
 ])]
 /**
  * User model with role-based permissions and team support.
- * 
+ *
  * @mixin \Spatie\Permission\Traits\HasRoles
- * 
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -57,6 +57,12 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $is_super_admin
  * @property bool $is_real
  * @property int|null $team_id
+ * @property string|null $phone
+ * @property string|null $avatar
+ * @property string $timezone
+ * @property string $locale
+ * @property array|null $meta
+ *
  * @property-read string $teamName
  * @property-read string $initials
  * @property-read string $roleDisplay
@@ -132,41 +138,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Resolve team name from team ID.
-     *
-     * @param  int|null $teamId
-     *
-     * @return string
-     */
-    protected function resolveTeamName(?int $teamId): string
-    {
-        if ($teamId === null) {
-            return 'No Team';
-        }
-
-        $teamNames = $this->getTeamNamesMapping();
-
-        return $teamNames[$teamId] ?? "Team {$teamId}";
-    }
-
-    /**
-     * Get the mapping of team IDs to names.
-     *
-     * @return array<int, string>
-     */
-    protected function getTeamNamesMapping(): array
-    {
-        return [
-            1 => 'Head Office',
-            2 => 'Sales Department',
-            3 => 'IT Department',
-            4 => 'HR Department',
-            5 => 'Finance Department',
-            6 => 'Marketing Department',
-        ];
-    }
-
-    /**
      * Get the user's initials.
      *
      * @return string
@@ -174,36 +145,10 @@ class User extends Authenticatable
     public function getInitialsAttribute(): string
     {
         $words = explode(' ', $this->name);
-        
+
         return count($words) >= 2
             ? $this->getInitialsFromMultipleWords($words)
             : $this->getInitialsFromSingleWord($this->name);
-    }
-
-    /**
-     * Extract initials from multiple words.
-     *
-     * @param  array $words
-     *
-     * @return string
-     */
-    protected function getInitialsFromMultipleWords(array $words): string
-    {
-        return strtoupper(
-            substr($words[0], 0, 1) . substr($words[1], 0, 1)
-        );
-    }
-
-    /**
-     * Extract initials from a single word.
-     *
-     * @param  string $name
-     *
-     * @return string
-     */
-    protected function getInitialsFromSingleWord(string $name): string
-    {
-        return strtoupper(substr($name, 0, 2));
     }
 
     /**
@@ -213,7 +158,7 @@ class User extends Authenticatable
      */
     public function getRoleDisplayAttribute(): string
     {
-        return match(true) {
+        return match (true) {
             $this->is_super_admin => 'Super Admin',
             $this->is_admin => 'Admin',
             $this->is_user => 'User',
@@ -256,7 +201,7 @@ class User extends Authenticatable
         $effectiveTeamId = $teamId ?? $this->team_id;
 
         $this->executeInTeamContext(
-            fn() => $this->assignRole($roles),
+            fn () => $this->assignRole($roles),
             $effectiveTeamId
         );
 
@@ -273,7 +218,7 @@ class User extends Authenticatable
     public function hasPermissionInTeam(string $permission): bool
     {
         return $this->executeInTeamContext(
-            fn() => $this->hasPermissionTo($permission),
+            fn () => $this->hasPermissionTo($permission),
             $this->team_id
         );
     }
@@ -288,7 +233,7 @@ class User extends Authenticatable
     public function hasRoleInTeam(string $role): bool
     {
         return $this->executeInTeamContext(
-            fn() => $this->hasRole($role),
+            fn () => $this->hasRole($role),
             $this->team_id
         );
     }
@@ -301,9 +246,11 @@ class User extends Authenticatable
      *
      * @return mixed
      */
-    protected function executeInTeamContext(callable $callback, ?int $teamId): mixed
-    {
-        if (!$teamId) {
+    protected function executeInTeamContext(
+        callable $callback,
+        ?int $teamId
+    ): mixed {
+        if (! $teamId) {
             return $callback();
         }
 
@@ -312,6 +259,67 @@ class User extends Authenticatable
         setPermissionsTeamId(null);
 
         return $result;
+    }
+
+    /**
+     * Resolve team name from team ID.
+     *
+     * @param  int|null $teamId
+     *
+     * @return string
+     */
+    protected function resolveTeamName(?int $teamId): string
+    {
+        if ($teamId === null) {
+            return 'No Team';
+        }
+
+        $teamNames = $this->getTeamNamesMapping();
+
+        return $teamNames[$teamId] ?? "Team {$teamId}";
+    }
+
+    /**
+     * Get the mapping of team IDs to names.
+     *
+     * @return array<int, string>
+     */
+    protected function getTeamNamesMapping(): array
+    {
+        return [
+            1 => 'Head Office',
+            2 => 'Sales Department',
+            3 => 'IT Department',
+            4 => 'HR Department',
+            5 => 'Finance Department',
+            6 => 'Marketing Department',
+        ];
+    }
+
+    /**
+     * Extract initials from multiple words.
+     *
+     * @param  array $words
+     *
+     * @return string
+     */
+    protected function getInitialsFromMultipleWords(array $words): string
+    {
+        return strtoupper(
+            substr($words[0], 0, 1) . substr($words[1], 0, 1)
+        );
+    }
+
+    /**
+     * Extract initials from a single word.
+     *
+     * @param  string $name
+     *
+     * @return string
+     */
+    protected function getInitialsFromSingleWord(string $name): string
+    {
+        return strtoupper(substr($name, 0, 2));
     }
 
     /**
