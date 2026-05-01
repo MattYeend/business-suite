@@ -26,7 +26,7 @@ enum RolesEnum: string
     // HR Roles
     case HR_MANAGER = 'hr-manager';
     case HR_STAFF = 'hr-staff';
-    case EMPLOYER = 'employer';
+    case EMPLOYEE = 'employee';
     case RECRUITER = 'recruiter';
     case PAYROLL_SPECIALIST = 'payroll-specialist';
 
@@ -84,26 +84,171 @@ enum RolesEnum: string
      */
     public function label(): string
     {
-        return $this->labelBase()
-            ?? $this->labelSales()
-            ?? $this->labelFinance()
-            ?? $this->labelHr()
-            ?? $this->labelLms()
-            ?? $this->labelIt()
-            ?? $this->labelOperations()
-            ?? $this->labelProcurement()
-            ?? $this->labelMarketing()
-            ?? $this->labelAnalysis()
-            ?? $this->labelOther()
+        return $this->labelForBaseRoles()
+            ?? $this->labelForSalesRoles()
+            ?? $this->labelForFinanceRoles()
+            ?? $this->labelForHrRoles()
+            ?? $this->labelForLmsRoles()
+            ?? $this->labelForItRoles()
+            ?? $this->labelForOperationsRoles()
+            ?? $this->labelForProcurementRoles()
+            ?? $this->labelForMarketingRoles()
+            ?? $this->labelForAnalysisRoles()
+            ?? $this->labelForOtherRoles()
             ?? 'Unknown';
     }
 
     /**
-     * Get a human-readable label for the base role.
+     * Check if this is a base role.
+     *
+     * @return bool
+     */
+    public function isBase(): bool
+    {
+        return in_array($this, self::baseRoles());
+    }
+
+    /**
+     * Check if this is a specialized role.
+     *
+     * @return bool
+     */
+    public function isSpecialized(): bool
+    {
+        return ! $this->isBase();
+    }
+
+    /**
+     * Get the department category for this role.
+     *
+     * @return string
+     */
+    public function department(): string
+    {
+        return $this->departmentForBaseRoles()
+            ?? $this->departmentForSalesRoles()
+            ?? $this->departmentForFinanceRoles()
+            ?? $this->departmentForHrRoles()
+            ?? $this->departmentForLmsRoles()
+            ?? $this->departmentForItRoles()
+            ?? $this->departmentForOperationsRoles()
+            ?? $this->departmentForProcurementRoles()
+            ?? $this->departmentForMarketingRoles()
+            ?? $this->departmentForAnalysisRoles()
+            ?? $this->departmentForOtherRoles()
+            ?? 'Unknown';
+    }
+
+    /**
+     * Get all base roles.
+     *
+     * @return array<self>
+     */
+    public static function baseRoles(): array
+    {
+        return [
+            self::SUPER_ADMIN,
+            self::ADMIN,
+            self::USER,
+        ];
+    }
+
+    /**
+     * Get all specialized roles (non-base).
+     *
+     * @return array<self>
+     */
+    public static function specializedRoles(): array
+    {
+        return array_values(
+            array_filter(
+                self::cases(),
+                fn (self $role) => $role->isSpecialized()
+            )
+        );
+    }
+
+    /**
+     * Get roles by department.
+     *
+     * @param  string $department
+     *
+     * @return array<self>
+     */
+    public static function byDepartment(string $department): array
+    {
+        return array_values(
+            array_filter(
+                self::cases(),
+                fn (self $role) => $role->department() === $department
+            )
+        );
+    }
+
+    /**
+     * Get all departments.
+     *
+     * @return array<string>
+     */
+    public static function departments(): array
+    {
+        return array_values(
+            array_unique(
+                array_map(
+                    fn (self $role) => $role->department(),
+                    self::cases()
+                )
+            )
+        );
+    }
+
+    /**
+     * Get role from string value.
+     *
+     * @param  string $value
+     *
+     * @return self|null
+     */
+    public static function fromValue(string $value): ?self
+    {
+        return self::tryFrom($value);
+    }
+
+    /**
+     * Get all role values as strings.
+     *
+     * @return array<string>
+     */
+    public static function values(): array
+    {
+        return array_map(
+            fn (self $role) => $role->value,
+            self::cases()
+        );
+    }
+
+    /**
+     * Get all role labels.
+     *
+     * @return array<string, string>
+     */
+    public static function labels(): array
+    {
+        $labels = [];
+
+        foreach (self::cases() as $role) {
+            $labels[$role->value] = $role->label();
+        }
+
+        return $labels;
+    }
+
+    /**
+     * Get label for base roles.
      *
      * @return string|null
      */
-    private function labelBase(): ?string
+    private function labelForBaseRoles(): ?string
     {
         return match ($this) {
             self::SUPER_ADMIN => 'Super Administrator',
@@ -114,11 +259,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for sales roles.
+     * Get label for sales roles.
      *
      * @return string|null
      */
-    private function labelSales(): ?string
+    private function labelForSalesRoles(): ?string
     {
         return match ($this) {
             self::SALES_MANAGER => 'Sales Manager',
@@ -129,11 +274,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for finance roles.
+     * Get label for finance roles.
      *
      * @return string|null
      */
-    private function labelFinance(): ?string
+    private function labelForFinanceRoles(): ?string
     {
         return match ($this) {
             self::ACCOUNTANT => 'Accountant',
@@ -148,16 +293,16 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for HR roles.
+     * Get label for HR roles.
      *
      * @return string|null
      */
-    private function labelHr(): ?string
+    private function labelForHrRoles(): ?string
     {
         return match ($this) {
             self::HR_MANAGER => 'HR Manager',
             self::HR_STAFF => 'HR Staff',
-            self::EMPLOYER => 'Employee',
+            self::EMPLOYEE => 'Employee',
             self::RECRUITER => 'Recruiter',
             self::PAYROLL_SPECIALIST => 'Payroll Specialist',
             default => null,
@@ -165,11 +310,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for LMS roles.
+     * Get label for LMS roles.
      *
      * @return string|null
      */
-    private function labelLms(): ?string
+    private function labelForLmsRoles(): ?string
     {
         return match ($this) {
             self::TRAINING_MANAGER => 'Training Manager',
@@ -179,11 +324,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for IT roles.
+     * Get label for IT roles.
      *
      * @return string|null
      */
-    private function labelIt(): ?string
+    private function labelForItRoles(): ?string
     {
         return match ($this) {
             self::IT_DIRECTOR => 'IT Director',
@@ -198,11 +343,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for project and operations roles.
+     * Get label for operations roles.
      *
      * @return string|null
      */
-    private function labelOperations(): ?string
+    private function labelForOperationsRoles(): ?string
     {
         return match ($this) {
             self::PROJECT_MANAGER => 'Project Manager',
@@ -216,11 +361,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for procurement and warehouse roles.
+     * Get label for procurement roles.
      *
      * @return string|null
      */
-    private function labelProcurement(): ?string
+    private function labelForProcurementRoles(): ?string
     {
         return match ($this) {
             self::PROCUREMENT_MANAGER => 'Procurement Manager',
@@ -234,11 +379,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for marketing roles.
+     * Get label for marketing roles.
      *
      * @return string|null
      */
-    private function labelMarketing(): ?string
+    private function labelForMarketingRoles(): ?string
     {
         return match ($this) {
             self::MARKETING_DIRECTOR => 'Marketing Director',
@@ -252,11 +397,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for analysis and compliance roles.
+     * Get label for analysis roles.
      *
      * @return string|null
      */
-    private function labelAnalysis(): ?string
+    private function labelForAnalysisRoles(): ?string
     {
         return match ($this) {
             self::BUSINESS_ANALYST => 'Business Analyst',
@@ -268,15 +413,173 @@ enum RolesEnum: string
     }
 
     /**
-     * Get a human-readable label for other roles.
+     * Get label for other roles.
      *
      * @return string|null
      */
-    private function labelOther(): ?string
+    private function labelForOtherRoles(): ?string
     {
         return match ($this) {
             self::INTERN => 'Intern',
             self::CONTRACTOR => 'Contractor',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for base roles.
+     *
+     * @return string|null
+     */
+    private function departmentForBaseRoles(): ?string
+    {
+        return match ($this) {
+            self::SUPER_ADMIN, self::ADMIN, self::USER => 'Base',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for sales roles.
+     *
+     * @return string|null
+     */
+    private function departmentForSalesRoles(): ?string
+    {
+        return match ($this) {
+            self::SALES_MANAGER, self::SALES_REP,
+            self::CUSTOMER_SUCCESS_MANAGER => 'Sales',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for finance roles.
+     *
+     * @return string|null
+     */
+    private function departmentForFinanceRoles(): ?string
+    {
+        return match ($this) {
+            self::ACCOUNTANT, self::CFO, self::FINANCIAL_CONTROLLER,
+            self::ACCOUNTS_PAYABLE_CLERK, self::ACCOUNTS_RECEIVABLE_CLERK,
+            self::BUDGET_ANALYST, self::TAX_SPECIALIST => 'Finance',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for HR roles.
+     *
+     * @return string|null
+     */
+    private function departmentForHrRoles(): ?string
+    {
+        return match ($this) {
+            self::HR_MANAGER, self::HR_STAFF, self::EMPLOYEE,
+            self::RECRUITER, self::PAYROLL_SPECIALIST => 'HR',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for LMS roles.
+     *
+     * @return string|null
+     */
+    private function departmentForLmsRoles(): ?string
+    {
+        return match ($this) {
+            self::TRAINING_MANAGER, self::INSTRUCTOR => 'LMS',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for IT roles.
+     *
+     * @return string|null
+     */
+    private function departmentForItRoles(): ?string
+    {
+        return match ($this) {
+            self::IT_DIRECTOR, self::SYSTEM_ADMINISTRATOR,
+            self::NETWORK_ADMINISTRATOR, self::DATABASE_ADMINISTRATOR,
+            self::IT_SUPPORT_SPECIALIST, self::SECURITY_ANALYST,
+            self::DEVOPS_ENGINEER => 'IT',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for operations roles.
+     *
+     * @return string|null
+     */
+    private function departmentForOperationsRoles(): ?string
+    {
+        return match ($this) {
+            self::PROJECT_MANAGER, self::SUPPORT_AGENT, self::VIEWER,
+            self::TEAM_LEAD, self::OPERATIONS_MANAGER,
+            self::EXECUTIVE_ASSISTANT => 'Operations',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for procurement roles.
+     *
+     * @return string|null
+     */
+    private function departmentForProcurementRoles(): ?string
+    {
+        return match ($this) {
+            self::PROCUREMENT_MANAGER, self::PROCUREMENT_SPECIALIST,
+            self::INVENTORY_MANAGER, self::WAREHOUSE_SUPERVISOR,
+            self::WAREHOUSE_STAFF, self::LOGISTICS_COORDINATOR => 'Procurement',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for marketing roles.
+     *
+     * @return string|null
+     */
+    private function departmentForMarketingRoles(): ?string
+    {
+        return match ($this) {
+            self::MARKETING_DIRECTOR, self::MARKETING_MANAGER,
+            self::CONTENT_CREATOR, self::SOCIAL_MEDIA_MANAGER,
+            self::EMAIL_MARKETING_SPECIALIST,
+            self::EVENT_COORDINATOR => 'Marketing',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for analysis roles.
+     *
+     * @return string|null
+     */
+    private function departmentForAnalysisRoles(): ?string
+    {
+        return match ($this) {
+            self::BUSINESS_ANALYST, self::DATA_ANALYST,
+            self::COMPLIANCE_OFFICER, self::QA_MANAGER => 'Analysis',
+            default => null,
+        };
+    }
+
+    /**
+     * Get department for other roles.
+     *
+     * @return string|null
+     */
+    private function departmentForOtherRoles(): ?string
+    {
+        return match ($this) {
+            self::INTERN, self::CONTRACTOR => 'Other',
             default => null,
         };
     }
