@@ -16,10 +16,12 @@ class AssignRolesToUsersSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
-            // Set team context if user has a team
-            if ($user->team_id) {
-                setPermissionsTeamId($user->team_id);
-            }
+            // For users without a team (like super-admin), use a default team_id
+            // You can use team_id 1 (Head Office) or any other default
+            $teamId = $user->team_id ?? 1;
+            
+            // Set team context
+            setPermissionsTeamId($teamId);
 
             // Assign base role based on their boolean flags
             if ($user->is_super_admin) {
@@ -42,9 +44,7 @@ class AssignRolesToUsersSeeder extends Seeder
             }
 
             // Clear team context
-            if ($user->team_id) {
-                setPermissionsTeamId(null);
-            }
+            setPermissionsTeamId(null);
         }
 
         $this->command->info('Roles assigned to ' . $users->count() . ' users within their team contexts.');
