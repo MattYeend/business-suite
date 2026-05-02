@@ -16,6 +16,11 @@ class AssignRolesToUsersSeeder extends Seeder
         $users = User::all();
 
         foreach ($users as $user) {
+            // Skip if user already has roles assigned
+            if ($user->roles()->count() > 0) {
+                continue;
+            }
+
             // For users without a team (like super-admin), use a default team_id
             // You can use team_id 1 (Head Office) or any other default
             $teamId = $user->team_id ?? 1;
@@ -42,10 +47,10 @@ class AssignRolesToUsersSeeder extends Seeder
             } elseif (str_contains($user->email, 'accountant')) {
                 $user->assignRole('accountant');
             }
-
-            // Clear team context
-            setPermissionsTeamId(null);
         }
+
+        // Clear team context after all assignments are done
+        setPermissionsTeamId(null);
 
         $this->command->info('Roles assigned to ' . $users->count() . ' users within their team contexts.');
     }
