@@ -279,44 +279,6 @@ class UserSeeder extends Seeder
             ]
         );
 
-        // Generate additional random users in various teams (only if they don't exist)
-        $teams = [1, 2, 3, 4, 5, 6]; // Team IDs
-        
-        // Only create factory users if we have fewer than 20 real users
-        $existingRealUsersCount = User::where('is_real', true)->count();
-        if ($existingRealUsersCount < 20) {
-            $usersToCreate = 20 - $existingRealUsersCount;
-            User::factory()
-                ->count($usersToCreate)
-                ->create([
-                    'is_user' => true,
-                    'is_admin' => false,
-                    'is_super_admin' => false,
-                    'is_real' => true,
-                    'created_by' => $admin1->id,
-                ])
-                ->each(function ($user) use ($teams) {
-                    // Randomly assign to a team
-                    $user->update(['team_id' => $teams[array_rand($teams)]]);
-                });
-        }
-
-        // Generate some test users (only if they don't exist)
-        $existingTestUsersCount = User::where('is_real', false)->count();
-        if ($existingTestUsersCount < 6) {
-            $testUsersToCreate = 6 - $existingTestUsersCount;
-            User::factory()
-                ->count($testUsersToCreate)
-                ->create([
-                    'is_user' => true,
-                    'is_admin' => false,
-                    'is_super_admin' => false,
-                    'is_real' => false,
-                    'team_id' => 1, // Head Office
-                    'created_by' => $admin1->id,
-                ]);
-        }
-
         $this->command->info('Users created/verified successfully!');
         $this->command->info('Super Admin: superadmin@example.com / password');
         $this->command->info('Admin: admin@example.com / password');
