@@ -62,12 +62,12 @@ class FortifyServiceProvider extends ServiceProvider
                 'canResetPassword' => Features::enabled(
                     Features::resetPasswords()
                 ),
-                'canRegister' => Features::enabled(Features::registration()),
+                // 'canRegister' => Features::enabled(Features::registration()),
                 'status' => $request->session()->get('status'),
             ])
         );
 
-        Fortify::registerView(fn () => Inertia::render('auth/Register'));
+        // Fortify::registerView(fn () => Inertia::render('auth/Register'));
 
         Fortify::verifyEmailView(
             fn (Request $request) => Inertia::render('auth/VerifyEmail', [
