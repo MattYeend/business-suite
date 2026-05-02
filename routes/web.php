@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
 Route::inertia('/', 'Welcome', [
-    'canRegister' => false, // Disable registration for now
+    'canRegister' => false,
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
