@@ -26,13 +26,15 @@ class UserRestorerService
     public function restore(User $user, ?int $restoredBy = null): bool
     {
         return DB::transaction(function () use ($user, $restoredBy) {
+            $actor = User::findOrFail($restoredBy);
+
             $user->restored_by = $restoredBy;
             $user->restored_at = now();
             $user->save();
 
             $result = $user->restore();
 
-            $this->logService->logRestoration($user, $restoredBy);
+            $this->logService->logRestoration($user, $actor);
 
             return $result;
         });

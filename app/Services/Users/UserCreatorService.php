@@ -26,24 +26,26 @@ class UserCreatorService
      *
      * @throws \Exception
      */
-    public function create(
-        array $data,
-        ?int $createdBy = null
-    ): User {
+    public function create(array $data, ?int $createdBy = null): User
+    {
         return DB::transaction(function () use ($data, $createdBy) {
+            $actor = $createdBy
+                ? User::findOrFail($createdBy)
+                : throw new \RuntimeException('Actor required');
+
             $user = $this->createUser($data, $createdBy);
 
             if (isset($data['avatar'])) {
                 $this->handleAvatar($user, $data['avatar']);
             }
 
-            if (isset($data['roles']) && is_array($data['roles'])) {
+            if (isset($data['roles'])) {
                 $this->assignRoles($user, $data['roles']);
             }
 
             $this->sendWelcomeEmail($user, $data['plain_password']);
 
-            $this->logService->logCreation($user, $createdBy);
+            $this->logService->logCreation($user, $actor);
 
             return $user->fresh();
         });

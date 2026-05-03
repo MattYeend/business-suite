@@ -30,6 +30,8 @@ class UserUpdaterService
         ?int $updatedBy = null
     ): User {
         return DB::transaction(function () use ($user, $data, $updatedBy) {
+            $actor = User::findOrFail($updatedBy);
+
             $this->updateUserData($user, $data, $updatedBy);
 
             if (isset($data['avatar'])) {
@@ -40,7 +42,7 @@ class UserUpdaterService
                 $this->syncRoles($user, $data['roles']);
             }
 
-            $this->logService->logUpdate($user, $updatedBy);
+            $this->logService->logUpdate($user, $actor);
 
             return $user->fresh();
         });

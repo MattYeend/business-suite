@@ -25,12 +25,13 @@ class UserDeleterService
     public function delete(User $user, ?int $deletedBy = null): bool
     {
         return DB::transaction(function () use ($user, $deletedBy) {
+            $actor = User::findOrFail($deletedBy);
             $user->deleted_by = $deletedBy;
             $user->save();
 
             $result = $user->delete();
 
-            $this->logService->logDeletion($user, $deletedBy);
+            $this->logService->logDeletion($user, $actor);
 
             return $result;
         });
@@ -49,7 +50,8 @@ class UserDeleterService
     public function forceDelete(User $user, ?int $deletedBy = null): bool
     {
         return DB::transaction(function () use ($user, $deletedBy) {
-            $this->logService->logForceDeletion($user, $deletedBy);
+            $actor = User::findOrFail($deletedBy);
+            $this->logService->logForceDeletion($user, $actor);
 
             return $user->forceDelete();
         });
