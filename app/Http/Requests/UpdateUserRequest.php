@@ -24,45 +24,12 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('user')?->id;
-
-        return [
-            'name' => ['sometimes', 'required', 'string', 'max:255'],
-            'email' => [
-                'sometimes',
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users', 'email')->ignore($userId),
-            ],
-            'phone' => [
-                'nullable',
-                'string',
-                'max:20',
-                'regex:/^[0-9\s\-\+\(\)]+$/',
-            ],
-            'avatar' => [
-                'nullable',
-                'image',
-                'mimes:jpeg,png,jpg,gif,webp',
-                'max:2048',
-            ],
-            'timezone' => ['nullable', 'string', 'timezone:all'],
-            'locale' => [
-                'nullable',
-                'string',
-                Rule::in(['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'zh']),
-            ],
-            'team_id' => ['nullable', 'integer', Rule::exists('teams', 'id')],
-            'is_user' => ['nullable', 'boolean'],
-            'is_admin' => ['nullable', 'boolean'],
-            'is_super_admin' => ['nullable', 'boolean'],
-            'is_real' => ['nullable', 'boolean'],
-            'meta' => ['nullable', 'array'],
-            'roles' => ['nullable', 'array'],
-            'roles.*' => ['required', 'string', Rule::exists('roles', 'name')],
-        ];
+        return array_merge(
+            $this->baseRules(),
+            $this->profileRules(),
+            $this->statusRules(),
+            $this->roleRules()
+        );
     }
 
     /**
@@ -122,5 +89,86 @@ class UpdateUserRequest extends FormRequest
         if ($this->has('is_real')) {
             $this->merge(['is_real' => $this->boolean('is_real')]);
         }
+    }
+
+    /**
+     * Get the base validation rules for name and email.
+     *
+     * @return array
+     */
+    private function baseRules(): array
+    {
+        $userId = $this->route('user')?->id;
+
+        return [
+            'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'email' => [
+                'sometimes',
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($userId),
+            ],
+        ];
+    }
+
+    /**
+     * Get the validation rules for profile-related fields.
+     *
+     * @return array
+     */
+    private function profileRules(): array
+    {
+        return [
+            'phone' => [
+                'nullable',
+                'string',
+                'max:20',
+                'regex:/^[0-9\s\-\+\(\)]+$/',
+            ],
+            'avatar' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,gif,webp',
+                'max:2048',
+            ],
+            'timezone' => ['nullable', 'string', 'timezone:all'],
+            'locale' => [
+                'nullable',
+                'string',
+                Rule::in(['en','es','fr','de','it','pt','ja','zh']),
+            ],
+        ];
+    }
+
+    /**
+     * Get the validation rules for status and team-related fields.
+     *
+     * @return array
+     */
+    private function statusRules(): array
+    {
+        return [
+            'team_id' => ['nullable', 'integer', Rule::exists('teams', 'id')],
+            'is_user' => ['nullable', 'boolean'],
+            'is_admin' => ['nullable', 'boolean'],
+            'is_super_admin' => ['nullable', 'boolean'],
+            'is_real' => ['nullable', 'boolean'],
+            'meta' => ['nullable', 'array'],
+        ];
+    }
+
+    /**
+     * Get the validation rules for role-related fields.
+     *
+     * @return array
+     */
+    private function roleRules(): array
+    {
+        return [
+            'roles' => ['nullable', 'array'],
+            'roles.*' => ['required', 'string', Rule::exists('roles', 'name')],
+        ];
     }
 }
