@@ -35,6 +35,23 @@ class UserSortingService
     }
 
     /**
+     * Get available sort fields.
+     *
+     * @return array
+     */
+    public function getAvailableSortFields(): array
+    {
+        return [
+            'name' => 'Name',
+            'email' => 'Email',
+            'team' => 'Team',
+            'role' => 'Role',
+            'created_at' => 'Created Date',
+            'updated_at' => 'Updated Date',
+        ];
+    }
+
+    /**
      * Sort by role (priority: super_admin > admin > user).
      *
      * @param  Builder $query
@@ -42,8 +59,10 @@ class UserSortingService
      *
      * @return Builder
      */
-    protected function sortByRole(Builder $query, string $sortDirection): Builder
-    {
+    protected function sortByRole(
+        Builder $query,
+        string $sortDirection
+    ): Builder {
         if ($sortDirection === 'asc') {
             return $query->orderByRaw('
                 CASE
@@ -63,22 +82,5 @@ class UserSortingService
                 ELSE 0
             END DESC
         ');
-    }
-
-    /**
-     * Get available sort fields.
-     *
-     * @return array
-     */
-    public function getAvailableSortFields(): array
-    {
-        return [
-            'name' => 'Name',
-            'email' => 'Email',
-            'team' => 'Team',
-            'role' => 'Role',
-            'created_at' => 'Created Date',
-            'updated_at' => 'Updated Date',
-        ];
     }
 }

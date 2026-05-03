@@ -36,10 +36,24 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email')->ignore($userId),
             ],
-            'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9\s\-\+\(\)]+$/'],
-            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+            'phone' => [
+                'nullable',
+                'string',
+                'max:20',
+                'regex:/^[0-9\s\-\+\(\)]+$/',
+            ],
+            'avatar' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,gif,webp',
+                'max:2048',
+            ],
             'timezone' => ['nullable', 'string', 'timezone:all'],
-            'locale' => ['nullable', 'string', Rule::in(['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'zh'])],
+            'locale' => [
+                'nullable',
+                'string',
+                Rule::in(['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'zh']),
+            ],
             'team_id' => ['nullable', 'integer', Rule::exists('teams', 'id')],
             'is_user' => ['nullable', 'boolean'],
             'is_admin' => ['nullable', 'boolean'],
@@ -101,7 +115,9 @@ class UpdateUserRequest extends FormRequest
             $this->merge(['is_admin' => $this->boolean('is_admin')]);
         }
         if ($this->has('is_super_admin')) {
-            $this->merge(['is_super_admin' => $this->boolean('is_super_admin')]);
+            $this->merge(
+                ['is_super_admin' => $this->boolean('is_super_admin')]
+            );
         }
         if ($this->has('is_real')) {
             $this->merge(['is_real' => $this->boolean('is_real')]);

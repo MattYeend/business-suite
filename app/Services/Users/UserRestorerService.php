@@ -20,6 +20,7 @@ class UserRestorerService
      * @param  int|null $restoredBy
      *
      * @return bool
+     *
      * @throws \Exception
      */
     public function restore(User $user, ?int $restoredBy = null): bool
@@ -44,10 +45,13 @@ class UserRestorerService
      * @param  int|null $restoredBy
      *
      * @return int Number of users restored
+     *
      * @throws \Exception
      */
-    public function restoreMultiple(array $userIds, ?int $restoredBy = null): int
-    {
+    public function restoreMultiple(
+        array $userIds,
+        ?int $restoredBy = null
+    ): int {
         $count = 0;
 
         DB::transaction(function () use ($userIds, $restoredBy, &$count) {

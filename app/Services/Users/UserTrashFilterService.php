@@ -14,8 +14,10 @@ class UserTrashFilterService
      *
      * @return Builder
      */
-    public function applyFilter(Builder $query, ?string $trashed = null): Builder
-    {
+    public function applyFilter(
+        Builder $query,
+        ?string $trashed = null
+    ): Builder {
         return match ($trashed) {
             'only' => $query->onlyTrashed(),
             'with' => $query->withTrashed(),

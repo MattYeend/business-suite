@@ -68,11 +68,26 @@ class UserQueryService
     {
         $query = User::query();
 
-        $query = $this->applySearchFilter($query, $filters['search'] ?? null);
-        $query = $this->applyTeamFilter($query, $filters['team_id'] ?? null);
-        $query = $this->applyRoleFilter($query, $filters['role'] ?? null);
-        $query = $this->applyStatusFilter($query, $filters['status'] ?? null);
-        $query = $this->trashFilterService->applyFilter($query, $filters['trashed'] ?? null);
+        $query = $this->applySearchFilter(
+            $query,
+            $filters['search'] ?? null
+        );
+        $query = $this->applyTeamFilter(
+            $query,
+            $filters['team_id'] ?? null
+        );
+        $query = $this->applyRoleFilter(
+            $query,
+            $filters['role'] ?? null
+        );
+        $query = $this->applyStatusFilter(
+            $query,
+            $filters['status'] ?? null
+        );
+        $query = $this->trashFilterService->applyFilter(
+            $query,
+            $filters['trashed'] ?? null
+        );
         $query = $this->sortingService->applySorting(
             $query,
             $filters['sort_by'] ?? 'created_at',
@@ -90,9 +105,11 @@ class UserQueryService
      *
      * @return Builder
      */
-    protected function applySearchFilter(Builder $query, ?string $search): Builder
-    {
-        if (empty($search)) {
+    protected function applySearchFilter(
+        Builder $query,
+        ?string $search
+    ): Builder {
+        if (! isset($search)) {
             return $query;
         }
 
@@ -111,8 +128,10 @@ class UserQueryService
      *
      * @return Builder
      */
-    protected function applyTeamFilter(Builder $query, ?int $teamId): Builder
-    {
+    protected function applyTeamFilter(
+        Builder $query,
+        ?int $teamId
+    ): Builder {
         if ($teamId === null) {
             return $query;
         }
@@ -128,9 +147,11 @@ class UserQueryService
      *
      * @return Builder
      */
-    protected function applyRoleFilter(Builder $query, ?string $role): Builder
-    {
-        if (empty($role)) {
+    protected function applyRoleFilter(
+        Builder $query,
+        ?string $role
+    ): Builder {
+        if (! isset($role)) {
             return $query;
         }
 
@@ -138,7 +159,10 @@ class UserQueryService
             'super_admin' => $query->where('is_super_admin', true),
             'admin' => $query->where('is_admin', true),
             'user' => $query->where('is_user', true),
-            default => $query->whereHas('roles', fn ($q) => $q->where('name', $role)),
+            default => $query->whereHas(
+                'roles',
+                fn ($q) => $q->where('name', $role)
+            ),
         };
     }
 
@@ -150,9 +174,11 @@ class UserQueryService
      *
      * @return Builder
      */
-    protected function applyStatusFilter(Builder $query, ?string $status): Builder
-    {
-        if (empty($status)) {
+    protected function applyStatusFilter(
+        Builder $query,
+        ?string $status
+    ): Builder {
+        if (! isset($status)) {
             return $query;
         }
 
@@ -171,8 +197,10 @@ class UserQueryService
      *
      * @return array
      */
-    protected function paginate(Builder $query, int $perPage): array
-    {
+    protected function paginate(
+        Builder $query,
+        int $perPage
+    ): array {
         $paginator = $query->paginate($perPage);
 
         return [
@@ -233,7 +261,7 @@ class UserQueryService
         /** @var User $user */
         $user = auth()->user();
 
-        if (!$user) {
+        if (! $user) {
             return ['permissions_meta' => []];
         }
 

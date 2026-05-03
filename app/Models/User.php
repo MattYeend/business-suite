@@ -49,6 +49,7 @@ use Spatie\Permission\Traits\HasRoles;
  * User model with role-based permissions and team support.
  *
  * @mixin \Spatie\Permission\Traits\HasRoles
+ *
  * @method bool can(string $ability, mixed $arguments = [])
  *
  * @property int $id

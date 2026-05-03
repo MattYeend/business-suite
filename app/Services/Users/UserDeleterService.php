@@ -19,6 +19,7 @@ class UserDeleterService
      * @param  int|null $deletedBy
      *
      * @return bool
+     *
      * @throws \Exception
      */
     public function delete(User $user, ?int $deletedBy = null): bool
@@ -42,6 +43,7 @@ class UserDeleterService
      * @param  int|null $deletedBy
      *
      * @return bool
+     *
      * @throws \Exception
      */
     public function forceDelete(User $user, ?int $deletedBy = null): bool
@@ -60,6 +62,7 @@ class UserDeleterService
      * @param  int|null $deletedBy
      *
      * @return int Number of users deleted
+     *
      * @throws \Exception
      */
     public function deleteMultiple(array $userIds, ?int $deletedBy = null): int

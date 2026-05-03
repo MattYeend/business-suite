@@ -38,7 +38,7 @@ class UserAvatarService
      */
     public function delete(User $user): bool
     {
-        if (!$user->avatar) {
+        if (! $user->avatar) {
             return false;
         }
 
@@ -73,7 +73,7 @@ class UserAvatarService
      */
     public function getUrl(User $user): ?string
     {
-        if (!$user->avatar) {
+        if (! $user->avatar) {
             return null;
         }
 
@@ -86,6 +86,7 @@ class UserAvatarService
      * @param  UploadedFile $file
      *
      * @return void
+     *
      * @throws \InvalidArgumentException
      */
     protected function validate(UploadedFile $file): void
@@ -93,8 +94,10 @@ class UserAvatarService
         $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
         $maxSize = 2048 * 1024; // 2MB in bytes
 
-        if (!in_array($file->getMimeType(), $allowedMimes)) {
-            throw new \InvalidArgumentException('Invalid file type. Allowed types: jpg, jpeg, png, gif, webp');
+        if (! in_array($file->getMimeType(), $allowedMimes)) {
+            throw new \InvalidArgumentException(
+                'Invalid file type. Allowed types: jpg, jpeg, png, gif, webp'
+            );
         }
 
         if ($file->getSize() > $maxSize) {

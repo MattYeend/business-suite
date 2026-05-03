@@ -49,7 +49,11 @@ class UserPolicy
         // Admins can update other users
         if ($user->is_admin || $user->is_super_admin) {
             // Regular admins cannot modify super admins
-            if ($user->is_admin && !$user->is_super_admin && $model->is_super_admin) {
+            if (
+                $user->is_admin &&
+                ! $user->is_super_admin &&
+                $model->is_super_admin
+            ) {
                 return false;
             }
 
@@ -72,7 +76,11 @@ class UserPolicy
         // Only admins and super admins can delete
         if ($user->is_admin || $user->is_super_admin) {
             // Regular admins cannot delete super admins
-            if ($user->is_admin && !$user->is_super_admin && $model->is_super_admin) {
+            if (
+                $user->is_admin &&
+                ! $user->is_super_admin &&
+                $model->is_super_admin
+            ) {
                 return false;
             }
 
@@ -85,7 +93,7 @@ class UserPolicy
     /**
      * Determine if the user can restore the model.
      */
-    public function restore(User $user, User $model): bool
+    public function restore(User $user): bool
     {
         return $user->is_admin || $user->is_super_admin;
     }
@@ -93,7 +101,7 @@ class UserPolicy
     /**
      * Determine if the user can permanently delete the model.
      */
-    public function forceDelete(User $user, User $model): bool
+    public function forceDelete(User $user): bool
     {
         // Only super admins can force delete
         return $user->is_super_admin;

@@ -23,10 +23,13 @@ class UserCreatorService
      * @param  int|null $createdBy
      *
      * @return User
+     *
      * @throws \Exception
      */
-    public function create(array $data, ?int $createdBy = null): User
-    {
+    public function create(
+        array $data,
+        ?int $createdBy = null
+    ): User {
         return DB::transaction(function () use ($data, $createdBy) {
             $user = $this->createUser($data, $createdBy);
 
@@ -54,8 +57,10 @@ class UserCreatorService
      *
      * @return User
      */
-    protected function createUser(array $data, ?int $createdBy): User
-    {
+    protected function createUser(
+        array $data,
+        ?int $createdBy
+    ): User {
         $plainPassword = $this->passwordService->generatePassword();
 
         $userData = [
@@ -90,8 +95,10 @@ class UserCreatorService
      *
      * @return void
      */
-    protected function handleAvatar(User $user, mixed $avatar): void
-    {
+    protected function handleAvatar(
+        User $user,
+        mixed $avatar
+    ): void {
         if (is_object($avatar) && method_exists($avatar, 'isValid')) {
             $path = $this->avatarService->upload($avatar, $user);
             $user->avatar = $path;
@@ -107,8 +114,10 @@ class UserCreatorService
      *
      * @return void
      */
-    protected function assignRoles(User $user, array $roles): void
-    {
+    protected function assignRoles(
+        User $user,
+        array $roles
+    ): void {
         if ($user->team_id) {
             $user->assignRoleInTeam($roles, $user->team_id);
         } else {
@@ -124,8 +133,10 @@ class UserCreatorService
      *
      * @return void
      */
-    protected function sendWelcomeEmail(User $user, string $password): void
-    {
+    protected function sendWelcomeEmail(
+        User $user,
+        string $password
+    ): void {
         Mail::to($user->email)->queue(new WelcomeEmail($user, $password));
     }
 }

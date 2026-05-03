@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class StoreUserRequest extends FormRequest
 {
@@ -27,11 +26,31 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9\s\-\+\(\)]+$/'],
-            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email'),
+            ],
+            'phone' => [
+                'nullable',
+                'string',
+                'max:20',
+                'regex:/^[0-9\s\-\+\(\)]+$/',
+            ],
+            'avatar' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,gif,webp',
+                'max:2048',
+            ],
             'timezone' => ['nullable', 'string', 'timezone:all'],
-            'locale' => ['nullable', 'string', Rule::in(['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'zh'])],
+            'locale' => [
+                'nullable',
+                'string',
+                Rule::in(['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'zh']),
+            ],
             'team_id' => ['nullable', 'integer', Rule::exists('teams', 'id')],
             'is_user' => ['nullable', 'boolean'],
             'is_admin' => ['nullable', 'boolean'],

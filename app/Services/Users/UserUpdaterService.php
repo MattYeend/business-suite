@@ -21,10 +21,14 @@ class UserUpdaterService
      * @param  int|null $updatedBy
      *
      * @return User
+     *
      * @throws \Exception
      */
-    public function update(User $user, array $data, ?int $updatedBy = null): User
-    {
+    public function update(
+        User $user,
+        array $data,
+        ?int $updatedBy = null
+    ): User {
         return DB::transaction(function () use ($user, $data, $updatedBy) {
             $this->updateUserData($user, $data, $updatedBy);
 
@@ -51,8 +55,11 @@ class UserUpdaterService
      *
      * @return void
      */
-    protected function updateUserData(User $user, array $data, ?int $updatedBy): void
-    {
+    protected function updateUserData(
+        User $user,
+        array $data,
+        ?int $updatedBy
+    ): void {
         $fillableData = array_filter([
             'name' => $data['name'] ?? null,
             'email' => $data['email'] ?? null,
@@ -80,8 +87,10 @@ class UserUpdaterService
      *
      * @return void
      */
-    protected function handleAvatar(User $user, mixed $avatar): void
-    {
+    protected function handleAvatar(
+        User $user,
+        mixed $avatar
+    ): void {
         if ($avatar === null || $avatar === '') {
             // Remove avatar
             $this->avatarService->delete($user);
@@ -103,8 +112,10 @@ class UserUpdaterService
      *
      * @return void
      */
-    protected function syncRoles(User $user, array $roles): void
-    {
+    protected function syncRoles(
+        User $user,
+        array $roles
+    ): void {
         if ($user->team_id) {
             $user->executeInTeamContext(
                 fn () => $user->syncRoles($roles),

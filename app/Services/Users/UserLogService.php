@@ -16,10 +16,12 @@ class UserLogService
      *
      * @return array
      */
-    public function logCreation(User $user, ?int $actorId = null): array
-    {
+    public function logCreation(
+        User $user,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'created_at' => now(),
             'created_by' => $actor?->name,
@@ -43,10 +45,12 @@ class UserLogService
      *
      * @return array The structured data written to the log entry.
      */
-    public function logUpdate(User $user, ?int $actorId = null): array
-    {
+    public function logUpdate(
+        User $user,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'updated_at' => now(),
             'updated_by' => $actor?->name,
@@ -70,10 +74,12 @@ class UserLogService
      *
      * @return array The structured data written to the log entry.
      */
-    public function logDeletion(User $user, ?int $actorId = null): array
-    {
+    public function logDeletion(
+        User $user,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'deleted_at' => now(),
             'deleted_by' => $actor?->name,
@@ -97,10 +103,12 @@ class UserLogService
      *
      * @return array The structured data written to the log entry.
      */
-    public function logForceDeletion(User $user, ?int $actorId = null): array
-    {
+    public function logForceDeletion(
+        User $user,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'force_deleted_at' => now(),
             'force_deleted_by' => $actor?->name,
@@ -124,10 +132,12 @@ class UserLogService
      *
      * @return array The structured data written to the log entry.
      */
-    public function userVerified(User $user, ?int $actorId = null): array
-    {
+    public function userVerified(
+        User $user,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'verified_at' => now(),
             'verified_by' => $actor?->name,
@@ -151,10 +161,12 @@ class UserLogService
      *
      * @return array The structured data written to the log entry.
      */
-    public function logRestoration(User $user, ?int $actorId = null): array
-    {
+    public function logRestoration(
+        User $user,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'restored_at' => now(),
             'restored_by' => $actor?->name,
@@ -178,10 +190,12 @@ class UserLogService
      *
      * @return array The structured data written to the log entry.
      */
-    public function logPasswordChange(User $user, ?int $actorId = null): array
-    {
+    public function logPasswordChange(
+        User $user,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'password_changed_at' => now(),
             'password_changed_by' => $actor?->name,
@@ -206,10 +220,13 @@ class UserLogService
      *
      * @return array The structured data written to the log entry.
      */
-    public function logRoleAssignment(User $user, array $roles, ?int $actorId = null): array
-    {
+    public function logRoleAssignment(
+        User $user,
+        array $roles,
+        ?int $actorId = null
+    ): array {
         $actor = $actorId ? User::find($actorId) : null;
-        
+
         $data = $this->baseUserData($user) + [
             'roles' => implode(', ', $roles),
             'assigned_at' => now(),

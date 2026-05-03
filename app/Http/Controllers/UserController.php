@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\WelcomeEmail;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
@@ -21,7 +20,7 @@ class UserController extends Controller
      * @var UserLogService
      */
     protected UserLogService $logger;
- 
+
     /**
      * Service responsible for creating, updating, deleting, and restoring
      * users.
@@ -29,14 +28,14 @@ class UserController extends Controller
      * @var UserManagementService
      */
     protected UserManagementService $management;
- 
+
     /**
      * Service responsible for querying and listing users.
      *
      * @var UserQueryService
      */
     protected UserQueryService $query;
- 
+
     /**
      * Inject the required services into the controller.
      *
@@ -74,9 +73,9 @@ class UserController extends Controller
     public function index(Request $request): JsonResponse
     {
         $this->authorize('viewAny', User::class);
- 
+
         $users = $this->query->list($request);
- 
+
         return response()->json($users);
     }
 
@@ -102,10 +101,10 @@ class UserController extends Controller
             $auth->id,
             $user,
         );
- 
+
         return response()->json($user, 201);
     }
- 
+
     /**
      * Display the specified resource.
      *
@@ -120,12 +119,12 @@ class UserController extends Controller
     public function show(User $user): JsonResponse
     {
         $this->authorize('view', $user);
- 
+
         $user = $this->query->show($user);
- 
+
         return response()->json($user);
     }
- 
+
     /**
      * Update the specified resource in storage.
      *
@@ -144,18 +143,18 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $user = $this->management->update($request, $user);
- 
+
         $auth = auth()->user();
- 
+
         $this->logger->userUpdated(
             $auth,
             $auth->id,
             $user,
         );
- 
+
         return response()->json($user);
     }
- 
+
     /**
      * Remove the specified resource from storage.
      *
@@ -172,18 +171,18 @@ class UserController extends Controller
     {
         $this->authorize('delete', $user);
         $auth = auth()->user();
- 
+
         $this->logger->userDeleted(
             $auth,
             $auth->id,
             $user,
         );
- 
+
         $this->management->destroy($user);
- 
+
         return response()->json(null, 204);
     }
- 
+
     /**
      * Restore the specified user from soft deletion.
      *
@@ -201,21 +200,21 @@ class UserController extends Controller
     {
         $user = User::withTrashed()->findOrFail($id);
         $this->authorize('restore', $user);
- 
+
         if (! $user->trashed()) {
             abort(404);
         }
- 
+
         $user = $this->management->restore((int) $id);
- 
+
         $auth = auth()->user();
- 
+
         $this->logger->userRestored(
             $auth,
             $auth->id,
             $user,
         );
- 
+
         return response()->json($user);
     }
 }

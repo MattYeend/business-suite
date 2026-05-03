@@ -10,7 +10,7 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @return array<string,mixed>
      */
     public function toArray(Request $request): array
     {
@@ -20,7 +20,9 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'avatar' => $this->avatar,
-            'avatar_url' => $this->avatar ? asset('storage/' . $this->avatar) : null,
+            'avatar_url' => $this->avatar ? asset(
+                'storage/' . $this->avatar
+            ) : null,
             'timezone' => $this->timezone,
             'locale' => $this->locale,
             'team' => [
@@ -44,6 +46,7 @@ class UserResource extends JsonResource
                 'updated_at' => $this->updated_at?->toISOString(),
                 'deleted_at' => $this->deleted_at?->toISOString(),
             ],
+            'can_edit' => $request->user()?->can('update', $this->resource),
         ];
     }
 }
