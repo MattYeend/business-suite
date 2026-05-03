@@ -41,26 +41,15 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        // Users can update themselves
-        if ($user->id === $model->id) {
+        if ($this->isSelf($user, $model)) {
             return true;
         }
 
-        // Admins can update other users
-        if ($user->is_admin || $user->is_super_admin) {
-            // Regular admins cannot modify super admins
-            if (
-                $user->is_admin &&
-                ! $user->is_super_admin &&
-                $model->is_super_admin
-            ) {
-                return false;
-            }
-
-            return true;
+        if (! $this->isAdmin($user)) {
+            return false;
         }
 
-        return false;
+        return ! $this->isRestrictedFromManaging($user, $model);
     }
 
     /**
@@ -68,26 +57,15 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        // Users cannot delete themselves
-        if ($user->id === $model->id) {
+        if ($this->isSelf($user, $model)) {
             return false;
         }
 
-        // Only admins and super admins can delete
-        if ($user->is_admin || $user->is_super_admin) {
-            // Regular admins cannot delete super admins
-            if (
-                $user->is_admin &&
-                ! $user->is_super_admin &&
-                $model->is_super_admin
-            ) {
-                return false;
-            }
-
-            return true;
+        if (! $this->isAdmin($user)) {
+            return false;
         }
 
-        return false;
+        return ! $this->isRestrictedFromManaging($user, $model);
     }
 
     /**
@@ -105,5 +83,31 @@ class UserPolicy
     {
         // Only super admins can force delete
         return $user->is_super_admin;
+    }
+
+    /**
+     * Determine if the user is an admin or super admin.
+     */
+    private function isAdmin(User $user): bool
+    {
+        return $user->is_admin || $user->is_super_admin;
+    }
+
+    /**
+     * Determine if the user is trying to perform an action on themselves.
+     */
+    private function isSelf(User $user, User $model): bool
+    {
+        return $user->id === $model->id;
+    }
+
+    /**
+     * Determine if the user is a regular admin trying to manage a super admin.
+     */
+    private function isRestrictedFromManaging(User $user, User $model): bool
+    {
+        return $user->is_admin
+            && ! $user->is_super_admin
+            && $model->is_super_admin;
     }
 }
