@@ -2,14 +2,35 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Attributes\Description;
-use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\GeneratorCommand;
 
-#[Signature('make:service')]
-#[Description('Create a new service class')]
+/**
+ * Artisan command to generate a new service class.
+ *
+ * Extends Laravel's GeneratorCommand to scaffold a service class
+ * from a stub file into the App\Services namespace.
+ *
+ * Usage:
+ *   php artisan make:service UserService
+ *
+ * This will create: app/Services/UserService.php
+ */
 class MakeServiceCommand extends GeneratorCommand
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $name = 'make:service';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Create a new service class';
+
     /**
      * The type of class being generated.
      *
@@ -36,11 +57,11 @@ class MakeServiceCommand extends GeneratorCommand
     /**
      * Get the default namespace for the class.
      *
-     * Places all generated service classes under app\Services
+     * Places all generated service classes under App\Services
      * unless a sub-namespace is specified by the caller.
      *
      * @param  string $rootNamespace The application's root
-     * namespace (typically "app").
+     * namespace (typically "App").
      *
      * @return string The fully resolved namespace for the new service.
      */

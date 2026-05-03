@@ -47,35 +47,36 @@ class Log extends Model
     public const ACTION_UPDATE_USER = 9;
     public const ACTION_DELETE_USER = 10;
     public const ACTION_SHOW_USER = 11;
-    public const ACTION_WELCOME_EMAIL_SENT = 12;
-    public const ACTION_CONFIRM_PASSWORD = 13;
-    public const ACTION_FORGOT_PASSWORD = 14;
-    public const ACTION_REGISTER_USER = 15;
-    public const ACTION_RESET_PASSWORD = 16;
-    public const ACTION_RESET_EMAIL = 17;
-    public const ACTION_RESET_USERNAME = 18;
-    public const ACTION_VERIFY_USER = 19;
-    public const ACTION_PASSWORD_CHANGED = 20;
-    public const ACTION_USER_RESTORED = 21;
-    public const ACTION_USER_DELETED = 22;
+    public const ACTION_FORCE_DELETE_USER = 12;
+    public const ACTION_WELCOME_EMAIL_SENT = 13;
+    public const ACTION_CONFIRM_PASSWORD = 14;
+    public const ACTION_FORGOT_PASSWORD = 15;
+    public const ACTION_REGISTER_USER = 16;
+    public const ACTION_RESET_PASSWORD = 17;
+    public const ACTION_RESET_EMAIL = 18;
+    public const ACTION_RESET_USERNAME = 19;
+    public const ACTION_VERIFY_USER = 20;
+    public const ACTION_PASSWORD_CHANGED = 21;
+    public const ACTION_USER_RESTORED = 22;
+    public const ACTION_USER_DELETED = 23;
 
     // MFA/Settings
-    public const ACTION_MFA_ENABLED = 23;
-    public const ACTION_MFA_DISABLED = 24;
-    public const ACTION_PROFILE_UPDATED = 25;
-    public const ACTION_PROFILE_DELETED = 26;
-    public const ACTION_EMAIL_UPDATED = 27;
+    public const ACTION_MFA_ENABLED = 24;
+    public const ACTION_MFA_DISABLED = 25;
+    public const ACTION_PROFILE_UPDATED = 26;
+    public const ACTION_PROFILE_DELETED = 27;
+    public const ACTION_EMAIL_UPDATED = 28;
 
     // Role/Permission Management
-    public const ACTION_ROLE_ASSIGNED = 28;
-    public const ACTION_PERMISSION_GRANTED = 29;
-    public const ACTION_PERMISSION_REVOKED = 30;
+    public const ACTION_ROLE_ASSIGNED = 29;
+    public const ACTION_PERMISSION_GRANTED = 30;
+    public const ACTION_PERMISSION_REVOKED = 31;
 
     // Errors/Cache
-    public const ACTION_GENERAL_ERROR = 31;
-    public const ACTION_FOUR_HUNDRED_ERROR = 32;
-    public const ACTION_FIVE_HUNDRED_ERRORS = 33;
-    public const ACTION_CLEAR_CACHE = 34;
+    public const ACTION_GENERAL_ERROR = 32;
+    public const ACTION_FOUR_HUNDRED_ERROR = 33;
+    public const ACTION_FIVE_HUNDRED_ERRORS = 34;
+    public const ACTION_CLEAR_CACHE = 35;
 
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
