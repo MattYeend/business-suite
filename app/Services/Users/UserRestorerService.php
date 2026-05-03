@@ -3,6 +3,7 @@
 namespace App\Services\Users;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class UserRestorerService
@@ -50,8 +51,10 @@ class UserRestorerService
         $count = 0;
 
         DB::transaction(function () use ($userIds, $restoredBy, &$count) {
+            /** @var Collection<int,User> $users */
             $users = User::onlyTrashed()->whereIn('id', $userIds)->get();
 
+            /** @var User $user */
             foreach ($users as $user) {
                 if ($this->restore($user, $restoredBy)) {
                     $count++;

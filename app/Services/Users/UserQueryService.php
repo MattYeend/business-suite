@@ -230,6 +230,7 @@ class UserQueryService
      */
     protected function getPermissions(): array
     {
+        /** @var User $user */
         $user = auth()->user();
 
         if (!$user) {

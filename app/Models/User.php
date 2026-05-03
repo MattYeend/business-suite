@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -34,9 +35,9 @@ use Spatie\Permission\Traits\HasRoles;
     'updated_at',
     'updated_by',
     'deleted_at',
-    'deteled_by',
+    'deleted_by',
     'restored_at',
-    'resotred_by',
+    'restored_by',
 ])]
 #[Hidden([
     'password',
@@ -48,6 +49,7 @@ use Spatie\Permission\Traits\HasRoles;
  * User model with role-based permissions and team support.
  *
  * @mixin \Spatie\Permission\Traits\HasRoles
+ * @method bool can(string $ability, mixed $arguments = [])
  *
  * @property int $id
  * @property string $name
@@ -85,7 +87,8 @@ class User extends Authenticatable
         HasRoles,
         HasTeam,
         HasUserRoles,
-        HasUserScopes;
+        HasUserScopes,
+        Authorizable;
 
     /**
      * Check if the user has standard user permissions.
