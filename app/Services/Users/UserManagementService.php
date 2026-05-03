@@ -16,24 +16,6 @@ use App\Models\User;
  */
 class UserManagementService
 {
-    /** Service responsible for creating new user records.
-     *
-     * @var UserCreatorService
-     */
-    private UserCreatorService $creator;
-
-    /** Service responsible for updating existing user records.
-     *
-     * @var UserUpdaterService
-     */
-    private UserUpdaterService $updater;
-
-    /** Service responsible for soft-deleting and restoring user records.
-     *
-     * @var UserDestructorService
-     */
-    private UserDestructorService $destructor;
-
     /**
      * Inject the required services into the management service.
      *
@@ -45,13 +27,10 @@ class UserManagementService
      * @return void
      */
     public function __construct(
-        UserCreatorService $creator,
-        UserUpdaterService $updater,
-        UserDestructorService $destructor,
+        protected UserCreatorService $creator,
+        protected UserUpdaterService $updater,
+        protected UserDestructorService $destructor,
     ) {
-        $this->creator = $creator;
-        $this->updater = $updater;
-        $this->destructor = $destructor;
     }
 
     /**

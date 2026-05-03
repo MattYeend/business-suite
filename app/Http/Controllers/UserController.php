@@ -13,30 +13,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
-{
-    /**
-     * Service responsible for writing audit log entries for user events.
-     *
-     * @var UserLogService
-     */
-    protected UserLogService $logger;
-
-    /**
-     * Service responsible for creating, updating, deleting, and restoring
-     * users.
-     *
-     * @var UserManagementService
-     */
-    protected UserManagementService $management;
-
-    /**
-     * Service responsible for querying and listing users.
-     *
-     * @var UserQueryService
-     */
-    protected UserQueryService $query;
-
-    /**
+{    /**
      * Inject the required services into the controller.
      *
      * @param  UserLogService $logger Handles audit logging for
@@ -47,13 +24,10 @@ class UserController extends Controller
      * retrieval.
      */
     public function __construct(
-        UserLogService $logger,
-        UserManagementService $management,
-        UserQueryService $query,
+        protected UserLogService $logger,
+        protected UserManagementService $management,
+        protected UserQueryService $query,
     ) {
-        $this->logger = $logger;
-        $this->management = $management;
-        $this->query = $query;
     }
 
     /**

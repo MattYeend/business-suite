@@ -94,12 +94,10 @@ class UserUpdaterService
         mixed $avatar
     ): void {
         if ($avatar === null || $avatar === '') {
-            // Remove avatar
             $this->avatarService->delete($user);
             $user->avatar = null;
             $user->save();
         } elseif (is_object($avatar) && method_exists($avatar, 'isValid')) {
-            // Upload new avatar
             $path = $this->avatarService->replace($avatar, $user);
             $user->avatar = $path;
             $user->save();
