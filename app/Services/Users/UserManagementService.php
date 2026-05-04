@@ -91,4 +91,75 @@ class UserManagementService
         $user = User::withTrashed()->findOrFail($id);
         return $this->restorer->restore($user);
     }
+
+    /**
+     * Force delete a user, permanently removing it from the database.
+     *
+     * @param  int $id The primary key of the user to force delete.
+     *
+     * @return void
+     */
+    public function forceDelete(int $id): void
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $this->destructor->forceDelete($user);
+    }
+
+    /**
+     * Bulk restore users.
+     *
+     * @param  array $ids The IDs of the users to restore.
+     * @param  User $actor The user performing the restoration, used for
+     * logging.
+     * @param  callable $authorizeCallback The callback to authorize each
+     * user.
+     *
+     * @return array The IDs of the users that were restored.
+     */
+    public function bulkRestore(
+        array $ids,
+        User $actor,
+        callable $authorizeCallback
+    ): array {
+        $restored = [];
+
+        foreach ($ids as $id) {
+            $user = User::withTrashed()->findOrFail($id);
+            $authorizeCallback($user);
+
+            if ($user->trashed()) {
+                $this->restorer->restore($user, $actor->id);
+                $restored[] = $id;
+            }
+        }
+
+        return $restored;
+    }
+
+    /**
+     * Bulk delete users.
+     *
+     * @param  array $ids The IDs of the users to delete.
+     * @param  User $actor The user performing the deletion, used for logging.
+     * @param  callable $authorizeCallback The callback to authorize each user.
+     *
+     * @return array The IDs of the users that were deleted.
+     */
+    public function bulkDelete(
+        array $ids,
+        User $actor,
+        callable $authorizeCallback
+    ): array {
+        $deleted = [];
+
+        foreach ($ids as $id) {
+            $user = User::findOrFail($id);
+            $authorizeCallback($user);
+
+            $this->destructor->delete($user, $actor->id);
+            $deleted[] = $id;
+        }
+
+        return $deleted;
+    }
 }

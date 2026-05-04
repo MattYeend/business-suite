@@ -23,7 +23,7 @@ class CompanyIndustryQueryService
      *
      * @return array
      */
-    public function getCompanyIndustries(array $filters = []): array
+    public function getPaginated(array $filters = []): array
     {
         $query = $this->buildQuery($filters);
         $paginated = $this->paginate($query, $filters['per_page'] ?? 15);
@@ -43,17 +43,15 @@ class CompanyIndustryQueryService
      *
      * @return array
      */
-    public function getCompanyIndustryById(
-        int $id,
-        bool $withTrashed = false
-    ): array {
+    public function getById(int $id, bool $withTrashed = false): array
+    {
         $industry = $this->findCompanyIndustry($id, $withTrashed);
 
-        return $industry ? array_merge(
-            $industry,
+        return array_merge(
+            ['company_industry' => $this->formatterService->format($industry)],
             $this->getPermissions(),
-            $this->baseData()
-        ) : [];
+            $this->baseData(),
+        );
     }
 
     /**
@@ -63,15 +61,12 @@ class CompanyIndustryQueryService
      *
      * @return Builder
      */
-    protected function buildQuery(array $filters)
+    protected function buildQuery(array $filters): Builder
     {
         $query = CompanyIndustry::query();
-        $query = $this->trashFilterService->applyFilter(
-            $query,
-            $filters['trash'] ?? null
-        );
+        $query = $this->filterService->applyAll($query, $filters);
 
-        return $this->filterService->applyAll($query, $filters);
+        return $this->applySorting($query, $filters);
     }
 
     /**
@@ -100,7 +95,7 @@ class CompanyIndustryQueryService
     }
 
     /**
-     * Get user permissions for the authenticated company industry.
+     * Get user permissions for the authenticated user.
      *
      * @return array
      */
@@ -115,8 +110,8 @@ class CompanyIndustryQueryService
 
         return [
             'permissions_meta' => [
-                'can_create' => $user->can('create', User::class),
-                'can_view_any' => $user->can('viewAny', User::class),
+                'can_create' => $user->can('create', CompanyIndustry::class),
+                'can_view_any' => $user->can('viewAny', CompanyIndustry::class),
             ],
         ];
     }
@@ -135,24 +130,24 @@ class CompanyIndustryQueryService
     }
 
     /**
-     * Find a company industry by ID, optionally including trashed records.
+     * Find a company industry by ID with optional trashed records.
      *
      * @param  int $id
      * @param  bool $withTrashed
      *
-     * @return array|null
+     * @return CompanyIndustry
      */
-    protected function findCompanyIndustry(
+    private function findCompanyIndustry(
         int $id,
         bool $withTrashed = false
-    ): ?array {
+    ): CompanyIndustry {
         $query = CompanyIndustry::query();
 
         if ($withTrashed) {
             $query->withTrashed();
         }
 
-        return $query->find($id);
+        return $query->findOrFail($id);
     }
 
     /**

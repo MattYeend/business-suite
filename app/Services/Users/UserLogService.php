@@ -12,12 +12,14 @@ class UserLogService
      *
      * @param  User $user The user that was created.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array
      */
     public function logCreation(
         User $user,
-        User $actor
+        User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'created_at' => now(),
@@ -27,7 +29,7 @@ class UserLogService
         Log::log(
             Log::ACTION_CREATE_USER,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -38,12 +40,14 @@ class UserLogService
      *
      * @param  User $user The user that was updated.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logUpdate(
         User $user,
-        User $actor
+        User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'updated_at' => now(),
@@ -53,7 +57,7 @@ class UserLogService
         Log::log(
             Log::ACTION_UPDATE_USER,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -64,12 +68,14 @@ class UserLogService
      *
      * @param  User $user The user that was deleted.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logDeletion(
         User $user,
-        User $actor
+        User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'deleted_at' => now(),
@@ -79,7 +85,7 @@ class UserLogService
         Log::log(
             Log::ACTION_DELETE_USER,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -90,12 +96,14 @@ class UserLogService
      *
      * @param  User $user The user that was force deleted.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logForceDeletion(
         User $user,
         User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'force_deleted_at' => now(),
@@ -105,7 +113,7 @@ class UserLogService
         Log::log(
             Log::ACTION_FORCE_DELETE_USER,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -116,12 +124,14 @@ class UserLogService
      *
      * @param  User $user The user that was verified.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function userVerified(
         User $user,
         User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'verified_at' => now(),
@@ -131,7 +141,7 @@ class UserLogService
         Log::log(
             Log::ACTION_VERIFY_USER,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -142,13 +152,14 @@ class UserLogService
      *
      * @param  User $user The user that was restored.
      * @param  User $actor The user who performed the action.
-     * or null for system-initiated restoration.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logRestoration(
         User $user,
         User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'restored_at' => now(),
@@ -158,7 +169,7 @@ class UserLogService
         Log::log(
             Log::ACTION_USER_RESTORED,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -169,12 +180,14 @@ class UserLogService
      *
      * @param  User $user The user whose password was changed.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logPasswordChange(
         User $user,
-        User $actor
+        User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'password_changed_at' => now(),
@@ -184,7 +197,7 @@ class UserLogService
         Log::log(
             Log::ACTION_PASSWORD_CHANGED,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -196,13 +209,15 @@ class UserLogService
      * @param  User $user The user whose roles were assigned.
      * @param  array $roles The roles that were assigned.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logRoleAssignment(
         User $user,
         array $roles,
-        User $actor
+        User $actor,
+        int $actorId
     ): array {
         $data = $this->baseUserData($user) + [
             'roles' => implode(', ', $roles),
@@ -213,7 +228,7 @@ class UserLogService
         Log::log(
             Log::ACTION_ROLE_ASSIGNED,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;
@@ -224,12 +239,14 @@ class UserLogService
      *
      * @param  array $importData The data of the users imported.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logImport(
         array $importData,
-        User $actor
+        User $actor,
+        int $actorId
     ): array {
         $data = [
             'imported_at' => now(),
@@ -241,7 +258,7 @@ class UserLogService
         Log::log(
             Log::ACTION_IMPORT_USER,
             $data,
-            $actor,
+            $actorId,
         );
         return $data;
     }
@@ -251,12 +268,14 @@ class UserLogService
      *
      * @param  array $exportData The data of the users exported.
      * @param  User $actor The user who performed the action.
+     * @param  int $actorId The ID of the user who performed the action.
      *
      * @return array The structured data written to the log entry.
      */
     public function logExport(
         array $exportData,
-        User $actor
+        User $actor,
+        int $actorId
     ): array {
         $data = [
             'exported_at' => now(),
@@ -268,7 +287,7 @@ class UserLogService
         Log::log(
             Log::ACTION_EXPORT_USER,
             $data,
-            $actor,
+            $actorId,
         );
 
         return $data;

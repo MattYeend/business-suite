@@ -33,48 +33,139 @@ class CompanyIndustryController extends Controller
 
     /**
      * Display a listing of the resource.
+     *
+     * Also includes the authenticated user's permissions for the
+     * CompanyIndustry resource, so the frontend can conditionally render
+     * create/view controls.
+     *
+     * Authorises via the 'viewAny' policy before returning data.
+     *
+     * @param  Request $request Incoming HTTP request; may carry
+     * filter/pagination params.
+     *
+     * @return JsonResponse Paginated company industry data with pagination
+     * metadata and permissions.
      */
     public function index(Request $request): JsonResponse
     {
         $this->authorize('viewAny', CompanyIndustry::class);
 
-        $companyIndustries = $this->query->list($request);
+        $companyIndustries = $this->query->getPaginated($request->all());
 
         return response()->json($companyIndustries);
     }
 
     /**
      * Store a newly created resource in storage.
+     *
+     * Validation is handled upstream by StoreCompanyIndustryRequest.
+     *
+     * After storing, an audit log entry is written against the
+     * authenticated user.
+     *
+     * @param  StoreCompanyIndustryRequest $request Validated request
+     * containing company industry data.
+     *
+     * @return JsonResponse The newly created company industry, with HTTP
+     * 201 Created.
      */
-    public function store(StoreCompanyIndustryRequest $request)
+    public function store(StoreCompanyIndustryRequest $request): JsonResponse
     {
-        //
+        $companyIndustry = $this->management->store($request);
+        $auth = auth()->user();
+        $this->logger->logCreation(
+            $companyIndustry,
+            $auth,
+            $auth->id,
+        );
+
+        return response()->json($companyIndustry, 201);
     }
 
     /**
      * Display the specified resource.
+     *
+     * Returns a single company industry by its model binding.
+     *
+     * Authorises via the 'view' policy before returning data.
+     *
+     * @param  CompanyIndustry $companyIndustry Route-model-bound company
+     * industry instance.
+     *
+     * @return JsonResponse The resolved company industry resource.
      */
-    public function show(CompanyIndustry $companyIndustry)
+    public function show(CompanyIndustry $companyIndustry): JsonResponse
     {
-        //
+        $this->authorize('view', $companyIndustry);
+
+        $companyIndustry = $this->query->getById($companyIndustry->id);
+
+        return response()->json($companyIndustry);
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * Validation is handled upstream by UpdateCompanyIndustryRequest, which
+     * also implicitly authorises the operation via its authorize() method.
+     *
+     * After updating, an audit log entry is written against the
+     * authenticated user.
+     *
+     * @param  UpdateCompanyIndustryRequest $request Validated request
+     * containing updated company industry data.
+     * @param  CompanyIndustry $companyIndustry Route-model-bound company
+     * industry instance to update.
+     *
+     * @return JsonResponse The updated company industry resource.
      */
     public function update(
         UpdateCompanyIndustryRequest $request,
         CompanyIndustry $companyIndustry
-    ) {
-        //
+    ): JsonResponse {
+        $companyIndustry = $this->management->update(
+            $request,
+            $companyIndustry
+        );
+
+        $auth = auth()->user();
+
+        $this->logger->logUpdate(
+            $companyIndustry,
+            $auth,
+            $auth->id,
+        );
+
+        return response()->json($companyIndustry);
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * Authorises via the 'delete' policy before proceeding.
+     *
+     * The audit log entry is written before the deletion so that the
+     * company industry instance is still fully accessible during logging.
+     *
+     * @param  CompanyIndustry $companyIndustry Route-model-bound company
+     * industry instance to delete.
+     *
+     * @return JsonResponse Empty response with HTTP 204 No Content.
      */
-    public function destroy(CompanyIndustry $companyIndustry)
+    public function destroy(CompanyIndustry $companyIndustry): JsonResponse
     {
-        //
+        $this->authorize('delete', $companyIndustry);
+        $auth = auth()->user();
+
+        $this->logger->logDeletion(
+            $companyIndustry,
+            $auth,
+            $auth->id,
+        );
+
+        $this->management->destroy($companyIndustry);
+
+        return response()->json(null, 204);
     }
 
     /**
@@ -105,12 +196,109 @@ class CompanyIndustryController extends Controller
 
         $auth = auth()->user();
 
-        $this->logger->companyIndustryRestored(
+        $this->logger->logRestoration(
+            $companyIndustry,
             $auth,
             $auth->id,
-            $companyIndustry,
         );
 
         return response()->json($companyIndustry);
+    }
+
+    /**
+     * Permanently delete the specified company industry from storage.
+     *
+     * Looks up the company industry including trashed records, then
+     * authorises via the 'forceDelete' policy. This action is irreversible.
+     *
+     * The audit log entry is written before the permanent deletion so
+     * that the company industry instance is still fully accessible during
+     * logging.
+     *
+     * @param  int|string $id The primary key of the company industry to
+     * permanently delete.
+     *
+     * @return JsonResponse Empty response with HTTP 204 No Content.
+     */
+    public function forceDelete($id): JsonResponse
+    {
+        $companyIndustry = CompanyIndustry::withTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $companyIndustry);
+
+        $auth = auth()->user();
+
+        $this->logger->logForceDeletion(
+            $companyIndustry,
+            $auth,
+            $auth->id,
+        );
+
+        $this->management->forceDelete((int) $id);
+
+        return response()->json(null, 204);
+    }
+
+    /**
+     * Soft delete multiple company industries in bulk.
+     *
+     * Expects a 'ids' array in the request containing company industry IDs
+     * to delete. Each company industry is authorised individually via the
+     * 'delete' policy.
+     *
+     * @param  Request $request Incoming HTTP request with 'ids' array.
+     *
+     * @return JsonResponse Summary of the bulk operation.
+     */
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'required|integer|exists:company_industries,id',
+        ]);
+
+        $auth = auth()->user();
+        $deleted = $this->management->bulkDelete(
+            $request->input('ids'),
+            $auth,
+            fn ($industry) => $this->authorize('delete', $industry)
+        );
+
+        return response()->json([
+            'message' => 'Company industries deleted successfully',
+            'deleted_count' => count($deleted),
+            'deleted_ids' => $deleted,
+        ]);
+    }
+
+    /**
+     * Restore multiple company industries from soft deletion in bulk.
+     *
+     * Expects a 'ids' array in the request containing company industry IDs
+     * to restore. Each company industry is authorised individually via the
+     * 'restore' policy.
+     *
+     * @param  Request $request Incoming HTTP request with 'ids' array.
+     *
+     * @return JsonResponse Summary of the bulk operation.
+     */
+    public function bulkRestore(Request $request): JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'required|integer',
+        ]);
+
+        $auth = auth()->user();
+        $restored = $this->management->bulkRestore(
+            $request->input('ids'),
+            $auth,
+            fn ($industry) => $this->authorize('restore', $industry)
+        );
+
+        return response()->json([
+            'message' => 'Company industries restored successfully',
+            'restored_count' => count($restored),
+            'restored_ids' => $restored,
+        ]);
     }
 }

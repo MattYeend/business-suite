@@ -5,6 +5,7 @@ namespace App\Services\CompanyIndustries;
 use App\Http\Requests\StoreCompanyIndustryRequest;
 use App\Http\Requests\UpdateCompanyIndustryRequest;
 use App\Models\CompanyIndustry;
+use App\Models\User;
 
 /**
  * Orchestrates company industry lifecycle operations by delegating to focused
@@ -99,5 +100,78 @@ class CompanyIndustryManagementService
     {
         $companyIndustry = CompanyIndustry::withTrashed()->findOrFail($id);
         return $this->restorer->restore($companyIndustry, auth()->id());
+    }
+
+    /**
+     * Force delete a company industry, permanently removing it from the
+     * database.
+     *
+     * @param  int $id The ID of the company industry to force delete.
+     *
+     * @return void
+     */
+    public function forceDelete(int $id): void
+    {
+        $companyIndustry = CompanyIndustry::withTrashed()->findOrFail($id);
+        $this->destructor->forceDelete($companyIndustry, auth()->id());
+    }
+
+    /**
+     * Bulk restore company industries.
+     *
+     * @param  array $ids The IDs of the company industries to restore.
+     * @param  User $actor The user performing the restoration, used for
+     * logging.
+     * @param  callable $authorizeCallback The callback to authorize
+     * each company industry.
+     *
+     * @return array The IDs of the company industries that were restored.
+     */
+    public function bulkRestore(
+        array $ids,
+        User $actor,
+        callable $authorizeCallback
+    ): array {
+        $restored = [];
+
+        foreach ($ids as $id) {
+            $industry = CompanyIndustry::withTrashed()->findOrFail($id);
+            $authorizeCallback($industry);
+
+            if ($industry->trashed()) {
+                $this->restorer->restore($industry, $actor->id);
+                $restored[] = $id;
+            }
+        }
+
+        return $restored;
+    }
+
+    /**
+     * Bulk soft delete company industries.
+     *
+     * @param  array $ids The IDs of the company industries to delete.
+     * @param  User $actor The user performing the deletion, used for logging.
+     * @param  callable $authorizeCallback The callback to authorize each
+     * company industry.
+     *
+     * @return array The IDs of the company industries that were deleted.
+     */
+    public function bulkDelete(
+        array $ids,
+        User $actor,
+        callable $authorizeCallback
+    ): array {
+        $deleted = [];
+
+        foreach ($ids as $id) {
+            $industry = CompanyIndustry::findOrFail($id);
+            $authorizeCallback($industry);
+
+            $this->destructor->delete($industry, $actor->id);
+            $deleted[] = $id;
+        }
+
+        return $deleted;
     }
 }
