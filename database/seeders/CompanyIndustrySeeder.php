@@ -65,7 +65,10 @@ class CompanyIndustrySeeder extends Seeder
         foreach ($industries as $name) {
             CompanyIndustry::firstOrCreate(
                 ['slug' => Str::slug($name)],
-                ['name' => $name]
+                [
+                    'name' => $name,
+                    'meta' => ['slug' => Str::slug($name), 'name' => $name],
+                ],
             );
         }
     }

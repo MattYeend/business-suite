@@ -220,6 +220,84 @@ class UserLogService
     }
 
     /**
+     * Log a user import event.
+     *
+     * @param  array $importData The data of the users imported.
+     * @param  User $actor The user who performed the action.
+     *
+     * @return array The structured data written to the log entry.
+     */
+    public function logImport(
+        array $importData,
+        User $actor
+    ): array {
+        $data = [
+            'imported_at' => now(),
+            'imported_by' => $actor?->name,
+            'imported_count' => count($importData),
+            'imported_data_sample' => array_slice($importData, 0, 5),
+        ];
+
+        Log::log(
+            Log::ACTION_IMPORT_USER,
+            $data,
+            $actor,
+        );
+        return $data;
+    }
+
+    /**
+     * Log a user export event.
+     *
+     * @param  array $exportData The data of the users exported.
+     * @param  User $actor The user who performed the action.
+     *
+     * @return array The structured data written to the log entry.
+     */
+    public function logExport(
+        array $exportData,
+        User $actor
+    ): array {
+        $data = [
+            'exported_at' => now(),
+            'exported_by' => $actor?->name,
+            'exported_count' => count($exportData),
+            'exported_data_sample' => array_slice($exportData, 0, 5),
+        ];
+
+        Log::log(
+            Log::ACTION_EXPORT_USER,
+            $data,
+            $actor,
+        );
+
+        return $data;
+    }
+
+    /**
+     * Log a user update performed by a scheduled task (cron).
+     *
+     * @param  User $user The user that was updated.
+     *
+     * @return array The structured data written to the log entry.
+     */
+    public function logUpdateByCron(User $user): array
+    {
+        $data = $this->baseUserData($user) + [
+            'updated_at' => now(),
+            'updated_by' => 'System (Cron)',
+        ];
+
+        Log::log(
+            Log::ACTION_USER_UPDATED_BY_CRON,
+            $data,
+            null,
+        );
+
+        return $data;
+    }
+
+    /**
      * Get base user data for logging.
      *
      * @param  User $user

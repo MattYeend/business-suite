@@ -38,6 +38,10 @@ class StoreCompanyIndustryRequest extends FormRequest
                 'alpha_dash',
                 Rule::unique('company_industries', 'slug'),
             ],
+            'meta' => [
+                'nullable',
+                'array',
+            ],
         ];
     }
 

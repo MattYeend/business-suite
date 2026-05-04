@@ -19,11 +19,11 @@ class UserRestorerService
      * @param  User $user
      * @param  int|null $restoredBy
      *
-     * @return bool
+     * @return User
      *
      * @throws \Exception
      */
-    public function restore(User $user, ?int $restoredBy = null): bool
+    public function restore(User $user, ?int $restoredBy = null): User
     {
         return DB::transaction(function () use ($user, $restoredBy) {
             $actor = User::findOrFail($restoredBy);

@@ -59,37 +59,40 @@ class Log extends Model
     public const ACTION_PASSWORD_CHANGED = 21;
     public const ACTION_USER_RESTORED = 22;
     public const ACTION_USER_DELETED = 23;
+    public const ACTION_IMPORT_USER = 24;
+    public const ACTION_EXPORT_USER = 25;
+    public const ACTION_USER_UPDATED_BY_CRON = 26;
 
     // MFA/Settings
-    public const ACTION_MFA_ENABLED = 24;
-    public const ACTION_MFA_DISABLED = 25;
-    public const ACTION_PROFILE_UPDATED = 26;
-    public const ACTION_PROFILE_DELETED = 27;
-    public const ACTION_EMAIL_UPDATED = 28;
+    public const ACTION_MFA_ENABLED = 27;
+    public const ACTION_MFA_DISABLED = 28;
+    public const ACTION_PROFILE_UPDATED = 29;
+    public const ACTION_PROFILE_DELETED = 30;
+    public const ACTION_EMAIL_UPDATED = 31;
 
     // Role/Permission Management
-    public const ACTION_ROLE_ASSIGNED = 29;
-    public const ACTION_PERMISSION_GRANTED = 30;
-    public const ACTION_PERMISSION_REVOKED = 31;
+    public const ACTION_ROLE_ASSIGNED = 32;
+    public const ACTION_PERMISSION_GRANTED = 33;
+    public const ACTION_PERMISSION_REVOKED = 34;
 
     // Errors/Cache
-    public const ACTION_GENERAL_ERROR = 32;
-    public const ACTION_FOUR_HUNDRED_ERROR = 33;
-    public const ACTION_FIVE_HUNDRED_ERRORS = 34;
-    public const ACTION_CLEAR_CACHE = 35;
+    public const ACTION_GENERAL_ERROR = 35;
+    public const ACTION_FOUR_HUNDRED_ERROR = 36;
+    public const ACTION_FIVE_HUNDRED_ERRORS = 37;
+    public const ACTION_CLEAR_CACHE = 38;
 
-    public const ACTION_LOG_TABLE_DATA_RESET_BY_CRON = 36;
+    public const ACTION_LOG_TABLE_DATA_RESET_BY_CRON = 39;
 
     // Company Industry Management
-    public const ACTION_CREATE_COMPANY_INDUSTRY = 37;
-    public const ACTION_UPDATE_COMPANY_INDUSTRY = 38;
-    public const ACTION_DELETE_COMPANY_INDUSTRY = 39;
-    public const ACTION_SHOW_COMPANY_INDUSTRY = 40;
-    public const ACTION_FORCE_DELETE_COMPANY_INDUSTRY = 41;
-    public const ACTION_RESTORE_COMPANY_INDUSTRY = 42;
-    public const ACTION_IMPORT_COMPANY_INDUSTRY = 43;
-    public const ACTION_EXPORT_COMPANY_INDUSTRY = 44;
-    public const ACTION_COMPANY_INDUSTRY_UPDATED_BY_CRON = 45;
+    public const ACTION_CREATE_COMPANY_INDUSTRY = 40;
+    public const ACTION_UPDATE_COMPANY_INDUSTRY = 41;
+    public const ACTION_DELETE_COMPANY_INDUSTRY = 42;
+    public const ACTION_SHOW_COMPANY_INDUSTRY = 43;
+    public const ACTION_FORCE_DELETE_COMPANY_INDUSTRY = 44;
+    public const ACTION_RESTORE_COMPANY_INDUSTRY = 45;
+    public const ACTION_IMPORT_COMPANY_INDUSTRY = 46;
+    public const ACTION_EXPORT_COMPANY_INDUSTRY = 47;
+    public const ACTION_COMPANY_INDUSTRY_UPDATED_BY_CRON = 48;
 
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.

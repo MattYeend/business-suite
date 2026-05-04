@@ -67,7 +67,9 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Company Industry management routes
-    Route::prefix('company-industries')->name('company-industries.')->group(function () {
+    Route::prefix('company-industries')->name(
+        'company-industries.'
+    )->group(function () {
         // Standard CRUD
         Route::get(
             '/',

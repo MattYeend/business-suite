@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 #[Fillable([
     'name',
     'slug',
+    'meta',
     'created_by',
     'updated_by',
     'deleted_by',
@@ -96,6 +97,7 @@ class CompanyIndustry extends Model
     protected function casts(): array
     {
         return [
+            'meta' => 'array',
             'restored_at' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',

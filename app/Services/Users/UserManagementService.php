@@ -21,23 +21,24 @@ class UserManagementService
      *
      * @param  UserCreatorService $creator Handles user creation.
      * @param  UserUpdaterService $updater Handles user updates.
-     * @param  UserDestructorService $destructor Handles user deletion
+     * @param  UserDeleterService $destructor Handles user deletion
      * and restoration.
+     * @param  UserRestorerService $restorer Handles user restoration.
      *
      * @return void
      */
     public function __construct(
         protected UserCreatorService $creator,
         protected UserUpdaterService $updater,
-        protected UserDestructorService $destructor,
+        protected UserDeleterService $destructor,
+        protected UserRestorerService $restorer,
     ) {
     }
 
     /**
      * Create a new user.
      *
-     * @param StoreUserRequest Validated request containing user
-     * data.
+     * @param StoreUserRequest $request Validated request containing user data.
      *
      * @return User The newly created user.
      */
@@ -75,7 +76,7 @@ class UserManagementService
      */
     public function destroy(User $user): void
     {
-        $this->destructor->destroy($user);
+        $this->destructor->delete($user);
     }
 
     /**
@@ -87,6 +88,7 @@ class UserManagementService
      */
     public function restore(int $id): User
     {
-        return $this->destructor->restore($id);
+        $user = User::withTrashed()->findOrFail($id);
+        return $this->restorer->restore($user);
     }
 }

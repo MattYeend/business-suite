@@ -26,6 +26,7 @@ class UpdateCompanyIndustryRequest extends FormRequest
         return [
             'name' => $this->nameRules(),
             'slug' => $this->slugRules(),
+            'meta' => $this->metaRules(),
         ];
     }
 
@@ -78,6 +79,20 @@ class UpdateCompanyIndustryRequest extends FormRequest
             'alpha_dash',
             Rule::unique('company_industries', 'slug')
                 ->ignore($this->getCompanyIndustryId()),
+        ];
+    }
+
+    /**
+     * Get validation rules for the meta field.
+     *
+     * @return array<mixed>
+     */
+    protected function metaRules(): array
+    {
+        return [
+            'sometimes',
+            'nullable',
+            'array',
         ];
     }
 
