@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
+
 
 #[Fillable([
     'name',
@@ -27,10 +30,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $updated_by
  * @property int|null $deleted_by
  * @property int|null $restored_by
- * @property \Illuminate\Support\Carbon|null $restored_at
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $restored_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  *
  * @property-read User|null $creator
  * @property-read User|null $updater
@@ -47,32 +50,40 @@ class CompanyIndustry extends Model
 
     /**
      * Get the user who created the industry.
+     *
+     * @return BelongsTo
      */
-    public function creator()
+    public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
     /**
      * Get the user who last updated the industry.
+     *
+     * @return BelongsTo
      */
-    public function updater()
+    public function updater(): BelongsTo
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
 
     /**
      * Get the user who deleted the industry.
+     *
+     * @return BelongsTo
      */
-    public function deleter()
+    public function deleter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
     /**
      * Get the user who restored the industry.
+     *
+     * @return BelongsTo
      */
-    public function restorer()
+    public function restorer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'restored_by');
     }
