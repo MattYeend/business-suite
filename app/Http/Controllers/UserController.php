@@ -13,7 +13,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
-{    /**
+{    
+    /**
      * Inject the required services into the controller.
      *
      * @param  UserLogService $logger Handles audit logging for
