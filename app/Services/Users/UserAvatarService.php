@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class UserAvatarService
 {
+    public function __construct(
+        protected UserAvatarValidationService $validationService
+    ) {
+    }
+
     /**
      * Upload and store user avatar.
      *
@@ -18,7 +23,7 @@ class UserAvatarService
      */
     public function upload(UploadedFile $file, ?User $user = null): string
     {
-        $this->validate($file);
+        $this->validationService->validate($file);
 
         $path = $this->storePath($user);
         $filename = $this->generateFilename($file);
@@ -81,31 +86,6 @@ class UserAvatarService
     }
 
     /**
-     * Validate the uploaded file.
-     *
-     * @param  UploadedFile $file
-     *
-     * @return void
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function validate(UploadedFile $file): void
-    {
-        $allowedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $maxSize = 2048 * 1024; // 2MB in bytes
-
-        if (! in_array($file->getMimeType(), $allowedMimes)) {
-            throw new \InvalidArgumentException(
-                'Invalid file type. Allowed types: jpg, jpeg, png, gif, webp'
-            );
-        }
-
-        if ($file->getSize() > $maxSize) {
-            throw new \InvalidArgumentException('File size exceeds 2MB limit');
-        }
-    }
-
-    /**
      * Generate storage path for avatar.
      *
      * @param  User|null $user
@@ -116,11 +96,7 @@ class UserAvatarService
     {
         $basePath = 'avatars';
 
-        if ($user) {
-            return "{$basePath}/{$user->id}";
-        }
-
-        return "{$basePath}/temp";
+        return $user ? "{$basePath}/{$user->id}" : "{$basePath}/temp";
     }
 
     /**

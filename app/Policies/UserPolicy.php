@@ -3,15 +3,21 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Services\Users\UserPolicyAuthorizationService;
 
 class UserPolicy
 {
+    public function __construct(
+        protected UserPolicyAuthorizationService $authorizationService
+    ) {
+    }
+
     /**
      * Determine if the user can view any users.
      */
     public function viewAny(User $user): bool
     {
-        return $user->is_admin || $user->is_super_admin;
+        return $this->authorizationService->isAdmin($user);
     }
 
     /**
@@ -19,13 +25,11 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        // Users can view themselves
-        if ($user->id === $model->id) {
+        if ($this->authorizationService->isSelf($user, $model)) {
             return true;
         }
 
-        // Admins can view all users
-        return $user->is_admin || $user->is_super_admin;
+        return $this->authorizationService->isAdmin($user);
     }
 
     /**
@@ -33,7 +37,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $user->is_admin || $user->is_super_admin;
+        return $this->authorizationService->isAdmin($user);
     }
 
     /**
@@ -41,15 +45,18 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        if ($this->isSelf($user, $model)) {
+        if ($this->authorizationService->isSelf($user, $model)) {
             return true;
         }
 
-        if (! $this->isAdmin($user)) {
+        if (! $this->authorizationService->isAdmin($user)) {
             return false;
         }
 
-        return ! $this->isRestrictedFromManaging($user, $model);
+        return ! $this->authorizationService->isRestrictedFromManaging(
+            $user,
+            $model
+        );
     }
 
     /**
@@ -57,15 +64,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        if ($this->isSelf($user, $model)) {
-            return false;
-        }
-
-        if (! $this->isAdmin($user)) {
-            return false;
-        }
-
-        return ! $this->isRestrictedFromManaging($user, $model);
+        return $this->authorizationService->canManage($user, $model);
     }
 
     /**
@@ -73,7 +72,7 @@ class UserPolicy
      */
     public function restore(User $user): bool
     {
-        return $user->is_admin || $user->is_super_admin;
+        return $this->authorizationService->isAdmin($user);
     }
 
     /**
@@ -81,33 +80,6 @@ class UserPolicy
      */
     public function forceDelete(User $user): bool
     {
-        // Only super admins can force delete
         return $user->is_super_admin;
-    }
-
-    /**
-     * Determine if the user is an admin or super admin.
-     */
-    private function isAdmin(User $user): bool
-    {
-        return $user->is_admin || $user->is_super_admin;
-    }
-
-    /**
-     * Determine if the user is trying to perform an action on themselves.
-     */
-    private function isSelf(User $user, User $model): bool
-    {
-        return $user->id === $model->id;
-    }
-
-    /**
-     * Determine if the user is a regular admin trying to manage a super admin.
-     */
-    private function isRestrictedFromManaging(User $user, User $model): bool
-    {
-        return $user->is_admin
-            && ! $user->is_super_admin
-            && $model->is_super_admin;
     }
 }
