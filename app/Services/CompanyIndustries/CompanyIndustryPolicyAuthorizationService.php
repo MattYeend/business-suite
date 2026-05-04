@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Services\Users;
+namespace App\Services\CompanyIndustries;
 
 use App\Models\User;
 use App\Services\UserRoleCheckerService;
 
-/**
- * Handles user authorization checks for policies.
- */
-class UserPolicyAuthorizationService
+class CompanyIndustryPolicyAuthorizationService
 {
     public function __construct(
         protected UserRoleCheckerService $roleChecker
@@ -37,18 +34,6 @@ class UserPolicyAuthorizationService
     public function isAdmin(User $user): bool
     {
         return $this->roleChecker->isAdmin($user);
-    }
-
-    /**
-     * Check if the user is a super admin.
-     *
-     * @param  User $user
-     *
-     * @return bool
-     */
-    public function isSuperAdmin(User $user): bool
-    {
-        return $this->roleChecker->isSuperAdmin($user);
     }
 
     /**

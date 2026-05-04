@@ -53,7 +53,8 @@ class StoreCompanyIndustryRequest extends FormRequest
             'name.unique' => 'This industry name already exists.',
             'slug.required' => 'The slug is required.',
             'slug.unique' => 'This slug already exists.',
-            'slug.alpha_dash' => 'The slug may only contain letters, numbers, dashes and underscores.',
+            'slug.alpha_dash' => 'The slug may only contain letters, numbers,
+            dashes and underscores.',
         ];
     }
 }

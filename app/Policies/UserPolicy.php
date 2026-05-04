@@ -49,7 +49,7 @@ class UserPolicy
             return true;
         }
 
-        if (! $this->authorizationService->isAdmin($user)) {
+        if ($this->authorizationService->isUser($user)) {
             return false;
         }
 
@@ -80,6 +80,38 @@ class UserPolicy
      */
     public function forceDelete(User $user): bool
     {
-        return $user->is_super_admin;
+        return $this->authorizationService->isSuperAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can bulk delete models.
+     */
+    public function bulkDelete(User $user): bool
+    {
+        return $this->authorizationService->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can bulk restore models.
+     */
+    public function bulkRestore(User $user): bool
+    {
+        return $this->authorizationService->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can import models.
+     */
+    public function import(User $user): bool
+    {
+        return $this->authorizationService->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can export models.
+     */
+    public function export(User $user): bool
+    {
+        return $user->isUser() || $this->authorizationService->isAdmin($user);
     }
 }

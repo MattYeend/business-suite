@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\CompanyIndustry;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -15,7 +14,6 @@ class UpdateCompanyIndustryRequest extends FormRequest
     public function authorize(): bool
     {
         return $this->user()->can('update', $this->route('company_industry'));
-
     }
 
     /**
@@ -25,24 +23,9 @@ class UpdateCompanyIndustryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $companyIndustryId = $this->route('company_industry')->id ?? $this->route('company_industry');
-
         return [
-            'name' => [
-                'sometimes',
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('company_industries', 'name')->ignore($companyIndustryId),
-            ],
-            'slug' => [
-                'sometimes',
-                'required',
-                'string',
-                'max:255',
-                'alpha_dash',
-                Rule::unique('company_industries', 'slug')->ignore($companyIndustryId),
-            ],
+            'name' => $this->nameRules(),
+            'slug' => $this->slugRules(),
         ];
     }
 
@@ -58,7 +41,54 @@ class UpdateCompanyIndustryRequest extends FormRequest
             'name.unique' => 'This industry name already exists.',
             'slug.required' => 'The slug is required.',
             'slug.unique' => 'This slug already exists.',
-            'slug.alpha_dash' => 'The slug may only contain letters, numbers, dashes and underscores.',
+            'slug.alpha_dash' => 'The slug may only contain letters, numbers,
+            dashes and underscores.',
         ];
+    }
+
+    /**
+     * Get validation rules for the name field.
+     *
+     * @return array<mixed>
+     */
+    protected function nameRules(): array
+    {
+        return [
+            'sometimes',
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('company_industries', 'name')
+                ->ignore($this->getCompanyIndustryId()),
+        ];
+    }
+
+    /**
+     * Get validation rules for the slug field.
+     *
+     * @return array<mixed>
+     */
+    protected function slugRules(): array
+    {
+        return [
+            'sometimes',
+            'required',
+            'string',
+            'max:255',
+            'alpha_dash',
+            Rule::unique('company_industries', 'slug')
+                ->ignore($this->getCompanyIndustryId()),
+        ];
+    }
+
+    /**
+     * Get the company industry ID from the route.
+     *
+     * @return mixed
+     */
+    protected function getCompanyIndustryId(): mixed
+    {
+        $route = $this->route('company_industry');
+        return $route->id ?? $route;
     }
 }

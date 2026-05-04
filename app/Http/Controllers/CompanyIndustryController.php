@@ -19,10 +19,10 @@ class CompanyIndustryController extends Controller
      *
      * @param  CompanyIndustryLogService $logger Handles audit logging for
      * company industry events.
-     * @param  CompanyIndustryManagementService $management Handles company industry
-     * create/update/delete/restore.
-     * @param  CompanyIndustryQueryService $query Handles company industry listing and
-     * retrieval.
+     * @param  CompanyIndustryManagementService $management Handles
+     * company industry create/update/delete/restore.
+     * @param  CompanyIndustryQueryService $query Handles company industry
+     * listing and retrieval.
      */
     public function __construct(
         protected CompanyIndustryLogService $logger,
@@ -34,9 +34,13 @@ class CompanyIndustryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        $this->authorize('viewAny', CompanyIndustry::class);
+
+        $companyIndustries = $this->query->list($request);
+
+        return response()->json($companyIndustries);
     }
 
     /**
@@ -58,8 +62,10 @@ class CompanyIndustryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCompanyIndustryRequest $request, CompanyIndustry $companyIndustry)
-    {
+    public function update(
+        UpdateCompanyIndustryRequest $request,
+        CompanyIndustry $companyIndustry
+    ) {
         //
     }
 
@@ -74,11 +80,13 @@ class CompanyIndustryController extends Controller
     /**
      * Restore the specified company industry from soft deletion.
      *
-     * Looks up the company industry including trashed records, then authorises via
-     * the 'restore' policy. Returns 404 if the company industry is not currently
-     * soft-deleted, preventing accidental double-restores.
+     * Looks up the company industry including trashed records, then
+     * authorises via the 'restore' policy. Returns 404 if the company
+     * industry is not currently soft-deleted, preventing accidental
+     * double-restores.
      *
-     * @param  int|string $id The primary key of the soft-deleted company industry.
+     * @param  int|string $id The primary key of the soft-deleted
+     * company industry.
      *
      * @return JsonResponse The restored company industry resource.
      *

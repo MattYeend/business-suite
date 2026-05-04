@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Users;
+namespace App\Services;
 
 use App\Models\User;
 
@@ -9,6 +9,17 @@ use App\Models\User;
  */
 class UserRoleCheckerService
 {
+    /**
+     * Check if the user is a user, admin, or super admin.
+     *
+     * @param  User $user
+     *
+     * @return bool
+     */
+    public function isUser(User $user): bool
+    {
+        return $user->is_user || $this->isAdmin($user);
+    }
     /**
      * Check if user is admin or super admin.
      *
@@ -19,6 +30,18 @@ class UserRoleCheckerService
     public function isAdmin(User $user): bool
     {
         return $user->is_admin || $user->is_super_admin;
+    }
+
+    /**
+     * Check if the user is a super admin.
+     *
+     * @param  User $user
+     *
+     * @return bool
+     */
+    public function isSuperAdmin(User $user): bool
+    {
+        return $user->is_super_admin;
     }
 
     /**
