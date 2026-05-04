@@ -10,8 +10,35 @@ use App\Models\User;
 class UserPolicyAuthorizationService
 {
     public function __construct(
-        protected UserRoleChecker $roleChecker
+        protected UserRoleCheckerService $roleChecker
     ) {
+    }
+
+    /**
+     * Check if user is admin or super admin.
+     *
+     * @param  User $user
+     *
+     * @return bool
+     */
+    public function isAdmin(User $user): bool
+    {
+        return $this->roleChecker->isAdmin($user);
+    }
+
+    /**
+     * Check if admin is restricted from managing the target user.
+     *
+     * Regular admins cannot manage super admins.
+     *
+     * @param  User $user
+     * @param  User $model
+     *
+     * @return bool
+     */
+    public function isRestrictedFromManaging(User $user, User $model): bool
+    {
+        return $this->roleChecker->isRestrictedFromManaging($user, $model);
     }
 
     /**

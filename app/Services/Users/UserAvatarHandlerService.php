@@ -11,7 +11,7 @@ class UserAvatarHandlerService
 {
     public function __construct(
         protected UserAvatarService $avatarService,
-        protected AvatarValidator $validator
+        protected UserAvatarValidatorService $validator
     ) {
     }
 

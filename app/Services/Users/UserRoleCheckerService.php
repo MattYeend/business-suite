@@ -7,7 +7,7 @@ use App\Models\User;
 /**
  * Checks user roles and restrictions.
  */
-class UserRoleChecker
+class UserRoleCheckerService
 {
     /**
      * Check if user is admin or super admin.

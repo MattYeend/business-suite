@@ -5,7 +5,7 @@ namespace App\Services\Users;
 /**
  * Validates avatar upload data.
  */
-class AvatarValidator
+class UserAvatarValidatorService
 {
     /**
      * Check if avatar should be removed.
