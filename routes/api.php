@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyIndustryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,27 +20,27 @@ Route::middleware('auth:sanctum')->group(function () {
         // Standard CRUD
         Route::get(
             '/',
-            [UserController::class,'index']
+            [UserController::class, 'index']
         )->name('index');
         Route::post(
             '/',
-            [UserController::class,'store']
+            [UserController::class, 'store']
         )->name('store');
         Route::get(
             '/{user}',
-            [UserController::class,'show']
+            [UserController::class, 'show']
         )->name('show');
         Route::put(
             '/{user}',
-            [UserController::class,'update']
+            [UserController::class, 'update']
         )->name('update');
         Route::patch(
             '/{user}',
-            [UserController::class,'update']
+            [UserController::class, 'update']
         )->name('patch');
         Route::delete(
             '/{user}',
-            [UserController::class,'destroy']
+            [UserController::class, 'destroy']
         )->name('destroy');
 
         // Restoration
@@ -57,11 +58,62 @@ Route::middleware('auth:sanctum')->group(function () {
         // Bulk operations
         Route::post(
             '/bulk/delete',
-            [UserController::class,'bulkDelete']
+            [UserController::class, 'bulkDelete']
         )->name('bulk.delete');
         Route::post(
             '/bulk/restore',
-            [UserController::class,'bulkRestore']
+            [UserController::class, 'bulkRestore']
+        )->name('bulk.restore');
+    });
+
+    // Company Industry management routes
+    Route::prefix('company-industries')->name('company-industries.')->group(function () {
+        // Standard CRUD
+        Route::get(
+            '/',
+            [CompanyIndustryController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [CompanyIndustryController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{company_industry}',
+            [CompanyIndustryController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{company_industry}',
+            [CompanyIndustryController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{company_industry}',
+            [CompanyIndustryController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{company_industry}',
+            [CompanyIndustryController::class, 'destroy']
+        )->name('destroy');
+
+        // Restoration
+        Route::post(
+            '/{id}/restore',
+            [CompanyIndustryController::class, 'restore']
+        )->name('restore');
+
+        // Force delete
+        Route::delete(
+            '/{id}/force',
+            [CompanyIndustryController::class, 'forceDelete']
+        )->name('force-delete');
+
+        // Bulk operations
+        Route::post(
+            '/bulk/delete',
+            [CompanyIndustryController::class, 'bulkDelete']
+        )->name('bulk.delete');
+        Route::post(
+            '/bulk/restore',
+            [CompanyIndustryController::class, 'bulkRestore']
         )->name('bulk.restore');
     });
 });
