@@ -78,6 +78,19 @@ class Log extends Model
     public const ACTION_FIVE_HUNDRED_ERRORS = 34;
     public const ACTION_CLEAR_CACHE = 35;
 
+    public const ACTION_LOG_TABLE_DATA_RESET_BY_CRON = 36;
+
+    // Company Industry Management
+    public const ACTION_CREATE_COMPANY_INDUSTRY = 37;
+    public const ACTION_UPDATE_COMPANY_INDUSTRY = 38;
+    public const ACTION_DELETE_COMPANY_INDUSTRY = 39;
+    public const ACTION_SHOW_COMPANY_INDUSTRY = 40;
+    public const ACTION_FORCE_DELETE_COMPANY_INDUSTRY = 41;
+    public const ACTION_RESTORE_COMPANY_INDUSTRY = 42;
+    public const ACTION_IMPORT_COMPANY_INDUSTRY = 43;
+    public const ACTION_EXPORT_COMPANY_INDUSTRY = 44;
+    public const ACTION_COMPANY_INDUSTRY_UPDATED_BY_CRON = 45;
+
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
     // Ensure to update the documentation accordingly.
