@@ -11,6 +11,7 @@ use App\Services\UserRoleCheckerService;
 class UserPolicyAuthorizationService
 {
     public function __construct(
+        protected UserActiveCheckerService $activeChecker,
         protected UserRoleCheckerService $roleChecker
     ) {
     }
@@ -92,5 +93,36 @@ class UserPolicyAuthorizationService
         return ! $this->isSelf($user, $model)
             && $this->roleChecker->isAdmin($user)
             && ! $this->roleChecker->isRestrictedFromManaging($user, $model);
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  User $user
+     * @param  User $model
+     *
+     * @return bool
+     */
+    public function canRestore(User $user, User $model): bool
+    {
+        return $this->isAdmin($user)
+            && $this->activeChecker->isTrashed($model);
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  User $user
+     * @param  User $model
+     *
+     * @return bool
+     */
+    public function canForceDelete(User $user, User $model): bool
+    {
+        return $this->activeChecker->canUserPerformAction(
+            $user,
+            'restoreOrForceDelete',
+            $model
+        );
     }
 }

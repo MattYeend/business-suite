@@ -83,7 +83,7 @@ class UserManagementService
      */
     public function destroy(User $user): void
     {
-        $this->destructor->delete($user);
+        $this->destructor->delete($user, auth()->id());
     }
 
     /**
@@ -96,7 +96,7 @@ class UserManagementService
     public function restore(int $id): User
     {
         $user = User::withTrashed()->findOrFail($id);
-        return $this->restorer->restore($user);
+        return $this->restorer->restore($user, auth()->id());
     }
 
     /**
@@ -109,7 +109,7 @@ class UserManagementService
     public function forceDelete(int $id): void
     {
         $user = User::withTrashed()->findOrFail($id);
-        $this->destructor->forceDelete($user);
+        $this->destructor->forceDelete($user, auth()->id());
     }
 
     /**

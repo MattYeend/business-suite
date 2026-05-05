@@ -176,11 +176,12 @@ class UserController extends Controller
     public function restore($id): JsonResponse
     {
         $user = User::withTrashed()->findOrFail($id);
-        $this->authorize('restore', $user);
 
         if (! $user->trashed()) {
             abort(404);
         }
+
+        $this->authorize('restore', $user);
 
         $user = $this->management->restore((int) $id);
 

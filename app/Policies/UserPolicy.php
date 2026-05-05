@@ -69,8 +69,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return $this->authorizationService->isAdmin($user)
-        && ! $this->authorizationService->isRestrictedFromManaging(
+        return $this->authorizationService->canRestore(
             $user,
             $model
         );
@@ -81,7 +80,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return ! $this->authorizationService->isRestrictedFromManaging(
+        return $this->authorizationService->canForceDelete(
             $user,
             $model
         );
