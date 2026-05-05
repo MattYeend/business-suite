@@ -17,6 +17,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // User management routes
     Route::prefix('users')->name('users.')->group(function () {
+        // Bulk operations
+        Route::post(
+            '/bulk/delete',
+            [UserController::class, 'bulkDelete']
+        )->name('bulk.delete');
+        Route::post(
+            '/bulk/restore',
+            [UserController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
         // Standard CRUD
         Route::get(
             '/',
@@ -54,22 +64,23 @@ Route::middleware('auth:sanctum')->group(function () {
             '/{id}/force',
             [UserController::class, 'forceDelete']
         )->name('force-delete');
-
-        // Bulk operations
-        Route::post(
-            '/bulk/delete',
-            [UserController::class, 'bulkDelete']
-        )->name('bulk.delete');
-        Route::post(
-            '/bulk/restore',
-            [UserController::class, 'bulkRestore']
-        )->name('bulk.restore');
     });
 
     // Company Industry management routes
     Route::prefix('company-industries')->name(
         'company-industries.'
     )->group(function () {
+        // Bulk operations
+        Route::post(
+            '/bulk/delete',
+            [CompanyIndustryController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [CompanyIndustryController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
         // Standard CRUD
         Route::get(
             '/',
@@ -107,15 +118,5 @@ Route::middleware('auth:sanctum')->group(function () {
             '/{id}/force',
             [CompanyIndustryController::class, 'forceDelete']
         )->name('force-delete');
-
-        // Bulk operations
-        Route::post(
-            '/bulk/delete',
-            [CompanyIndustryController::class, 'bulkDelete']
-        )->name('bulk.delete');
-        Route::post(
-            '/bulk/restore',
-            [CompanyIndustryController::class, 'bulkRestore']
-        )->name('bulk.restore');
     });
 });

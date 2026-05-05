@@ -296,6 +296,7 @@ describe('forceDelete', function () {
     test('can force delete a non-soft-deleted company industry', function () {
         $user = adminUser();
         $industry = CompanyIndustry::factory()->create();
+        $industry->delete();
 
         $response = $this->actingAs($user, 'sanctum')
             ->deleteJson(route('company-industries.force-delete', $industry->id));
