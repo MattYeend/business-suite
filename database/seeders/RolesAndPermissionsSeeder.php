@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $modules = [
             'users',
             'companies',
+            'industries',
             'contacts',
             'deals',
             'leads',
@@ -157,6 +158,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $admin->givePermissionTo([
                 'view users', 'create users', 'edit users',
                 'view companies', 'create companies', 'edit companies', 'delete companies',
+                'view industries', 'create industries', 'edit industries', 'delete industries',
                 'view contacts', 'create contacts', 'edit contacts', 'delete contacts',
                 'view deals', 'create deals', 'edit deals', 'delete deals',
                 'view leads', 'create leads', 'edit leads', 'delete leads',
@@ -181,6 +183,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view users',
                 'view all data', // Can see all sales data
                 'view companies', 'create companies', 'edit companies',
+                'view industries', 'create industries', 'edit industries',
                 'view contacts', 'create contacts', 'edit contacts',
                 'view deals', 'create deals', 'edit deals', 'delete deals',
                 'view leads', 'create leads', 'edit leads', 'delete leads',
@@ -202,6 +205,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $salesRep->givePermissionTo([
                 'manage own data only', // Only see assigned records
                 'view companies', 'create companies', 'edit companies',
+                'view industries', 'create industries', 'edit industries',
                 'view contacts', 'create contacts', 'edit contacts',
                 'view deals', 'create deals', 'edit deals',
                 'view leads', 'create leads', 'edit leads',
@@ -222,6 +226,7 @@ class RolesAndPermissionsSeeder extends Seeder
         if (!$accountant->permissions->count()) {
             $accountant->givePermissionTo([
                 'view companies', 'view contacts',
+                'view industries',
                 'view deals', 'view quotes',
                 'view invoices', 'create invoices', 'edit invoices', 'delete invoices',
                 'view payments', 'create payments', 'edit payments', 'delete payments',
@@ -271,6 +276,9 @@ class RolesAndPermissionsSeeder extends Seeder
                 'manage own data only',
                 'view employees', // Can view other employees
                 'view departments',
+                'view companies',
+                'view industries',
+                'view contacts',
                 'view attendance', 'create attendance', // Can clock in/out
                 'view leaves', 'create leaves', // Can request leave
                 'view payroll', // Can view own payroll
@@ -334,7 +342,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $viewer = Role::firstOrCreate(['name' => 'viewer']);
         if (!$viewer->permissions->count()) {
             $viewer->givePermissionTo([
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view deals', 'view leads',
                 'view quotes', 'view invoices',
                 'view products',
@@ -348,6 +356,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $user->givePermissionTo([
                 'manage own data only',
                 'view companies', 'view contacts',
+                'view industries',
                 'view deals', 'view leads',
                 'view quotes', 'view invoices',
                 'view products',
@@ -503,7 +512,7 @@ class RolesAndPermissionsSeeder extends Seeder
         if (!$cfo->permissions->count()) {
             $cfo->givePermissionTo([
                 'view all data',
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view deals', 'view quotes', 'view invoices', 'view payments',
                 'view budgets', 'create budgets', 'edit budgets', 'delete budgets',
                 'approve budgets',
@@ -524,7 +533,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $controller = Role::firstOrCreate(['name' => 'financial-controller']);
         if (!$controller->permissions->count()) {
             $controller->givePermissionTo([
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view invoices', 'create invoices', 'edit invoices',
                 'view payments', 'create payments', 'edit payments',
                 'approve payments',
@@ -557,7 +566,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $arClerk = Role::firstOrCreate(['name' => 'accounts-receivable-clerk']);
         if (!$arClerk->permissions->count()) {
             $arClerk->givePermissionTo([
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view deals', 'view quotes',
                 'view invoices', 'create invoices', 'edit invoices',
                 'view payments', 'create payments', 'edit payments',
@@ -581,7 +590,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $taxSpecialist = Role::firstOrCreate(['name' => 'tax-specialist']);
         if (!$taxSpecialist->permissions->count()) {
             $taxSpecialist->givePermissionTo([
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view invoices', 'view payments',
                 'view tax_records', 'create tax_records', 'edit tax_records',
                 'view fiscal_years',
@@ -692,7 +701,7 @@ class RolesAndPermissionsSeeder extends Seeder
         if (!$marketingDirector->permissions->count()) {
             $marketingDirector->givePermissionTo([
                 'view all data',
-                'view companies', 'view contacts', 'view leads',
+                'view companies', 'view contacts', 'view industries', 'view leads',
                 'view campaigns', 'create campaigns', 'edit campaigns', 'delete campaigns',
                 'view newsletters', 'create newsletters', 'edit newsletters', 'delete newsletters',
                 'view events', 'create events', 'edit events', 'delete events',
@@ -709,7 +718,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $marketingManager = Role::firstOrCreate(['name' => 'marketing-manager']);
         if (!$marketingManager->permissions->count()) {
             $marketingManager->givePermissionTo([
-                'view companies', 'view contacts', 'view leads',
+                'view companies', 'view contacts', 'view industries', 'view leads',
                 'view campaigns', 'create campaigns', 'edit campaigns',
                 'view newsletters', 'create newsletters', 'edit newsletters',
                 'view events', 'create events', 'edit events',
@@ -803,7 +812,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $businessAnalyst = Role::firstOrCreate(['name' => 'business-analyst']);
         if (!$businessAnalyst->permissions->count()) {
             $businessAnalyst->givePermissionTo([
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view deals', 'view leads', 'view opportunities',
                 'view quotes', 'view invoices',
                 'view products', 'view inventory',
@@ -829,7 +838,7 @@ class RolesAndPermissionsSeeder extends Seeder
         if (!$complianceOfficer->permissions->count()) {
             $complianceOfficer->givePermissionTo([
                 'view users', 'view employees',
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view invoices', 'view payments',
                 'view contracts',
                 'view tax_records',
@@ -859,6 +868,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $csManager->givePermissionTo([
                 'view all data',
                 'view companies', 'create companies', 'edit companies',
+                'view industries', 'create industries', 'edit industries',
                 'view contacts', 'create contacts', 'edit contacts',
                 'view deals', 'view opportunities',
                 'view tasks', 'create tasks', 'edit tasks',
@@ -905,7 +915,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $execAssistant = Role::firstOrCreate(['name' => 'executive-assistant']);
         if (!$execAssistant->permissions->count()) {
             $execAssistant->givePermissionTo([
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view deals', 'view leads',
                 'view tasks', 'create tasks', 'edit tasks',
                 'view activities', 'create activities', 'edit activities',
@@ -922,7 +932,7 @@ class RolesAndPermissionsSeeder extends Seeder
         if (!$intern->permissions->count()) {
             $intern->givePermissionTo([
                 'manage own data only',
-                'view companies', 'view contacts',
+                'view companies', 'view contacts', 'view industries',
                 'view products',
                 'view tasks', 'create tasks',
                 'view documents',

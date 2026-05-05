@@ -34,11 +34,14 @@ class CompanyIndustryRestorerService
             $industry->restored_by = $restoredBy;
             $industry->restored_at = now();
             $industry->save();
-            $result = $industry->restore();
 
-            $this->logService->logRestoration($industry, $actor);
+            // restore() returns boolean, so we don't assign it
+            $industry->restore();
 
-            return $result;
+            $this->logService->logRestoration($industry, $actor, $restoredBy);
+
+            // Return the fresh model instance
+            return $industry->fresh();
         });
     }
 

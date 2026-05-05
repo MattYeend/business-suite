@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\CompanyIndustry;
 use App\Models\User;
 use App\Services\CompanyIndustries\CompanyIndustryPolicyAuthorizationService;
 
@@ -17,18 +18,19 @@ class CompanyIndustryPolicy
 
     /**
      * Determine whether the user can view any models.
+     * Only admins can view the list of company industries.
      */
     public function viewAny(User $user): bool
     {
-        return $this->authorizationService->isUser($user);
+        return $this->authorizationService->isAdmin($user);
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user): bool
+    public function view(User $user, CompanyIndustry $companyIndustry): bool
     {
-        return $this->authorizationService->isUser($user);
+        return $this->authorizationService->canView($user, $companyIndustry);
     }
 
     /**
@@ -42,33 +44,38 @@ class CompanyIndustryPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): bool
+    public function update(User $user, CompanyIndustry $companyIndustry): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorizationService->canUpdate($user, $companyIndustry);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user, CompanyIndustry $companyIndustry): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorizationService->canDelete($user, $companyIndustry);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user): bool
+    public function restore(User $user, CompanyIndustry $companyIndustry): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorizationService->canRestore($user, $companyIndustry);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user): bool
-    {
-        return $user->isSuperAdmin();
+    public function forceDelete(
+        User $user,
+        CompanyIndustry $companyIndustry
+    ): bool {
+        return $this->authorizationService->canForceDelete(
+            $user,
+            $companyIndustry
+        );
     }
 
     /**

@@ -8,12 +8,14 @@ use App\Models\User;
 use App\Services\Users\UserLogService;
 use App\Services\Users\UserManagementService;
 use App\Services\Users\UserQueryService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Inject the required services into the controller.
      *

@@ -34,7 +34,7 @@ class CompanyIndustryUpdaterService
             $actor = User::findOrFail($updatedBy);
 
             $this->updateCompanyIndustryData($industry, $data, $updatedBy);
-            $this->logService->logUpdate($industry, $actor);
+            $this->logService->logUpdate($industry, $actor, $updatedBy);
 
             return $industry->fresh();
         });

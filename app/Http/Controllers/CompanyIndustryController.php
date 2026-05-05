@@ -8,12 +8,15 @@ use App\Models\CompanyIndustry;
 use App\Services\CompanyIndustries\CompanyIndustryLogService;
 use App\Services\CompanyIndustries\CompanyIndustryManagementService;
 use App\Services\CompanyIndustries\CompanyIndustryQueryService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CompanyIndustryController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Inject the required services into the controller.
      *
@@ -172,9 +175,8 @@ class CompanyIndustryController extends Controller
      * Restore the specified company industry from soft deletion.
      *
      * Looks up the company industry including trashed records, then
-     * authorises via the 'restore' policy. Returns 404 if the company
-     * industry is not currently soft-deleted, preventing accidental
-     * double-restores.
+     * checks if it exists and is trashed before authorization.
+     * Returns 404 if the company industry is not currently soft-deleted.
      *
      * @param  int|string $id The primary key of the soft-deleted
      * company industry.
@@ -186,11 +188,13 @@ class CompanyIndustryController extends Controller
     public function restore($id): JsonResponse
     {
         $companyIndustry = CompanyIndustry::withTrashed()->findOrFail($id);
-        $this->authorize('restore', $companyIndustry);
 
+        // Check if trashed BEFORE authorization to return 404 instead of 403
         if (! $companyIndustry->trashed()) {
             abort(404);
         }
+
+        $this->authorize('restore', $companyIndustry);
 
         $companyIndustry = $this->management->restore((int) $id);
 
@@ -273,24 +277,22 @@ class CompanyIndustryController extends Controller
     /**
      * Restore multiple company industries from soft deletion in bulk.
      *
-     * Expects a 'ids' array in the request containing company industry IDs
-     * to restore. Each company industry is authorised individually via the
-     * 'restore' policy.
-     *
      * @param  Request $request Incoming HTTP request with 'ids' array.
      *
      * @return JsonResponse Summary of the bulk operation.
      */
     public function bulkRestore(Request $request): JsonResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'ids' => 'required|array',
             'ids.*' => 'required|integer',
         ]);
 
+        $this->validateBulkRestoreIds($validated['ids']);
+
         $auth = auth()->user();
         $restored = $this->management->bulkRestore(
-            $request->input('ids'),
+            $validated['ids'],
             $auth,
             fn ($industry) => $this->authorize('restore', $industry)
         );
@@ -300,5 +302,27 @@ class CompanyIndustryController extends Controller
             'restored_count' => count($restored),
             'restored_ids' => $restored,
         ]);
+    }
+
+    /**
+     * Validate that all IDs exist in database (including trashed).
+     *
+     * @param  array $ids
+     *
+     * @return void
+     *
+     * @throws ValidationException
+     */
+    protected function validateBulkRestoreIds(array $ids): void
+    {
+        foreach ($ids as $index => $id) {
+            $industry = CompanyIndustry::withTrashed()->find($id);
+
+            if (! $industry) {
+                throw ValidationException::withMessages([
+                    "ids.{$index}" => ["The selected ids.{$index} is invalid."],
+                ]);
+            }
+        }
     }
 }

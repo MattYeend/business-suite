@@ -31,7 +31,7 @@ class CompanyIndustryCreatorService
 
         return DB::transaction(function () use ($data, $createdBy, $actor) {
             $industry = $this->createCompanyIndustry($data, $createdBy);
-            $this->logService->logCreation($industry, $actor);
+            $this->logService->logCreation($industry, $actor, $createdBy);
 
             return $industry;
         });

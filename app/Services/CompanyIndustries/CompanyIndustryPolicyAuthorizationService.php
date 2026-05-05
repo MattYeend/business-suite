@@ -2,12 +2,14 @@
 
 namespace App\Services\CompanyIndustries;
 
+use App\Models\CompanyIndustry;
 use App\Models\User;
 use App\Services\UserRoleCheckerService;
 
 class CompanyIndustryPolicyAuthorizationService
 {
     public function __construct(
+        protected CompanyIndustryActiveCheckerService $activeChecker,
         protected UserRoleCheckerService $roleChecker
     ) {
     }
@@ -52,30 +54,103 @@ class CompanyIndustryPolicyAuthorizationService
     }
 
     /**
-     * Check if user is trying to perform action on themselves.
+     * Check if industry is active (not soft-deleted).
      *
-     * @param  User $user
-     * @param  User $model
+     * @param  CompanyIndustry $companyIndustry
      *
      * @return bool
      */
-    public function isSelf(User $user, User $model): bool
+    public function isActive(CompanyIndustry $companyIndustry): bool
     {
-        return $user->id === $model->id;
+        return $this->activeChecker->isActive($companyIndustry);
     }
 
     /**
-     * Check if user can manage the target user.
+     * Check if industry is soft-deleted.
      *
-     * @param  User $user
-     * @param  User $model
+     * @param  CompanyIndustry $companyIndustry
      *
      * @return bool
      */
-    public function canManage(User $user, User $model): bool
+    public function isTrashed(CompanyIndustry $companyIndustry): bool
     {
-        return ! $this->isSelf($user, $model)
-            && $this->roleChecker->isAdmin($user)
-            && ! $this->roleChecker->isRestrictedFromManaging($user, $model);
+        return $this->activeChecker->isTrashed($companyIndustry);
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     * Only admins can view company industries.
+     *
+     * @param  User $user
+     * @param  CompanyIndustry $industry
+     *
+     * @return bool
+     */
+    public function canView(User $user, CompanyIndustry $industry): bool
+    {
+        return $this->isAdmin($user) && $this->activeChecker->isActive(
+            $industry
+        );
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     *
+     * @param  User $user
+     * @param  CompanyIndustry $industry
+     *
+     * @return bool
+     */
+    public function canUpdate(User $user, CompanyIndustry $industry): bool
+    {
+        return $this->isAdmin($user) && $this->activeChecker->isActive(
+            $industry
+        );
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param  User $user
+     * @param  CompanyIndustry $industry
+     *
+     * @return bool
+     */
+    public function canDelete(User $user, CompanyIndustry $industry): bool
+    {
+        return $this->isAdmin($user) && $this->activeChecker->canBeModified(
+            $industry
+        );
+    }
+
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  User $user
+     * @param  CompanyIndustry $industry
+     *
+     * @return bool
+     */
+    public function canRestore(User $user, CompanyIndustry $industry): bool
+    {
+        return $this->isAdmin($user) &&
+            $this->activeChecker->canBeRestoredOrForceDeleted($industry);
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  User $user
+     * @param  CompanyIndustry $industry
+     *
+     * @return bool
+     */
+    public function canForceDelete(User $user, CompanyIndustry $industry): bool
+    {
+        return $this->activeChecker->canUserPerformAction(
+            $industry,
+            'restoreOrForceDelete',
+            $user
+        );
     }
 }

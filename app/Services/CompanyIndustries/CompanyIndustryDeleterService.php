@@ -34,7 +34,7 @@ class CompanyIndustryDeleterService
 
             $result = $industry->delete();
 
-            $this->logService->logDeletion($industry, $actor);
+            $this->logService->logDeletion($industry, $actor, $deletedBy);
 
             return $result;
         });
@@ -56,7 +56,7 @@ class CompanyIndustryDeleterService
     ): bool {
         return DB::transaction(function () use ($industry, $deletedBy) {
             $actor = User::findOrFail($deletedBy);
-            $this->logService->logForceDeletion($industry, $actor);
+            $this->logService->logForceDeletion($industry, $actor, $deletedBy);
 
             return $industry->forceDelete();
         });
