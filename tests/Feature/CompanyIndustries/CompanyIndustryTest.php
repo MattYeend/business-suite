@@ -4,27 +4,18 @@ use App\Models\CompanyIndustry;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Spatie\Permission\Models\Role;
+use Tests\Concerns\CreatesUsers;
 
-uses(LazilyRefreshDatabase::class);
+uses(
+    LazilyRefreshDatabase::class,
+    CreatesUsers::class,
+);
 
 beforeEach(function () {
     setPermissionsTeamId(1);
 
     Role::firstOrCreate(['name' => 'admin']);
 });
-
-function adminUser(): User
-{
-    $user = User::factory()->create([
-        'is_admin' => true,
-        'is_super_admin' => false,
-        'is_user' => true,
-    ]);
-
-    $user->assignRole('admin');
-    
-    return $user;
-}
 
 test('example', function () {
     $response = $this->get('/');

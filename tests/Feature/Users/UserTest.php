@@ -3,8 +3,12 @@
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Spatie\Permission\Models\Role;
+use Tests\Concerns\CreatesUsers;
 
-uses(LazilyRefreshDatabase::class);
+uses(
+    LazilyRefreshDatabase::class,
+    CreatesUsers::class,
+);
 
 beforeEach(function () {
     setPermissionsTeamId(1);

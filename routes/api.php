@@ -17,7 +17,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // User management routes
     Route::prefix('users')->name('users.')->group(function () {
-        // Bulk operations
         Route::post(
             '/bulk/delete',
             [UserController::class, 'bulkDelete']
@@ -27,7 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
             [UserController::class, 'bulkRestore']
         )->name('bulk.restore');
 
-        // Standard CRUD
         Route::get(
             '/',
             [UserController::class, 'index']
@@ -36,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
             '/',
             [UserController::class, 'store']
         )->name('store');
+
         Route::get(
             '/{user}',
             [UserController::class, 'show']
@@ -45,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
             [UserController::class, 'update']
         )->name('update');
         Route::patch(
-            'users/{user}',
+            '/{user}',
             [UserController::class, 'update']
         )->name('patch');
         Route::delete(
@@ -53,13 +52,10 @@ Route::middleware('auth:sanctum')->group(function () {
             [UserController::class, 'destroy']
         )->name('destroy');
 
-        // Restoration
         Route::post(
             '/{id}/restore',
             [UserController::class, 'restore']
         )->name('restore');
-
-        // Force delete
         Route::delete(
             '/{id}/force',
             [UserController::class, 'forceDelete']
@@ -70,7 +66,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('company-industries')->name(
         'company-industries.'
     )->group(function () {
-        // Bulk operations
         Route::post(
             '/bulk/delete',
             [CompanyIndustryController::class, 'bulkDelete']
@@ -107,13 +102,11 @@ Route::middleware('auth:sanctum')->group(function () {
             [CompanyIndustryController::class, 'destroy']
         )->name('destroy');
 
-        // Restoration
         Route::post(
             '/{id}/restore',
             [CompanyIndustryController::class, 'restore']
         )->name('restore');
 
-        // Force delete
         Route::delete(
             '/{id}/force',
             [CompanyIndustryController::class, 'forceDelete']

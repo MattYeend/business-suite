@@ -49,14 +49,11 @@ class UserPolicy
             return true;
         }
 
-        if ($this->authorizationService->isUser($user)) {
-            return false;
-        }
-
-        return ! $this->authorizationService->isRestrictedFromManaging(
-            $user,
-            $model
-        );
+        return $this->authorizationService->isAdmin($user)
+            && ! $this->authorizationService->isRestrictedFromManaging(
+                $user,
+                $model
+            );
     }
 
     /**
@@ -70,17 +67,24 @@ class UserPolicy
     /**
      * Determine if the user can restore the model.
      */
-    public function restore(User $user): bool
+    public function restore(User $user, User $model): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorizationService->isAdmin($user)
+        && ! $this->authorizationService->isRestrictedFromManaging(
+            $user,
+            $model
+        );
     }
 
     /**
      * Determine if the user can permanently delete the model.
      */
-    public function forceDelete(User $user): bool
+    public function forceDelete(User $user, User $model): bool
     {
-        return $this->authorizationService->isSuperAdmin($user);
+        return ! $this->authorizationService->isRestrictedFromManaging(
+            $user,
+            $model
+        );
     }
 
     /**
@@ -112,6 +116,6 @@ class UserPolicy
      */
     public function export(User $user): bool
     {
-        return $user->isUser() || $this->authorizationService->isAdmin($user);
+        return $this->authorizationService->isUser($user);
     }
 }

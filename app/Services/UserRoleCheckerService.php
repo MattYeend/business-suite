@@ -58,6 +58,6 @@ class UserRoleCheckerService
     {
         return $user->is_admin
             && ! $user->is_super_admin
-            && $model->is_super_admin;
+            && $model->is_admin;
     }
 }

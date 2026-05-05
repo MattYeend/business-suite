@@ -64,6 +64,7 @@ class UserManagementService
     public function update(UpdateUserRequest $request, User $user): User
     {
         $user = $this->updater->update(
+            $user,
             $request->validated(),
             $request->user()->id
         );
