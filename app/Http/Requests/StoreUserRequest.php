@@ -99,6 +99,8 @@ class StoreUserRequest extends FormRequest
                 'max:255',
                 Rule::unique('users', 'email'),
             ],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required'],
         ];
     }
 

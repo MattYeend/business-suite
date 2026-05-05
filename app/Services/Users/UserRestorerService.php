@@ -32,11 +32,11 @@ class UserRestorerService
             $user->restored_at = now();
             $user->save();
 
-            $result = $user->restore();
+            $user->restore();
 
-            $this->logService->logRestoration($user, $actor);
+            $this->logService->logRestoration($user, $actor, $restoredBy);
 
-            return $result;
+            return $user->fresh();
         });
     }
 

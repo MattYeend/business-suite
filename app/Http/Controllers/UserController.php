@@ -97,7 +97,7 @@ class UserController extends Controller
     {
         $this->authorize('view', $user);
 
-        $user = $this->query->show($user);
+        $user = $this->query->getById($user->id);
 
         return response()->json($user);
     }

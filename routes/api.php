@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
             [UserController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{user}',
+            'users/{user}',
             [UserController::class, 'update']
         )->name('patch');
         Route::delete(

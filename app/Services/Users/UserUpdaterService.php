@@ -37,7 +37,7 @@ class UserUpdaterService
             $this->updateUserData($user, $data, $updatedBy);
             $this->handleAvatarUpdate($user, $data);
             $this->handleRolesUpdate($user, $data);
-            $this->logService->logUpdate($user, $actor);
+            $this->logService->logUpdate($user, $actor, $updatedBy);
 
             return $user->fresh();
         });

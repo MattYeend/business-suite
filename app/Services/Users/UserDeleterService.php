@@ -31,7 +31,7 @@ class UserDeleterService
 
             $result = $user->delete();
 
-            $this->logService->logDeletion($user, $actor);
+            $this->logService->logDeletion($user, $actor, $deletedBy);
 
             return $result;
         });
@@ -51,7 +51,7 @@ class UserDeleterService
     {
         return DB::transaction(function () use ($user, $deletedBy) {
             $actor = User::findOrFail($deletedBy);
-            $this->logService->logForceDeletion($user, $actor);
+            $this->logService->logForceDeletion($user, $actor, $deletedBy);
 
             return $user->forceDelete();
         });

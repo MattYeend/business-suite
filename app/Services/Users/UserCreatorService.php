@@ -37,8 +37,8 @@ class UserCreatorService
 
             $this->avatarHandler->handleUpload($user, $data['avatar'] ?? null);
             $this->roleAssignment->assign($user, $data['roles'] ?? null);
-            $this->sendWelcomeEmail($user, $data['plain_password']);
-            $this->logService->logCreation($user, $actor);
+            $this->sendWelcomeEmail($user, $data['password']);
+            $this->logService->logCreation($user, $actor, $createdBy);
 
             return $user->fresh();
         });
@@ -54,11 +54,17 @@ class UserCreatorService
      */
     protected function createUser(array $data, ?int $createdBy): User
     {
-        $plainPassword = $this->passwordService->generatePassword();
+        if (isset($data['password'])) {
+            $plainPassword = $data['password'];
+            $hashedPassword = $this->passwordService->hash($plainPassword);
+        } else {
+            $plainPassword = $this->passwordService->generatePassword();
+            $hashedPassword = $this->passwordService->hash($plainPassword);
+        }
 
         $userData = $this->dataPreparation->prepareForCreation(
             $data,
-            $plainPassword,
+            $hashedPassword, // Use hashed password instead
             $createdBy
         );
 

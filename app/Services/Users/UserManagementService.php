@@ -44,9 +44,12 @@ class UserManagementService
      */
     public function store(StoreUserRequest $request): User
     {
-        $user = $this->creator->create($request);
+        $user = $this->creator->create(
+            $request->validated(),
+            $request->user()->id
+        );
 
-        return $user->load('role');
+        return $user->load('roles');
     }
 
     /**
@@ -60,9 +63,12 @@ class UserManagementService
      */
     public function update(UpdateUserRequest $request, User $user): User
     {
-        $user = $this->updater->update($request, $user);
+        $user = $this->updater->update(
+            $request->validated(),
+            $request->user()->id
+        );
 
-        return $user->load('role');
+        return $user->load('roles');
     }
 
     /**
