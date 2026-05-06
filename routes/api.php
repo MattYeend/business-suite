@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyIndustryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -76,7 +77,6 @@ Route::middleware('auth:sanctum')->group(function () {
             [CompanyIndustryController::class, 'bulkRestore']
         )->name('bulk.restore');
 
-        // Standard CRUD
         Route::get(
             '/',
             [CompanyIndustryController::class, 'index']
@@ -110,6 +110,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [CompanyIndustryController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Company management routes
+    Route::prefix('companies')->name(
+        'companies.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [CompanyController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [CompanyController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [CompanyController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [CompanyController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{company}',
+            [CompanyController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{company}',
+            [CompanyController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{company}',
+            [CompanyController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{company}',
+            [CompanyController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [CompanyController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [CompanyController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
