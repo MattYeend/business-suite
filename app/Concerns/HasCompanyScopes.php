@@ -61,7 +61,7 @@ trait HasCompanyScopes
      *
      * @param  Builder $query
      * @param  int $min
-     * @param  null|int $max
+     * @param  int|null $max
      *
      * @return Builder
      */
@@ -84,7 +84,7 @@ trait HasCompanyScopes
      *
      * @param  Builder $query
      * @param  float $min
-     * @param  null|float $max
+     * @param  float|null $max
      *
      * @return Builder
      */

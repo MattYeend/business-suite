@@ -19,7 +19,7 @@ trait HasCompanyHelpers
     /**
      * Get the full address as a formatted string.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getFullAddressAttribute(): ?string
     {
@@ -31,7 +31,11 @@ trait HasCompanyHelpers
             $this->country,
         ]);
 
-        return empty($parts) ? null : implode(', ', $parts);
+        if ($parts === []) {
+            return null;
+        }
+
+        return implode(', ', $parts);
     }
 
     // /**
@@ -73,7 +77,7 @@ trait HasCompanyHelpers
     /**
      * Get employee count category.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getEmployeeSizeAttribute(): ?string
     {
@@ -85,7 +89,7 @@ trait HasCompanyHelpers
     /**
      * Get formatted annual revenue.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getFormattedRevenueAttribute(): ?string
     {
@@ -97,9 +101,9 @@ trait HasCompanyHelpers
     /**
      * Format website URL with https:// prefix if needed.
      *
-     * @param  null|string $website
+     * @param  string|null $website
      *
-     * @return null|string
+     * @return string|null
      */
     private function formatWebsiteUrl(?string $website): ?string
     {
