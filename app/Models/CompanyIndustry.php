@@ -14,11 +14,14 @@ use Illuminate\Support\Carbon;
     'name',
     'slug',
     'meta',
+    'created_at',
     'created_by',
+    'updated_at',
     'updated_by',
+    'deleted_at',
     'deleted_by',
-    'restored_by',
     'restored_at',
+    'restored_by',
 ])]
 
 /**
