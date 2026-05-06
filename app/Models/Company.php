@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
+use App\Concerns\HasCompanyHelpers;
+use App\Concerns\HasCompanyScopes;
 use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+// use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -62,7 +63,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * 
+ *
  * @property-read CompanyIndustry|null $industry
  * @property-read User|null $creator
  * @property-read User|null $updater
@@ -76,8 +77,12 @@ class Company extends Model
     /**
      * @use HasFactory<CompanyFactory>
      * @use SoftDeletes<SoftDeletes>
-     * */
-    use HasFactory, SoftDeletes;
+     * @use HasCompanyScopes<HasCompanyScopes>
+     */
+    use HasFactory,
+        SoftDeletes,
+        HasCompanyHelpers,
+        HasCompanyScopes;
 
     /**
      * Get the industry for company.
@@ -166,188 +171,6 @@ class Company extends Model
     //         ->where('is_primary', true)
     //         ->first();
     // }
-
-    /**
-     * Scope a query to only include real companies.
-     *
-     * @param  Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeReal(Builder $query): Builder
-    {
-        return $query->where('is_real', true);
-    }
-
-    /**
-     * Scope a query to only include test companies.
-     *
-     * @param  Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeTest(Builder $query): Builder
-    {
-        return $query->where('is_real', false);
-    }
-
-    /**
-     * Scope a query to filter by industry.
-     *
-     * @param  Builder $query
-     * @param  int $industryId
-     *
-     * @return Builder
-     */
-    public function scopeInIndustry(Builder $query, int $industryId): Builder
-    {
-        return $query->where('industry_id', $industryId);
-    }
-
-    /**
-     * Scope a query to filter by country.
-     *
-     * @param  Builder $query
-     * @param  string $country
-     *
-     * @return Builder
-     */
-    public function scopeInCountry(Builder $query, string $country): Builder
-    {
-        return $query->where('country', $country);
-    }
-
-    /**
-     * Scope a query to filter by employee count range.
-     *
-     * @param  Builder $query
-     * @param  int $min
-     * @param  null|int $max
-     *
-     * @return Builder
-     */
-    public function scopeEmployeeCountBetween(Builder $query, int $min, ?int $max = null): Builder
-    {
-        $query->where('employee_count', '>=', $min);
-
-        if ($max !== null) {
-            $query->where('employee_count', '<=', $max);
-        }
-
-        return $query;
-    }
-
-    /**
-     * Scope a query to filter by annual revenue range.
-     *
-     * @param  Builder $query
-     * @param  float $min
-     * @param  null|float $max
-     *
-     * @return Builder
-     */
-    public function scopeRevenueBetween(Builder $query, float $min, ?float $max = null): Builder
-    {
-        $query->where('annual_revenue', '>=', $min);
-
-        if ($max !== null) {
-            $query->where('annual_revenue', '<=', $max);
-        }
-
-        return $query;
-    }
-
-    /**
-     * Get the full address as a formatted string.
-     *
-     * @return null|string
-     */
-    public function getFullAddressAttribute(): ?string
-    {
-        $parts = array_filter([
-            $this->address,
-            $this->city,
-            $this->region,
-            $this->postal_code,
-            $this->country,
-        ]);
-
-        return !empty($parts) ? implode(', ', $parts) : null;
-    }
-
-    /**
-     * Get primary email (fallback to model email).
-     *
-     * @return null|string
-     */
-    public function getPrimaryEmailAttribute(): ?string
-    {
-        return $this->primaryContact('email')?->value ?? $this->email;
-    }
-
-    /**
-     * Get primary phone (fallback to model phone).
-     *
-     * @return null|string
-     */
-    public function getPrimaryPhoneAttribute(): ?string
-    {
-        return $this->primaryContact('phone')?->value ?? $this->phone;
-    }
-
-    /**
-     * Get primary website (fallback to model website).
-     *
-     * @return null|string
-     */
-    public function getPrimaryWebsiteAttribute(): ?string
-    {
-        $contact = $this->primaryContact('website');
-        
-        if ($contact) {
-            return $contact->formatted_value;
-        }
-
-        if ($this->website && !preg_match('~^https?://~i', $this->website)) {
-            return 'https://' . $this->website;
-        }
-
-        return $this->website;
-    }
-
-    /**
-     * Get employee count category.
-     *
-     * @return null|string
-     */
-    public function getEmployeeSizeAttribute(): ?string
-    {
-        if (!$this->employee_count) {
-            return null;
-        }
-
-        return match (true) {
-            $this->employee_count < 10 => 'Micro (1-9)',
-            $this->employee_count < 50 => 'Small (10-49)',
-            $this->employee_count < 250 => 'Medium (50-249)',
-            $this->employee_count < 1000 => 'Large (250-999)',
-            default => 'Enterprise (1000+)',
-        };
-    }
-
-    /**
-     * Get formatted annual revenue.
-     *
-     * @return null|string
-     */
-    public function getFormattedRevenueAttribute(): ?string
-    {
-        if (!$this->annual_revenue) {
-            return null;
-        }
-
-        return '£' . number_format($this->annual_revenue, 2);
-    }
 
     /**
      * Get the attributes that should be cast.
