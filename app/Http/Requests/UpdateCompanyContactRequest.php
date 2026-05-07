@@ -75,6 +75,7 @@ class UpdateCompanyContactRequest extends FormRequest
     {
         return [
             'sometimes',
+            'required',
             'string',
             'max:255',
         ];
@@ -89,6 +90,7 @@ class UpdateCompanyContactRequest extends FormRequest
     {
         return [
             'sometimes',
+            'required',
             'string',
             'max:255',
         ];
@@ -160,6 +162,7 @@ class UpdateCompanyContactRequest extends FormRequest
     {
         return [
             'sometimes',
+            'required',
             'boolean',
         ];
     }

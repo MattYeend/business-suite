@@ -137,3 +137,69 @@ describe('show', function () {
         $response->assertForbidden();
     });
 });
+
+describe('update', function () {
+    test('can update a company contact', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create([
+            'first_name' => 'Old',
+            'last_name' => 'Name' 
+        ]);
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->putJson(
+                route('company-contacts.update', $contact),
+                ['first_name' => 'New'],
+            );
+
+        $response->assertOk()
+            ->assertJsonFragment(['first_name' => 'New']);
+
+        $this->assertDatabaseHas('company_contacts', [
+            'id' => $contact->id,
+            'first_name' => 'New',
+            'last_name' => 'Name'
+        ]);
+    });
+
+    test('can update a company contact via patch', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create(['first_name' => 'Old Name']);
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->patchJson(
+                route('company-contacts.patch', $contact),
+                ['first_name' => 'Patched Name']
+            );
+
+        $response->assertOk()
+            ->assertJsonFragment(['first_name' => 'Patched Name']);
+    });
+
+    test('validation fails with invalid data', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->putJson(
+                route('company-contacts.update', $contact),
+                ['first_name' => '']
+            );
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['first_name']);
+    });
+
+    test('unauthorized user cannot update company contact', function () {
+        $unauthorizedUser = User::factory()->create();
+        $contact = CompanyContact::factory()->create();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->putJson(
+                route('company-contacts.update', $contact),
+                ['first_name' => 'Updated']
+            );
+
+        $response->assertForbidden();
+    });
+});
