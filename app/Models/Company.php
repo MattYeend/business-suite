@@ -77,6 +77,7 @@ class Company extends Model
     /**
      * @use HasFactory<CompanyFactory>
      * @use SoftDeletes<SoftDeletes>
+     * @use HasCompanyHelpers<HasCompanyHelpers>
      * @use HasCompanyScopes<HasCompanyScopes>
      */
     use HasFactory,
