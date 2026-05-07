@@ -243,7 +243,7 @@ class CompanyContactController extends Controller
     }
 
     /**
-     * Soft delete multiple company industries in bulk.
+     * Soft delete multiple company contacts in bulk.
      *
      * Expects a 'ids' array in the request containing company contact IDs
      * to delete. Each company contact is authorised individually via the
@@ -268,14 +268,14 @@ class CompanyContactController extends Controller
         );
 
         return response()->json([
-            'message' => 'Company industries deleted successfully',
+            'message' => 'Company contacts deleted successfully',
             'deleted_count' => count($deleted),
             'deleted_ids' => $deleted,
         ]);
     }
 
     /**
-     * Restore multiple company industries from soft deletion in bulk.
+     * Restore multiple company contacts from soft deletion in bulk.
      *
      * @param  Request $request Incoming HTTP request with 'ids' array.
      *
@@ -298,7 +298,7 @@ class CompanyContactController extends Controller
         );
 
         return response()->json([
-            'message' => 'Company industries restored successfully',
+            'message' => 'Company contacts restored successfully',
             'restored_count' => count($restored),
             'restored_ids' => $restored,
         ]);

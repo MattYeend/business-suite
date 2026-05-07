@@ -203,3 +203,228 @@ describe('update', function () {
         $response->assertForbidden();
     });
 });
+
+describe('destroy', function () {
+    test('can soft delete a company contact', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->deleteJson(route('company-contacts.destroy', $contact));
+
+        $response->assertNoContent();
+
+        $this->assertSoftDeleted('company_contacts', [
+            'id' => $contact->id,
+        ]);
+    });
+
+    test('unauthorized user cannot delete company contact', function () {
+        $unauthorizedUser = User::factory()->create();
+        $contact = CompanyContact::factory()->create();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->deleteJson(route('company-contacts.destroy', $contact));
+
+        $response->assertForbidden();
+    });
+});
+
+describe('restore', function () {
+    test('can restore a soft deleted company contact', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create();
+        $contact->delete();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.restore', $contact->id));
+
+        $response->assertOk()
+            ->assertJsonFragment(['id' => $contact->id]);
+
+        $this->assertDatabaseHas('company_contacts', [
+            'id' => $contact->id,
+            'deleted_at' => null,
+        ]);
+    });
+
+    test('cannot restore a non-deleted company contact', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.restore', $contact->id));
+
+        $response->assertNotFound();
+    });
+
+    test('returns 404 for non-existent company contact', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.restore', 99999));
+
+        $response->assertNotFound();
+    });
+
+    test('unauthorized user cannot restore company contact', function () {
+        $unauthorizedUser = User::factory()->create();
+        $contact = CompanyContact::factory()->create();
+        $contact->delete();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->postJson(route('company-contacts.restore', $contact->id));
+
+        $response->assertForbidden();
+    });
+});
+
+describe('forceDelete', function () {
+    test('can permanently delete a company contact', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create();
+        $contact->delete();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->deleteJson(route('company-contacts.force-delete', $contact->id));
+
+        $response->assertNoContent();
+
+        $this->assertDatabaseMissing('company_contacts', [
+            'id' => $contact->id,
+        ]);
+    });
+
+    test('can force delete a non-soft-deleted company contact', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create();
+        $contact->delete();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->deleteJson(route('company-contacts.force-delete', $contact->id));
+
+        $response->assertNoContent();
+
+        $this->assertDatabaseMissing('company_contacts', [
+            'id' => $contact->id,
+        ]);
+    });
+
+    test('unauthorized user cannot force delete company contact', function () {
+        $unauthorizedUser = User::factory()->create();
+        $contact = CompanyContact::factory()->create();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->deleteJson(route('company-contacts.force-delete', $contact->id));
+
+        $response->assertForbidden();
+    });
+});
+
+describe('bulkDelete', function () {
+    test('can bulk delete multiple company contacts', function () {
+        $user = adminUser();
+        $contacts = CompanyContact::factory()->count(3)->create();
+        $ids = $contacts->pluck('id')->toArray();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.bulk.delete'), [
+                'ids' => $ids,
+            ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'message' => 'Company contacts deleted successfully',
+                'deleted_count' => 3,
+                'deleted_ids' => $ids,
+            ]);
+
+        foreach ($ids as $id) {
+            $this->assertSoftDeleted('company_contacts', ['id' => $id]);
+        }
+    });
+
+    test('validation fails with missing ids', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.bulk.delete'), []);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['ids']);
+    });
+
+    test('validation fails with non-existent ids', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.bulk.delete'), [
+                'ids' => [99999],
+            ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['ids.0']);
+    });
+
+    test('validation fails with invalid id format', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.bulk.delete'), [
+                'ids' => ['not-a-number'],
+            ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['ids.0']);
+    });
+});
+
+describe('bulkRestore', function () {
+    test('can bulk restore multiple company contacts', function () {
+        $user = adminUser();
+        $contacts = CompanyContact::factory()->count(3)->create();
+        $contacts->each->delete();
+        $ids = $contacts->pluck('id')->toArray();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.bulk.restore'), [
+                'ids' => $ids,
+            ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'message' => 'Company contacts restored successfully',
+                'restored_count' => 3,
+                'restored_ids' => $ids,
+            ]);
+
+        foreach ($ids as $id) {
+            $this->assertDatabaseHas('company_contacts', [
+                'id' => $id,
+                'deleted_at' => null,
+            ]);
+        }
+    });
+
+    test('validation fails with missing ids', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.bulk.restore'), []);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['ids']);
+    });
+
+    test('validation fails with invalid id format', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.bulk.restore'), [
+                'ids' => ['not-a-number'],
+            ]);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['ids.0']);
+    });
+});
