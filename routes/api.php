@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyContactController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyIndustryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;

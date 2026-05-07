@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Concerns\HasCompanyContactHelpers;
+use App\Concerns\HasCompanyContactScopes;
 use Database\Factories\CompanyContactFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Builder;
 
 #[Fillable([
     'company_id',
@@ -36,9 +37,13 @@ class CompanyContact extends Model
     /**
      * @use HasFactory<CompanyContactFactory>
      * @use SoftDeletes<SoftDeletes>
+     * @use HasCompanyContactHelpers<HasCompanyContactHelpers>
+     * @use HasCompanyContactScopes<HasCompanyContactScopes>
      */
     use HasFactory,
-        SoftDeletes;
+        SoftDeletes,
+        HasCompanyContactHelpers,
+        HasCompanyContactScopes;
 
     /**
      * Get the company for contact.
@@ -88,123 +93,6 @@ class CompanyContact extends Model
     public function restorer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'restored_by');
-    }
-
-    /**
-     * Scope to filter primary contacts.
-     *
-     * @param Builder $query
-     *
-     * @return Builder
-     */
-    public function scopePrimary(Builder $query): Builder
-    {
-        return $query->where('is_primary', true);
-    }
-
-    /**
-     * Scope to filter real contacts.
-     *
-     * @param Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeReal(Builder $query): Builder
-    {
-        return $query->where('is_real', true);
-    }
-
-    /**
-     * Scope to filter contacts by company.
-     *
-     * @param Builder $query
-     * @param int $companyId
-     *
-     * @return Builder
-     */
-    public function scopeForCompany(Builder $query, int $companyId): Builder
-    {
-        return $query->where('company_id', $companyId);
-    }
-
-    /**
-     * Scope to filter contacts with email.
-     *
-     * @param Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeWithEmail(Builder $query): Builder
-    {
-        return $query->whereNotNull('email');
-    }
-
-    /**
-     * Scope to filter contacts with phone.
-     *
-     * @param Builder $query
-     *
-     * @return Builder
-     */
-    public function scopeWithPhone(Builder $query): Builder
-    {
-        return $query->where(function ($q) {
-            $q->whereNotNull('phone')
-                ->orWhereNotNull('mobile');
-        });
-    }
-
-    /**
-     * Get the contact's full name.
-     *
-     * @return string
-     */
-    public function getFullNameAttribute(): string
-    {
-        return trim("{$this->first_name} {$this->last_name}");
-    }
-
-    /**
-     * Get the contact's initials.
-     *
-     * @return string
-     */
-    public function getInitialsAttribute(): string
-    {
-        $firstInitial = $this->first_name ? substr($this->first_name, 0, 1) : '';
-        $lastInitial = $this->last_name ? substr($this->last_name, 0, 1) : '';
-        
-        return strtoupper($firstInitial . $lastInitial);
-    }
-
-    /**
-     * Get the primary contact method.
-     *
-     * @return string|null
-     */
-    public function getPrimaryContactMethodAttribute(): ?string
-    {
-        if ($this->email) {
-            return $this->email;
-        }
-        
-        if ($this->mobile) {
-            return $this->mobile;
-        }
-        
-        return $this->phone;
-    }
-
-    /**
-     * Check if contact has complete information.
-     *
-     * @return bool
-     */
-    public function isComplete(): bool
-    {
-        return isset($this->first_name) 
-            && isset($this->last_name) 
-            && isset($this->email);
     }
 
     /**
