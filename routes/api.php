@@ -187,19 +187,19 @@ Route::middleware('auth:sanctum')->group(function () {
             [CompanyContactController::class, 'store']
         )->name('store');
         Route::get(
-            '/{company_industry}',
+            '/{company_contact}',
             [CompanyContactController::class, 'show']
         )->name('show');
         Route::put(
-            '/{company_industry}',
+            '/{company_contact}',
             [CompanyContactController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{company_industry}',
+            '/{company_contact}',
             [CompanyContactController::class, 'update']
         )->name('patch');
         Route::delete(
-            '/{company_industry}',
+            '/{company_contact}',
             [CompanyContactController::class, 'destroy']
         )->name('destroy');
 

@@ -55,7 +55,7 @@ describe('index', function () {
 });
 
 describe('store', function () {
-    test('can create a company industry', function () {
+    test('can create a company contact', function () {
         $user = adminUser();
 
         $company = Company::factory()->create();
@@ -98,6 +98,41 @@ describe('store', function () {
             ->postJson(route('company-contacts.store'), [
                 'first_name' => 'Dave',
             ]);
+
+        $response->assertForbidden();
+    });
+});
+
+describe('show', function () {
+    test('can view a company contact', function () {
+        $user = adminUser();
+        $contact = CompanyContact::factory()->create();
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->getJson(route('company-contacts.show', $contact));
+
+        $response->assertOk()
+            ->assertJsonFragment([
+                'id' => $contact->id,
+                'first_name' => $contact->first_name,
+            ]);
+    });
+
+    test('returns 404 for non-existent company contact', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->getJson(route('company-contacts.show', 99999));
+
+        $response->assertNotFound();
+    });
+
+    test('unauthorized user cannot view company contact', function () {
+        $unauthorizedUser = User::factory()->create();
+        $contact = CompanyContact::factory()->create();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->getJson(route('company-contacts.show', $contact));
 
         $response->assertForbidden();
     });
