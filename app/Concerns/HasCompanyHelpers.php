@@ -13,6 +13,8 @@ namespace App\Concerns;
  * @property string|null $website
  * @property int|null $employee_count
  * @property string|null $annual_revenue
+ *
+ * @method mixed primaryContact(string $type)
  */
 trait HasCompanyHelpers
 {
@@ -38,41 +40,41 @@ trait HasCompanyHelpers
         return implode(', ', $parts);
     }
 
-    // /**
-    //  * Get primary email (fallback to model email).
-    //  *
-    //  * @return null|string
-    //  */
-    // public function getPrimaryEmailAttribute(): ?string
-    // {
-    //     return $this->primaryContact('email')?->value ?? $this->email;
-    // }
+    /**
+     * Get primary email (fallback to model email).
+     *
+     * @return string|null
+     */
+    public function getPrimaryEmailAttribute(): ?string
+    {
+        return $this->primaryContact('email')?->value ?? $this->email;
+    }
 
-    // /**
-    //  * Get primary phone (fallback to model phone).
-    //  *
-    //  * @return null|string
-    //  */
-    // public function getPrimaryPhoneAttribute(): ?string
-    // {
-    //     return $this->primaryContact('phone')?->value ?? $this->phone;
-    // }
+    /**
+     * Get primary phone (fallback to model phone).
+     *
+     * @return string|null
+     */
+    public function getPrimaryPhoneAttribute(): ?string
+    {
+        return $this->primaryContact('phone')?->value ?? $this->phone;
+    }
 
-    // /**
-    //  * Get primary website (fallback to model website).
-    //  *
-    //  * @return null|string
-    //  */
-    // public function getPrimaryWebsiteAttribute(): ?string
-    // {
-    //     $contact = $this->primaryContact('website');
+    /**
+     * Get primary website (fallback to model website).
+     *
+     * @return string|null
+     */
+    public function getPrimaryWebsiteAttribute(): ?string
+    {
+        $contact = $this->primaryContact('website');
 
-    //     if ($contact) {
-    //         return $contact->formatted_value;
-    //     }
+        if ($contact) {
+            return $contact->formatted_value;
+        }
 
-    //     return $this->formatWebsiteUrl($this->website);
-    // }
+        return $this->formatWebsiteUrl($this->website);
+    }
 
     /**
      * Get employee count category.

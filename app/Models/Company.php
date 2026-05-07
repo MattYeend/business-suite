@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -134,43 +134,43 @@ class Company extends Model
         return $this->belongsTo(User::class, 'restored_by');
     }
 
-    // /**
-    //  * Get all contacts for the company.
-    //  *
-    //  * @return HasMany
-    //  */
-    // public function companyContacts(): HasMany
-    // {
-    //     return $this->hasMany(CompanyContact::class)->ordered();
-    // }
+    /**
+     * Get all contacts for the company.
+     *
+     * @return HasMany
+     */
+    public function companyContacts(): HasMany
+    {
+        return $this->hasMany(CompanyContact::class)->ordered();
+    }
 
-    // /**
-    //  * Get contacts of a specific type.
-    //  *
-    //  * @param  string $type
-    //  *
-    //  * @return HasMany
-    //  */
-    // public function contactsOfType(string $type): HasMany
-    // {
-    //     return $this->hasMany(CompanyContact::class)
-    //         ->where('type', $type)
-    //         ->ordered();
-    // }
+    /**
+     * Get contacts of a specific type.
+     *
+     * @param  string $type
+     *
+     * @return HasMany
+     */
+    public function contactsOfType(string $type): HasMany
+    {
+        return $this->hasMany(CompanyContact::class)
+            ->where('type', $type)
+            ->ordered();
+    }
 
-    // /**
-    //  * Get primary contact of a specific type.
-    //  *
-    //  * @param  string $type
-    //  *
-    //  * @return null|CompanyContact
-    //  */
-    // public function primaryContact(string $type): ?CompanyContact
-    // {
-    //     return $this->contactsOfType($type)
-    //         ->where('is_primary', true)
-    //         ->first();
-    // }
+    /**
+     * Get primary contact of a specific type.
+     *
+     * @param  string $type
+     *
+     * @return CompanyContact|null
+     */
+    public function primaryContact(string $type): ?CompanyContact
+    {
+        return $this->contactsOfType($type)
+            ->where('is_primary', true)
+            ->first();
+    }
 
     /**
      * Get the attributes that should be cast.
