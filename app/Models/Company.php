@@ -146,6 +146,16 @@ class Company extends Model
     }
 
     /**
+     * Get all phone related information for the company.
+     *
+     * @return HasMany
+     */
+    public function companyPhone(): HasMany
+    {
+        return $this->hasMany(CompanyPhone::class)->ordered();
+    }
+
+    /**
      * Get contacts of a specific type.
      *
      * @param  string $type
@@ -160,6 +170,20 @@ class Company extends Model
     }
 
     /**
+     * Get phones of a specific type.
+     *
+     * @param  string $type
+     *
+     * @return HasMany
+     */
+    public function phonesOfType(string $type): HasMany
+    {
+        return $this->hasMany(CompanyPhone::class)
+            ->where('type', $type)
+            ->ordered();
+    }
+
+    /**
      * Get primary contact of a specific type.
      *
      * @param  string $type
@@ -169,6 +193,20 @@ class Company extends Model
     public function primaryContact(string $type): ?CompanyContact
     {
         return $this->contactsOfType($type)
+            ->where('is_primary', true)
+            ->first();
+    }
+
+    /**
+     * Get primary phone of a specific type.
+     *
+     * @param  string $type
+     *
+     * @return CompanyPhone|null
+     */
+    public function primaryPhone(string $type): ?CompanyPhone
+    {
+        return $this->phonesOfType($type)
             ->where('is_primary', true)
             ->first();
     }

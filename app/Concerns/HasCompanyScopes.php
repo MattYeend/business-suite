@@ -7,6 +7,72 @@ use Illuminate\Database\Eloquent\Builder;
 trait HasCompanyScopes
 {
     /**
+     * Scope to eager load industry relationship.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithIndustry(Builder $query): Builder
+    {
+        return $query->with('industry');
+    }
+
+    /**
+     * Scope to eager load contacts relationship.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithContacts(Builder $query): Builder
+    {
+        return $query->with('companyContacts');
+    }
+
+    /**
+     * Scope to eager load phones relationship.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithPhones(Builder $query): Builder
+    {
+        return $query->with('companyPhone');
+    }
+
+    /**
+     * Scope to eager load creator relationship.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithCreator(Builder $query): Builder
+    {
+        return $query->with('creator');
+    }
+
+    /**
+     * Scope to eager load all common relationships.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithAllRelations(Builder $query): Builder
+    {
+        return $query->with([
+            'industry',
+            'companyContacts',
+            'companyPhone',
+            'creator',
+            'updater',
+        ]);
+    }
+
+    /**
      * Scope a query to only include real companies.
      *
      * @param  Builder $query
@@ -54,6 +120,18 @@ trait HasCompanyScopes
     public function scopeInCountry(Builder $query, string $country): Builder
     {
         return $query->where('country', $country);
+    }
+
+    /**
+     * Scope companies that have a phone.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeHasPhone(Builder $query): Builder
+    {
+        return $query->whereNotNull('phone');
     }
 
     /**

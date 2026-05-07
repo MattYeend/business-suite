@@ -13,8 +13,20 @@ namespace App\Concerns;
  * @property string|null $website
  * @property int|null $employee_count
  * @property string|null $annual_revenue
+ * 
+ * @property-read string|null $full_address
+ * @property-read string|null $primary_email
+ * @property-read string|null $primary_phone
+ * @property-read string|null $primary_website
+ * @property-read string|null $primary_phone_main
+ * @property-read string|null $primary_phone_fax
+ * @property-read string|null $primary_phone_mobile
+ * @property-read string|null $primary_phone_toll_free
+ * @property-read string|null $employee_size
+ * @property-read string|null $formatted_revenue
  *
  * @method mixed primaryContact(string $type)
+ * @method mixed primaryPhone(string $type)
  */
 trait HasCompanyHelpers
 {
@@ -57,7 +69,49 @@ trait HasCompanyHelpers
      */
     public function getPrimaryPhoneAttribute(): ?string
     {
-        return $this->primaryContact('phone')?->value ?? $this->phone;
+        return $this->primaryPhone('main')?->number 
+            ?? $this->primaryContact('phone')?->value 
+            ?? $this->phone;
+    }
+
+    /**
+     * Get primary main phone number.
+     *
+     * @return string|null
+     */
+    public function getPrimaryPhoneMainAttribute(): ?string
+    {
+        return $this->primaryPhone('main')?->number;
+    }
+
+    /**
+     * Get primary fax number.
+     *
+     * @return string|null
+     */
+    public function getPrimaryPhoneFaxAttribute(): ?string
+    {
+        return $this->primaryPhone('fax')?->number;
+    }
+
+    /**
+     * Get primary mobile number.
+     *
+     * @return string|null
+     */
+    public function getPrimaryPhoneMobileAttribute(): ?string
+    {
+        return $this->primaryPhone('mobile')?->number;
+    }
+
+    /**
+     * Get primary toll-free number.
+     *
+     * @return string|null
+     */
+    public function getPrimaryPhoneTollFreeAttribute(): ?string
+    {
+        return $this->primaryPhone('toll_free')?->number;
     }
 
     /**
