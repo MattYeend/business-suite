@@ -5,6 +5,7 @@ namespace App\Services\CompanyContacts;
 use App\Models\CompanyContact;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+
 class CompanyContactDeleterService
 {
     public function __construct(

@@ -270,19 +270,41 @@ class CompanyContactLogService
     protected function baseIndustryData(CompanyContact $contact): array
     {
         if (! $contact) {
-            return [
-                'id' => null,
-                'first_name' => null,
-                'last_name' => null,
-                'email' => null,
-                'phone' => null,
-                'mobile' => null,
-                'job_title' => null,
-                'company_id' => null,
-                'meta' => null,
-            ];
+            return $this->getNullData();
         }
 
+        return $this->getContactData($contact);
+    }
+
+    /**
+     * Get null data
+     *
+     * @return array
+     */
+    private function getNullData(): array
+    {
+        return [
+            'id' => null,
+            'first_name' => null,
+            'last_name' => null,
+            'email' => null,
+            'phone' => null,
+            'mobile' => null,
+            'job_title' => null,
+            'company_id' => null,
+            'meta' => null,
+        ];
+    }
+
+    /**
+     * Get contact data
+     *
+     * @param  CompanyContact $contact
+     *
+     * @return array
+     */
+    private function getContactData(CompanyContact $contact): array
+    {
         return [
             'id' => $contact->id,
             'first_name' => $contact->first_name,
