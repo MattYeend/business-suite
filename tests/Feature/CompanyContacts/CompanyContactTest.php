@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Company;
 use App\Models\CompanyContact;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
@@ -53,3 +54,51 @@ describe('index', function () {
     });
 });
 
+describe('store', function () {
+    test('can create a company industry', function () {
+        $user = adminUser();
+
+        $company = Company::factory()->create();
+        
+        $data = [
+            'company_id' => $company->id,
+            'first_name' => 'Dave',
+            'last_name' => 'Smith',
+            'is_primary' => true,
+        ];
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.store'), $data);
+
+        $response->assertCreated()
+            ->assertJsonFragment(['first_name' => 'Dave']);
+
+        $this->assertDatabaseHas('company_contacts', [
+            'company_id' => $company->id,
+            'first_name' => 'Dave',
+            'last_name' => 'Smith',
+            'is_primary' => true,
+        ]);
+    });
+
+    test('validation fails with missing required fields', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-contacts.store'), []);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['first_name']);
+    });
+
+    test('unauthorized user cannot create company contact', function () {
+        $unauthorizedUser = User::factory()->create();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->postJson(route('company-contacts.store'), [
+                'first_name' => 'Dave',
+            ]);
+
+        $response->assertForbidden();
+    });
+});

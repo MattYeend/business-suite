@@ -17,14 +17,14 @@ class CompanyContactDataPreparationService
         ?int $createdBy
     ): array {
         return [
+            'company_id' => $data['company_id'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'mobile' => $data['mobile'],
-            'job_title' => $data['job_title'],
-            'is_primary' => $data['is_primary'],
-            'company_id' => $data['company_id'],
+            'email' => $data['email'] ?? null,
+            'phone' => $data['phone'] ?? null,
+            'mobile' => $data['mobile'] ?? null,
+            'job_title' => $data['job_title'] ?? null,
+            'is_primary' => $data['is_primary'] ?? null,
             'created_by' => $createdBy,
         ];
     }
@@ -40,6 +40,7 @@ class CompanyContactDataPreparationService
     public function prepareForUpdate(array $data, ?int $updatedBy): array
     {
         return array_filter([
+            'company_id' => $data['company_id'] ?? null,
             'first_name' => $data['first_name'] ?? null,
             'last_name' => $data['last_name'] ?? null,
             'email' => $data['email'] ?? null,
@@ -47,7 +48,6 @@ class CompanyContactDataPreparationService
             'mobile' => $data['mobile'] ?? null,
             'job_title' => $data['job_title'] ?? null,
             'is_primary' => $data['is_primary'] ?? null,
-            'company_id' => $data['company_id'] ?? null,
             'updated_by' => $updatedBy,
         ], fn ($value) => $value !== null);
     }
