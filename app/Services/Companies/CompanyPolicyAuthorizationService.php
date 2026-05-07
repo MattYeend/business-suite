@@ -39,21 +39,6 @@ class CompanyPolicyAuthorizationService
     }
 
     /**
-     * Check if admin is restricted from managing the target user.
-     *
-     * Regular admins cannot manage super admins.
-     *
-     * @param  User $user
-     * @param  User $model
-     *
-     * @return bool
-     */
-    public function isRestrictedFromManaging(User $user, User $model): bool
-    {
-        return $this->roleChecker->isRestrictedFromManaging($user, $model);
-    }
-
-    /**
      * Check if company is active (not soft-deleted).
      *
      * @param  Company $companyIndustry
