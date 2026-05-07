@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             CompanyIndustrySeeder::class,
             CompanySeeder::class,
             CompanyContactSeeder::class,
+            CompanyPhoneSeeder::class,
         ]);
         // User::factory(10)->create();
 
