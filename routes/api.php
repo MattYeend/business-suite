@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyIndustryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -160,6 +161,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [CompanyController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Company Contact management routes
+    Route::prefix('company-contacts')->name(
+        'company-contacts.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [CompanyContactController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [CompanyContactController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [CompanyContactController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [CompanyContactController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{company_industry}',
+            [CompanyContactController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{company_industry}',
+            [CompanyContactController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{company_industry}',
+            [CompanyContactController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{company_industry}',
+            [CompanyContactController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [CompanyContactController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [CompanyContactController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
