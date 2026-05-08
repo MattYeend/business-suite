@@ -127,6 +127,17 @@ class Log extends Model
     public const ACTION_EXPORT_COMPANY_PHONE = 74;
     public const ACTION_COMPANY_PHONE_UPDATED_BY_CRON = 75;
 
+    // Company Address Management
+    public const ACTION_CREATE_COMPANY_ADDRESS = 76;
+    public const ACTION_UPDATE_COMPANY_ADDRESS = 77;
+    public const ACTION_DELETE_COMPANY_ADDRESS = 78;
+    public const ACTION_SHOW_COMPANY_ADDRESS = 79;
+    public const ACTION_FORCE_DELETE_COMPANY_ADDRESS = 80;
+    public const ACTION_RESTORE_COMPANY_ADDRESS = 81;
+    public const ACTION_IMPORT_COMPANY_ADDRESS = 82;
+    public const ACTION_EXPORT_COMPANY_ADDRESS = 83;
+    public const ACTION_COMPANY_ADDRESS_UPDATED_BY_CRON = 84;
+
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
     // Ensure to update the documentation accordingly.

@@ -22,11 +22,16 @@ namespace App\Concerns;
  * @property-read string|null $primary_phone_fax
  * @property-read string|null $primary_phone_mobile
  * @property-read string|null $primary_phone_toll_free
+ * @property-read string|null $primary_billing_address
+ * @property-read string|null $primary_shipping_address
+ * @property-read string|null $primary_office_address
+ * @property-read string|null $primary_warehouse_address
  * @property-read string|null $employee_size
  * @property-read string|null $formatted_revenue
  *
  * @method mixed primaryContact(string $type)
  * @method mixed primaryPhone(string $type)
+ * @method mixed primaryAddress(string $type)
  */
 trait HasCompanyHelpers
 {
@@ -128,6 +133,46 @@ trait HasCompanyHelpers
         }
 
         return $this->formatWebsiteUrl($this->website);
+    }
+
+    /**
+     * Get primary billing address formatted.
+     *
+     * @return string|null
+     */
+    public function getPrimaryBillingAddressAttribute(): ?string
+    {
+        return $this->primaryAddress('billing')?->full_address;
+    }
+
+    /**
+     * Get primary shipping address formatted.
+     *
+     * @return string|null
+     */
+    public function getPrimaryShippingAddressAttribute(): ?string
+    {
+        return $this->primaryAddress('shipping')?->full_address;
+    }
+
+    /**
+     * Get primary office address formatted.
+     *
+     * @return string|null
+     */
+    public function getPrimaryOfficeAddressAttribute(): ?string
+    {
+        return $this->primaryAddress('office')?->full_address;
+    }
+
+    /**
+     * Get primary warehouse address formatted.
+     *
+     * @return string|null
+     */
+    public function getPrimaryWarehouseAddressAttribute(): ?string
+    {
+        return $this->primaryAddress('warehouse')?->full_address;
     }
 
     /**

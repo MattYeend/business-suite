@@ -150,9 +150,19 @@ class Company extends Model
      *
      * @return HasMany
      */
-    public function companyPhone(): HasMany
+    public function companyPhones(): HasMany
     {
         return $this->hasMany(CompanyPhone::class)->ordered();
+    }
+
+    /**
+     * Get all address related information for the company.
+     *
+     * @return HasMany
+     */
+    public function companyAddresses(): HasMany
+    {
+        return $this->hasMany(CompanyAddress::class)->ordered();
     }
 
     /**
@@ -184,6 +194,20 @@ class Company extends Model
     }
 
     /**
+     * Get addresses of a specific type.
+     *
+     * @param  string $type
+     *
+     * @return HasMany
+     */
+    public function addressesesOfType(string $type): HasMany
+    {
+        return $this->hasMany(CompanyAddress::class)
+            ->where('type', $type)
+            ->ordered();
+    }
+
+    /**
      * Get primary contact of a specific type.
      *
      * @param  string $type
@@ -204,9 +228,23 @@ class Company extends Model
      *
      * @return CompanyPhone|null
      */
-    public function primaryPhone(string $type): ?CompanyPhone
+    public function primaryPhones(string $type): ?CompanyPhone
     {
         return $this->phonesOfType($type)
+            ->where('is_primary', true)
+            ->first();
+    }
+
+    /**
+     * Get primary address of a specific type.
+     *
+     * @param  string $type
+     *
+     * @return CompanyAddress|null
+     */
+    public function primaryAddresses(string $type): ?CompanyAddress
+    {
+        return $this->addressesOfType($type)
             ->where('is_primary', true)
             ->first();
     }

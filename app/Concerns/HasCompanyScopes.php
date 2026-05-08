@@ -39,7 +39,19 @@ trait HasCompanyScopes
      */
     public function scopeWithPhones(Builder $query): Builder
     {
-        return $query->with('companyPhone');
+        return $query->with('companyPhones');
+    }
+
+    /**
+     * Scope to eager load addresses relationship.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeWithAddresses(Builder $query): Builder
+    {
+        return $query->with('companyAddresses');
     }
 
     /**
@@ -66,7 +78,8 @@ trait HasCompanyScopes
         return $query->with([
             'industry',
             'companyContacts',
-            'companyPhone',
+            'companyPhones',
+            'companyAddresses',
             'creator',
             'updater',
         ]);

@@ -40,6 +40,11 @@ class CompanyPhone extends Model
         HasCompanyPhoneHelpers,
         HasCompanyPhoneScopes;
 
+    public const TYPE_MAIN = 'main';
+    public const TYPE_FAX = 'fax';
+    public const TYPE_TOLL_FREE = 'toll_free';
+    public const TYPE_MOBILE = 'mobile';
+
     /**
      * Get the company that owns the phone.
      *
