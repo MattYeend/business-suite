@@ -48,7 +48,7 @@ class CompanyPhoneQueryService
         $company = $this->findCompanyIndustry($id, $withTrashed);
 
         return array_merge(
-            ['company_industry' => $this->formatterService->format($company)],
+            ['company_phone' => $this->formatterService->format($company)],
             $this->getPermissions(),
             $this->baseData(),
         );

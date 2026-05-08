@@ -49,6 +49,7 @@ class CompanyPhoneFormatterService
     {
         return [
             'type' => $companyPhone->type,
+            'number' => $companyPhone->number,
             'is_primary' => $companyPhone->is_primary,
         ];
     }

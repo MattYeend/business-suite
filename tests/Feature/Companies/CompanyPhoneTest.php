@@ -110,3 +110,47 @@ describe('store', function () {
         $response->assertForbidden();
     });
 });
+
+describe('show', function () {
+    test('can view a company phone', function () {
+        $user = adminUser();
+        $company = Company::factory()->create();
+        $phone = CompanyPhone::factory()->create([
+            'company_id' => $company->id,
+            'type' => 'main',
+            'number' => '01234567890',
+            'is_primary' => true,
+        ]);
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->getJson(route('company-phones.show', $phone));
+
+        $response->assertOk()
+            ->assertJsonFragment([
+                'id' => $phone->id,
+                'company_id' => $company->id,
+                'type' => 'main',
+                'number' => '01234567890',
+                'is_primary' => true,
+            ]);
+    });
+
+    test('returns 404 for non-existent company phone', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->getJson(route('company-phones.show', 99999));
+
+        $response->assertNotFound();
+    });
+
+    test('unauthorized user cannot view company phone', function () {
+        $unauthorizedUser = User::factory()->create();
+        $phone = CompanyPhone::factory()->create();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->getJson(route('company-phones.show', $phone));
+
+        $response->assertForbidden();
+    });
+});
