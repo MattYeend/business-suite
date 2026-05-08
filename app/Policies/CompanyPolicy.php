@@ -12,6 +12,7 @@ class CompanyPolicy
         protected CompanyPolicyAuthorizationService $authorizationService
     ) {
     }
+
     /**
      * Determine whether the user can view any models.
      */
