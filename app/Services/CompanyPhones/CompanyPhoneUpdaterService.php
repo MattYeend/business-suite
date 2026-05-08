@@ -30,7 +30,11 @@ class CompanyPhoneUpdaterService
         array $data,
         ?int $updatedBy = null
     ): CompanyPhone {
-        return DB::transaction(function () use ($companyPhone, $data, $updatedBy) {
+        return DB::transaction(function () use (
+            $companyPhone,
+            $data,
+            $updatedBy
+        ) {
             $actor = User::findOrFail($updatedBy);
 
             $this->updateCompanyData($companyPhone, $data, $updatedBy);

@@ -122,7 +122,8 @@ class CompanyPhoneLogService
     /**
      * Log company phone force deletion (permanent).
      *
-     * @param  CompanyPhone $companyPhone The companyPhone that was force deleted.
+     * @param  CompanyPhone $companyPhone The companyPhone that was
+     * force deleted.
      * @param  User $actor The user who performed the action.
      * @param  int $actorId The ID of the user who performed the action.
      *
@@ -237,7 +238,8 @@ class CompanyPhoneLogService
     }
 
     /**
-     * Log a company phone companyPhone update event performed by a scheduled task (cron).
+     * Log a company phone companyPhone update event performed by a scheduled
+     * task (cron).
      *
      * @param  CompanyPhone $companyPhone The companyPhone that was updated.
      *

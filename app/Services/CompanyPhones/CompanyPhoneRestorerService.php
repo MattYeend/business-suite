@@ -38,7 +38,11 @@ class CompanyPhoneRestorerService
             // restore() returns boolean, so we don't assign it
             $companyPhone->restore();
 
-            $this->logService->logRestoration($companyPhone, $actor, $restoredBy);
+            $this->logService->logRestoration(
+                $companyPhone,
+                $actor,
+                $restoredBy
+            );
 
             // Return the fresh model instance
             return $companyPhone->fresh();
@@ -61,7 +65,11 @@ class CompanyPhoneRestorerService
     ): int {
         $count = 0;
 
-        DB::transaction(function () use ($companyPhoneIds, $restoredBy, &$count) {
+        DB::transaction(function () use (
+            $companyPhoneIds,
+            $restoredBy,
+            &$count
+        ) {
             /** @var Collection<int,CompanyPhone> $companyPhones */
             $companyPhones = CompanyPhone::withTrashed()
                 ->whereIn('id', $companyPhoneIds)

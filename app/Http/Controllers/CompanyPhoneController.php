@@ -51,8 +51,10 @@ class CompanyPhoneController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCompanyPhoneRequest $request, CompanyPhone $companyPhone)
-    {
+    public function update(
+        UpdateCompanyPhoneRequest $request,
+        CompanyPhone $companyPhone
+    ) {
         //
     }
 

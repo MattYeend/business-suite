@@ -63,8 +63,8 @@ class CompanyPhoneActiveCheckerService
     }
 
     /**
-     * Check if user can modify company phone (update/delete) or restore/force-delete
-     * company phone based on its active status.
+     * Check if user can modify company phone (update/delete) or
+     * restore/force-delete company phone based on its active status.
      *
      * @param  CompanyPhone $companyPhone
      * @param  string $action The action being checked, either 'modify' or

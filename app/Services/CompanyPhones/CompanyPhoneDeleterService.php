@@ -56,7 +56,11 @@ class CompanyPhoneDeleterService
     ): bool {
         return DB::transaction(function () use ($companyPhone, $deletedBy) {
             $actor = User::findOrFail($deletedBy);
-            $this->logService->logForceDeletion($companyPhone, $actor, $deletedBy);
+            $this->logService->logForceDeletion(
+                $companyPhone,
+                $actor,
+                $deletedBy
+            );
 
             return $companyPhone->forceDelete();
         });
@@ -78,8 +82,15 @@ class CompanyPhoneDeleterService
     ): int {
         $count = 0;
 
-        DB::transaction(function () use ($companyPhoneIds, $deletedBy, &$count) {
-            $companyPhones = CompanyPhone::whereIn('id', $companyPhoneIds)->get();
+        DB::transaction(function () use (
+            $companyPhoneIds,
+            $deletedBy,
+            &$count
+        ) {
+            $companyPhones = CompanyPhone::whereIn(
+                'id',
+                $companyPhoneIds
+            )->get();
 
             foreach ($companyPhones as $companyPhone) {
                 if ($this->delete($companyPhone, $deletedBy)) {
