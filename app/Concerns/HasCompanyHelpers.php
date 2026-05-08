@@ -13,7 +13,7 @@ namespace App\Concerns;
  * @property string|null $website
  * @property int|null $employee_count
  * @property string|null $annual_revenue
- * 
+ *
  * @property-read string|null $full_address
  * @property-read string|null $primary_email
  * @property-read string|null $primary_phone
@@ -69,8 +69,8 @@ trait HasCompanyHelpers
      */
     public function getPrimaryPhoneAttribute(): ?string
     {
-        return $this->primaryPhone('main')?->number 
-            ?? $this->primaryContact('phone')?->value 
+        return $this->primaryPhone('main')?->number
+            ?? $this->primaryContact('phone')?->value
             ?? $this->phone;
     }
 

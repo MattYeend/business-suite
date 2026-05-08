@@ -50,7 +50,8 @@ class CompanyIndustry extends Model
      * @use HasFactory<CompanyIndustryFactory>
      * @use SoftDeletes<SoftDeletes>
      */
-    use HasFactory, SoftDeletes;
+    use HasFactory,
+        SoftDeletes;
 
     /**
      * Get the user who created the industry.
