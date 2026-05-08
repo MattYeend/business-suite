@@ -189,7 +189,6 @@ class CompanyIndustryController extends Controller
     {
         $companyIndustry = CompanyIndustry::withTrashed()->findOrFail($id);
 
-        
         if (! $companyIndustry->trashed()) {
             abort(404);
         }
