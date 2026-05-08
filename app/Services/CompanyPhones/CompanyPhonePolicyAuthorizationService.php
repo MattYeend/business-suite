@@ -67,14 +67,14 @@ class CompanyPhonePolicyAuthorizationService
      * Only admins can view company phones.
      *
      * @param  User $user
-     * @param  CompanyPhone $company
+     * @param  CompanyPhone $companyPhone
      *
      * @return bool
      */
-    public function canView(User $user, CompanyPhone $company): bool
+    public function canView(User $user, CompanyPhone $companyPhone): bool
     {
         return $this->isAdmin($user) && $this->activeChecker->isActive(
-            $company
+            $companyPhone
         );
     }
 
@@ -82,14 +82,14 @@ class CompanyPhonePolicyAuthorizationService
      * Determine whether the user can update the model.
      *
      * @param  User $user
-     * @param  CompanyPhone $company
+     * @param  CompanyPhone $companyPhone
      *
      * @return bool
      */
-    public function canUpdate(User $user, CompanyPhone $company): bool
+    public function canUpdate(User $user, CompanyPhone $companyPhone): bool
     {
         return $this->isAdmin($user) && $this->activeChecker->isActive(
-            $company
+            $companyPhone
         );
     }
 
@@ -97,14 +97,14 @@ class CompanyPhonePolicyAuthorizationService
      * Determine whether the user can delete the model.
      *
      * @param  User $user
-     * @param  CompanyPhone $company
+     * @param  CompanyPhone $companyPhone
      *
      * @return bool
      */
-    public function canDelete(User $user, CompanyPhone $company): bool
+    public function canDelete(User $user, CompanyPhone $companyPhone): bool
     {
         return $this->isAdmin($user) && $this->activeChecker->canBeModified(
-            $company
+            $companyPhone
         );
     }
 
@@ -112,28 +112,28 @@ class CompanyPhonePolicyAuthorizationService
      * Determine whether the user can restore the model.
      *
      * @param  User $user
-     * @param  CompanyPhone $company
+     * @param  CompanyPhone $companyPhone
      *
      * @return bool
      */
-    public function canRestore(User $user, CompanyPhone $company): bool
+    public function canRestore(User $user, CompanyPhone $companyPhone): bool
     {
         return $this->isAdmin($user) &&
-            $this->activeChecker->canBeRestoredOrForceDeleted($company);
+            $this->activeChecker->canBeRestoredOrForceDeleted($companyPhone);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  User $user
-     * @param  CompanyPhone $company
+     * @param  CompanyPhone $companyPhone
      *
      * @return bool
      */
-    public function canForceDelete(User $user, CompanyPhone $company): bool
+    public function canForceDelete(User $user, CompanyPhone $companyPhone): bool
     {
         return $this->activeChecker->canUserPerformAction(
-            $company,
+            $companyPhone,
             'restoreOrForceDelete',
             $user
         );

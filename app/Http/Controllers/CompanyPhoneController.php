@@ -242,7 +242,7 @@ class CompanyPhoneController extends Controller
     }
 
     /**
-     * Soft delete multiple company contacts in bulk.
+     * Soft delete multiple company phones in bulk.
      *
      * Expects a 'ids' array in the request containing company phone IDs
      * to delete. Each company phone is authorised individually via the
@@ -267,14 +267,14 @@ class CompanyPhoneController extends Controller
         );
 
         return response()->json([
-            'message' => 'Company contacts deleted successfully',
+            'message' => 'Company phones deleted successfully',
             'deleted_count' => count($deleted),
             'deleted_ids' => $deleted,
         ]);
     }
 
     /**
-     * Restore multiple company contacts from soft deletion in bulk.
+     * Restore multiple company phones from soft deletion in bulk.
      *
      * @param  Request $request Incoming HTTP request with 'ids' array.
      *
@@ -297,7 +297,7 @@ class CompanyPhoneController extends Controller
         );
 
         return response()->json([
-            'message' => 'Company contacts restored successfully',
+            'message' => 'Company phones restored successfully',
             'restored_count' => count($restored),
             'restored_ids' => $restored,
         ]);
