@@ -243,7 +243,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('show');
         Route::put(
             '/{company_phone}',
-            [CompanyContactController::class, 'update']
+            [CompanyPhoneController::class, 'update']
         )->name('update');
         Route::patch(
             '/{company_phone}',
