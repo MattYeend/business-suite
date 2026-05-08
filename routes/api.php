@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyIndustryController;
+use App\Http\Controllers\CompanyPhoneController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -211,6 +212,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [CompanyContactController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Company Phone management routes
+    Route::prefix('company-phones')->name(
+        'company-phones.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [CompanyPhoneController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [CompanyPhoneController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [CompanyPhoneController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [CompanyPhoneController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{company_phone}',
+            [CompanyPhoneController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{company_phone}',
+            [CompanyContactController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{company_phone}',
+            [CompanyPhoneController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{company_phone}',
+            [CompanyPhoneController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [CompanyPhoneController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [CompanyPhoneController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
