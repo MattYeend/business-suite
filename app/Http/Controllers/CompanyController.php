@@ -189,7 +189,6 @@ class CompanyController extends Controller
     {
         $company = Company::withTrashed()->findOrFail($id);
 
-        // Check if trashed BEFORE authorization to return 404 instead of 403
         if (! $company->trashed()) {
             abort(404);
         }
