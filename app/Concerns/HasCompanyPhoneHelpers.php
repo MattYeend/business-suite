@@ -2,119 +2,92 @@
 
 namespace App\Concerns;
 
+use App\Models\CompanyPhone;
+
 /**
- * @property string|null $is_real
- * @property string|null $is_primary
- * @property string|null $type
- * @property string|null $number
+ * Company phone helper methods.
+ *
+ * @property bool   $is_real
+ * @property bool   $is_primary
+ * @property string $type
+ * @property string $number
+ * @property int    $company_id
+ * @property int    $id
+ *
+ * @mixin CompanyPhone
  */
 trait HasCompanyPhoneHelpers
 {
-    /**
-     * Check if the phone is real.
-     *
-     * @return bool
-     */
-    public function isReal(): bool
-    {
-        return (bool) $this->is_real;
-    }
-
-    /**
-     * Check if the phone is a test/demo phone.
-     *
-     * @return bool
-     */
-    public function isTest(): bool
-    {
-        return ! $this->is_real;
-    }
-
-    /**
-     * Check if the phone is the primary phone.
-     *
-     * @return bool
-     */
-    public function isPrimary(): bool
-    {
-        return (bool) $this->is_primary;
-    }
-
-    /**
-     * Check if the phone is of a specific type.
-     *
-     * @param string $type
-     *
-     * @return bool
-     */
-    public function isType(string $type): bool
-    {
-        return $this->type === $type;
-    }
-
-    /**
-     * Check if the phone is a main phone.
-     *
-     * @return bool
-     */
-    public function isMain(): bool
-    {
-        return $this->type === 'main';
-    }
-
-    /**
-     * Check if the phone is a fax number.
-     *
-     * @return bool
-     */
-    public function isFax(): bool
-    {
-        return $this->type === 'fax';
-    }
-
-    /**
-     * Check if the phone is a toll-free number.
-     *
-     * @return bool
-     */
-    public function isTollFree(): bool
-    {
-        return $this->type === 'toll_free';
-    }
-
-    /**
-     * Check if the phone is a mobile number.
-     *
-     * @return bool
-     */
-    public function isMobile(): bool
-    {
-        return $this->type === 'mobile';
-    }
+    use DetectsUKPhoneNumbers;
+    use DetectsUSPhoneNumbers;
+    use FormatsGenericPhoneNumbers;
+    use FormatsInternationalPhoneNumbers;
+    use FormatsUKPhoneNumbers;
+    use FormatsUSPhoneNumbers;
+    use HasCompanyPhoneStateHelpers;
+    use HasCompanyPhoneTypeHelpers;
 
     /**
      * Get a formatted phone number.
      *
-     * @return string
-     */
-    public function getFormattedNumberAttribute(): string
-    {
-        return $this->number;
-    }
-
-    /**
-     * Get the phone type label.
+     * @param  string|null $format
      *
      * @return string
      */
-    public function getTypeLabelAttribute(): string
-    {
-        return match ($this->type) {
-            'main' => 'Main',
-            'fax' => 'Fax',
-            'toll_free' => 'Toll Free',
-            'mobile' => 'Mobile',
-            default => ucfirst($this->type),
+    public function getFormattedNumber(
+        ?string $format = null
+    ): string {
+        if (! isset($this->number)) {
+            return '';
+        }
+
+        $cleaned = $this->cleanPhoneNumber(
+            $this->number
+        );
+
+        if (! isset($cleaned)) {
+            return $this->number;
+        }
+
+        return $this->formatCleanedNumber(
+            $cleaned,
+            $format
+        );
+    }
+
+    /**
+     * Format a cleaned phone number.
+     *
+     * @param  string $cleaned
+     * @param  string|null $format
+     *
+     * @return string
+     */
+    protected function formatCleanedNumber(
+        string $cleaned,
+        ?string $format
+    ): string {
+        $isInternational = str_starts_with($cleaned, '+');
+
+        $digits = ltrim($cleaned, '+');
+
+        return match (true) {
+            $this->isUKNumber($digits) => $this->formatUKNumber(
+                $digits,
+                $format
+            ),
+
+            $this->isUSNumber($digits) => $this->formatUSNumber(
+                $digits,
+                $format,
+                $isInternational
+            ),
+
+            $isInternational => $this->formatInternationalNumber(
+                $cleaned
+            ),
+
+            default => $this->formatGenericNumber($digits),
         };
     }
 }

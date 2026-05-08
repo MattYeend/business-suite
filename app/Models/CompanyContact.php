@@ -56,7 +56,7 @@ class CompanyContact extends Model
     }
 
     /**
-     * Get the user who created the company.
+     * Get the user who created the contact.
      *
      * @return BelongsTo
      */
@@ -66,7 +66,7 @@ class CompanyContact extends Model
     }
 
     /**
-     * Get the user who last updated the company.
+     * Get the user who last updated the contact.
      *
      * @return BelongsTo
      */
@@ -76,7 +76,7 @@ class CompanyContact extends Model
     }
 
     /**
-     * Get the user who deleted the company.
+     * Get the user who deleted the contact.
      *
      * @return BelongsTo
      */
@@ -86,7 +86,7 @@ class CompanyContact extends Model
     }
 
     /**
-     * Get the user who restored the company.
+     * Get the user who restored the contact.
      *
      * @return BelongsTo
      */
@@ -103,6 +103,7 @@ class CompanyContact extends Model
     protected function casts(): array
     {
         return [
+            'is_primary' => 'boolean',
             'is_real' => 'boolean',
             'meta' => 'array',
             'restored_at' => 'datetime',

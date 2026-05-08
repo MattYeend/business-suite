@@ -56,7 +56,7 @@ class CompanyPhone extends Model
     }
 
     /**
-     * Get the user who created the industry.
+     * Get the user who created the phone.
      *
      * @return BelongsTo
      */
@@ -66,7 +66,7 @@ class CompanyPhone extends Model
     }
 
     /**
-     * Get the user who last updated the industry.
+     * Get the user who last updated the phone.
      *
      * @return BelongsTo
      */
@@ -76,7 +76,7 @@ class CompanyPhone extends Model
     }
 
     /**
-     * Get the user who deleted the industry.
+     * Get the user who deleted the phone.
      *
      * @return BelongsTo
      */
@@ -86,7 +86,7 @@ class CompanyPhone extends Model
     }
 
     /**
-     * Get the user who restored the industry.
+     * Get the user who restored the phone.
      *
      * @return BelongsTo
      */

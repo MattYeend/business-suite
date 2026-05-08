@@ -2,7 +2,12 @@
 
 namespace App\Concerns;
 
+use App\Models\CompanyPhone;
 use Illuminate\Database\Eloquent\Builder;
+
+/**
+ * @mixin CompanyPhone
+ */
 
 trait HasCompanyPhoneScopes
 {
@@ -11,11 +16,11 @@ trait HasCompanyPhoneScopes
      *
      * @param  Builder $query
      *
-     * @return void
+     * @return Builder
      */
-    public function scopeReal(Builder $query): void
+    public function scopeReal(Builder $query): Builder
     {
-        $query->where('is_real', true);
+        return $query->where('is_real', true);
     }
 
     /**
@@ -23,11 +28,11 @@ trait HasCompanyPhoneScopes
      *
      * @param  Builder $query
      *
-     * @return void
+     * @return Builder
      */
-    public function scopePrimary(Builder $query): void
+    public function scopePrimary(Builder $query): Builder
     {
-        $query->where('is_primary', true);
+        return $query->where('is_primary', true);
     }
 
     /**
@@ -36,11 +41,11 @@ trait HasCompanyPhoneScopes
      * @param  Builder $query
      * @param  string $type
      *
-     * @return void
+     * @return Builder
      */
-    public function scopeOfType(Builder $query, string $type): void
+    public function scopeOfType(Builder $query, string $type): Builder
     {
-        $query->where('type', $type);
+        return $query->where('type', $type);
     }
 
     /**
@@ -48,11 +53,11 @@ trait HasCompanyPhoneScopes
      *
      * @param  Builder $query
      *
-     * @return void
+     * @return Builder
      */
-    public function scopeMain(Builder $query): void
+    public function scopeMain(Builder $query): Builder
     {
-        $query->where('type', 'main');
+        return $query->where('type', CompanyPhone::TYPE_MAIN);
     }
 
     /**
@@ -60,11 +65,11 @@ trait HasCompanyPhoneScopes
      *
      * @param  Builder $query
      *
-     * @return void
+     * @return Builder
      */
-    public function scopeFax(Builder $query): void
+    public function scopeFax(Builder $query): Builder
     {
-        $query->where('type', 'fax');
+        return $query->where('type', CompanyPhone::TYPE_FAX);
     }
 
     /**
@@ -72,11 +77,11 @@ trait HasCompanyPhoneScopes
      *
      * @param  Builder $query
      *
-     * @return void
+     * @return Builder
      */
-    public function scopeTollFree(Builder $query): void
+    public function scopeTollFree(Builder $query): Builder
     {
-        $query->where('type', 'toll_free');
+        return $query->where('type', CompanyPhone::TYPE_TOLL_FREE);
     }
 
     /**
@@ -84,10 +89,10 @@ trait HasCompanyPhoneScopes
      *
      * @param  Builder $query
      *
-     * @return void
+     * @return Builder
      */
-    public function scopeMobile(Builder $query): void
+    public function scopeMobile(Builder $query): Builder
     {
-        $query->where('type', 'mobile');
+        return $query->where('type', CompanyPhone::TYPE_MOBILE);
     }
 }
