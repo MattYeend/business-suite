@@ -9,7 +9,7 @@ use App\Models\User;
 class CompanyLogService
 {
     /**
-     * Log company company creation.
+     * Log company creation.
      *
      * @param  Company $company The company that was created.
      * @param  User $actor The user who performed the action.
@@ -28,7 +28,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_CREATE_COMPANY_INDUSTRY,
+            Log::ACTION_CREATE_COMPANY,
             $data,
             $actorId,
         );
@@ -37,7 +37,7 @@ class CompanyLogService
     }
 
     /**
-     * Log a company company show event.
+     * Log a company show event.
      *
      * @param  Company $company The company that was shown.
      * @param  User $actor The user who performed the action.
@@ -56,7 +56,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_SHOW_COMPANY_INDUSTRY,
+            Log::ACTION_SHOW_COMPANY,
             $data,
             $actorId,
         );
@@ -64,7 +64,7 @@ class CompanyLogService
         return $data;
     }
     /**
-     * Log a company company update event.
+     * Log a company update event.
      *
      * @param  Company $company The company that was updated.
      * @param  User $actor The user who performed the action.
@@ -83,7 +83,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_UPDATE_COMPANY_INDUSTRY,
+            Log::ACTION_UPDATE_COMPANY,
             $data,
             $actorId,
         );
@@ -92,7 +92,7 @@ class CompanyLogService
     }
 
     /**
-     * Log a company company deletion event.
+     * Log a company deletion event.
      *
      * @param  Company $company The company that was deleted.
      * @param  User $actor The user who performed the action.
@@ -111,7 +111,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_DELETE_COMPANY_INDUSTRY,
+            Log::ACTION_DELETE_COMPANY,
             $data,
             $actorId,
         );
@@ -120,7 +120,7 @@ class CompanyLogService
     }
 
     /**
-     * Log company company force deletion (permanent).
+     * Log company force deletion (permanent).
      *
      * @param  Company $company The company that was force deleted.
      * @param  User $actor The user who performed the action.
@@ -139,7 +139,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_FORCE_DELETE_COMPANY_INDUSTRY,
+            Log::ACTION_FORCE_DELETE_COMPANY,
             $data,
             $actorId,
         );
@@ -148,7 +148,7 @@ class CompanyLogService
     }
 
     /**
-     * Log a company company restoration event.
+     * Log a company restoration event.
      *
      * @param  Company $company The company that was restored.
      * @param  User $actor The user who performed the action.
@@ -168,7 +168,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_RESTORE_COMPANY_INDUSTRY,
+            Log::ACTION_RESTORE_COMPANY,
             $data,
             $actorId,
         );
@@ -177,7 +177,7 @@ class CompanyLogService
     }
 
     /**
-     * Log a company company import event.
+     * Log a company import event.
      *
      * @param  array $importData The data that was imported.
      * @param  User $actor The user who performed the action.
@@ -198,7 +198,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_IMPORT_COMPANY_INDUSTRY,
+            Log::ACTION_IMPORT_COMPANY,
             $data,
             $actorId,
         );
@@ -207,7 +207,7 @@ class CompanyLogService
     }
 
     /**
-     * Log a company company export event.
+     * Log a company export event.
      *
      * @param  array $exportData The data that was exported.
      * @param  User $actor The user who performed the action.
@@ -228,7 +228,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_EXPORT_COMPANY_INDUSTRY,
+            Log::ACTION_EXPORT_COMPANY,
             $data,
             $actorId,
         );
@@ -237,7 +237,7 @@ class CompanyLogService
     }
 
     /**
-     * Log a company company update event performed by a scheduled task (cron).
+     * Log a company update event performed by a scheduled task (cron).
      *
      * @param  Company $company The company that was updated.
      *
@@ -252,7 +252,7 @@ class CompanyLogService
         ];
 
         Log::log(
-            Log::ACTION_COMPANY_INDUSTRY_UPDATED_BY_CRON,
+            Log::ACTION_COMPANY_UPDATED_BY_CRON,
             $data,
             null,
         );

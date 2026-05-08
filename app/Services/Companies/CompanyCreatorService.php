@@ -16,7 +16,7 @@ class CompanyCreatorService
     }
 
     /**
-     * Create a new company company.
+     * Create a new company.
      *
      * @param  array $data
      * @param  int $createdBy
@@ -30,7 +30,7 @@ class CompanyCreatorService
         $actor = User::findOrFail($createdBy);
 
         return DB::transaction(function () use ($data, $createdBy, $actor) {
-            $company = $this->createCompanyIndustry($data, $createdBy);
+            $company = $this->createCompany($data, $createdBy);
             $this->logService->logCreation($company, $actor, $createdBy);
 
             return $company;
@@ -38,14 +38,14 @@ class CompanyCreatorService
     }
 
     /**
-     * Create the company company record.
+     * Create the company record.
      *
      * @param  array $data
      * @param  int $createdBy
      *
      * @return Company
      */
-    protected function createCompanyIndustry(
+    protected function createCompany(
         array $data,
         int $createdBy
     ): Company {

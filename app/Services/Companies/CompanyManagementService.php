@@ -20,13 +20,13 @@ class CompanyManagementService
     /**
      * Inject the required services into the management service.
      *
-     * @param  CompanyCreatorService $creator Handles company industry
+     * @param  CompanyCreatorService $creator Handles company company
      * creation.
-     * @param  CompanyUpdaterService $updater Handles company industry
+     * @param  CompanyUpdaterService $updater Handles company company
      * updates.
      * @param  CompanyDeleterService $destructor Handles company
-     * industry deletion.
-     * @param  CompanyRestorerService $restorer Handles company industry
+     * company deletion.
+     * @param  CompanyRestorerService $restorer Handles company company
      * restoration.
      *
      * @return void
@@ -40,12 +40,12 @@ class CompanyManagementService
     }
 
     /**
-     * Create a new company industry.
+     * Create a new company.
      *
      * @param StoreCompanyRequest $request Validated request
-     * containing company industry data.
+     * containing company data.
      *
-     * @return Company The newly created company industry.
+     * @return Company The newly created company.
      */
     public function store(
         StoreCompanyRequest $request
@@ -57,14 +57,14 @@ class CompanyManagementService
     }
 
     /**
-     * Update an existing company industry.
+     * Update an existing company.
      *
      * @param  UpdateCompanyRequest $request Validated
-     * request containing updated company industry data.
-     * @param  Company $company The company industry
+     * request containing updated company data.
+     * @param  Company $company The company
      * instance to update.
      *
-     * @return Company The updated company industry.
+     * @return Company The updated company.
      */
     public function update(
         UpdateCompanyRequest $request,
@@ -78,9 +78,9 @@ class CompanyManagementService
     }
 
     /**
-     * Soft delete a company industry.
+     * Soft delete a company.
      *
-     * @param  Company $company The company industry to delete.
+     * @param  Company $company The company to delete.
      *
      * @return void
      */
@@ -90,11 +90,11 @@ class CompanyManagementService
     }
 
     /**
-     * Restore a soft-deleted company industry.
+     * Restore a soft-deleted company.
      *
-     * @param  int $id The ID of the company industry to restore.
+     * @param  int $id The ID of the company to restore.
      *
-     * @return Company The restored company industry.
+     * @return Company The restored company.
      */
     public function restore(int $id): Company
     {
@@ -103,10 +103,10 @@ class CompanyManagementService
     }
 
     /**
-     * Force delete a company industry, permanently removing it from the
+     * Force delete a company, permanently removing it from the
      * database.
      *
-     * @param  int $id The ID of the company industry to force delete.
+     * @param  int $id The ID of the company to force delete.
      *
      * @return void
      */
@@ -117,15 +117,15 @@ class CompanyManagementService
     }
 
     /**
-     * Bulk restore company industries.
+     * Bulk restore companies.
      *
-     * @param  array $ids The IDs of the company industries to restore.
+     * @param  array $ids The IDs of the companies to restore.
      * @param  User $actor The user performing the restoration, used for
      * logging.
      * @param  callable $authorizeCallback The callback to authorize
-     * each company industry.
+     * each company company.
      *
-     * @return array The IDs of the company industries that were restored.
+     * @return array The IDs of the companies that were restored.
      */
     public function bulkRestore(
         array $ids,
@@ -135,11 +135,11 @@ class CompanyManagementService
         $restored = [];
 
         foreach ($ids as $id) {
-            $industry = Company::withTrashed()->findOrFail($id);
-            $authorizeCallback($industry);
+            $company = Company::withTrashed()->findOrFail($id);
+            $authorizeCallback($company);
 
-            if ($industry->trashed()) {
-                $this->restorer->restore($industry, $actor->id);
+            if ($company->trashed()) {
+                $this->restorer->restore($company, $actor->id);
                 $restored[] = $id;
             }
         }
@@ -148,14 +148,14 @@ class CompanyManagementService
     }
 
     /**
-     * Bulk soft delete company industries.
+     * Bulk soft delete companies.
      *
-     * @param  array $ids The IDs of the company industries to delete.
+     * @param  array $ids The IDs of the companies to delete.
      * @param  User $actor The user performing the deletion, used for logging.
      * @param  callable $authorizeCallback The callback to authorize each
-     * company industry.
+     * company.
      *
-     * @return array The IDs of the company industries that were deleted.
+     * @return array The IDs of the companies that were deleted.
      */
     public function bulkDelete(
         array $ids,
@@ -165,10 +165,10 @@ class CompanyManagementService
         $deleted = [];
 
         foreach ($ids as $id) {
-            $industry = Company::findOrFail($id);
-            $authorizeCallback($industry);
+            $company = Company::findOrFail($id);
+            $authorizeCallback($company);
 
-            $this->destructor->delete($industry, $actor->id);
+            $this->destructor->delete($company, $actor->id);
             $deleted[] = $id;
         }
 

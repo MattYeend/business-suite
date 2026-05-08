@@ -5,7 +5,7 @@ namespace App\Services\Companies;
 class CompanyDataPreparationService
 {
     /**
-     * Prepare user data for creation.
+     * Prepare company data for creation.
      *
      * @param  array $data
      * @param  int|null $createdBy

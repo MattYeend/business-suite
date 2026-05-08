@@ -15,7 +15,7 @@ class CompanyRestorerService
     }
 
     /**
-     * Restore a soft-deleted company company.
+     * Restore a soft-deleted company.
      *
      * @param  Company $company
      * @param  int|null $restoredBy
@@ -46,7 +46,7 @@ class CompanyRestorerService
     }
 
     /**
-     * Restore multiple soft-deleted company companies.
+     * Restore multiple soft-deleted companies.
      *
      * @param  array $companyIds
      * @param  int|null $restoredBy

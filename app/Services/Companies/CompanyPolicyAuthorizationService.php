@@ -41,25 +41,25 @@ class CompanyPolicyAuthorizationService
     /**
      * Check if company is active (not soft-deleted).
      *
-     * @param  Company $companyIndustry
+     * @param  Company $company
      *
      * @return bool
      */
-    public function isActive(Company $companyIndustry): bool
+    public function isActive(Company $company): bool
     {
-        return $this->activeChecker->isActive($companyIndustry);
+        return $this->activeChecker->isActive($company);
     }
 
     /**
      * Check if company is soft-deleted.
      *
-     * @param  Company $companyIndustry
+     * @param  Company $company
      *
      * @return bool
      */
-    public function isTrashed(Company $companyIndustry): bool
+    public function isTrashed(Company $company): bool
     {
-        return $this->activeChecker->isTrashed($companyIndustry);
+        return $this->activeChecker->isTrashed($company);
     }
 
     /**

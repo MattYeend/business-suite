@@ -15,7 +15,7 @@ class CompanyUpdaterService
     }
 
     /**
-     * Update an existing company company.
+     * Update an existing company.
      *
      * @param  Company $company
      * @param  array $data
@@ -33,7 +33,7 @@ class CompanyUpdaterService
         return DB::transaction(function () use ($company, $data, $updatedBy) {
             $actor = User::findOrFail($updatedBy);
 
-            $this->updateCompanyIndustryData($company, $data, $updatedBy);
+            $this->updateCompanyData($company, $data, $updatedBy);
             $this->logService->logUpdate($company, $actor, $updatedBy);
 
             return $company->fresh();
@@ -41,7 +41,7 @@ class CompanyUpdaterService
     }
 
     /**
-     * Update company company data.
+     * Update company data.
      *
      * @param  Company $company
      * @param  array $data
@@ -49,7 +49,7 @@ class CompanyUpdaterService
      *
      * @return void
      */
-    protected function updateCompanyIndustryData(
+    protected function updateCompanyData(
         Company $company,
         array $data,
         ?int $updatedBy

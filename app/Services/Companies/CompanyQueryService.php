@@ -17,7 +17,7 @@ class CompanyQueryService
     }
 
     /**
-     * Get paginated company industries with filters.
+     * Get paginated companies with filters.
      *
      * @param  array $filters
      *
@@ -36,7 +36,7 @@ class CompanyQueryService
     }
 
     /**
-     * Get a single company company by ID.
+     * Get a single company by ID.
      *
      * @param  int $id
      * @param  bool $withTrashed
