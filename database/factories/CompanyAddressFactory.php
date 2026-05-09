@@ -32,7 +32,7 @@ class CompanyAddressFactory extends Factory
             'address_line_1' => fake()->streetAddress(),
             'address_line_2' => fake()->optional(0.3)->secondaryAddress(),
             'city' => fake()->city(),
-            'county' => fake()->optional(0.7)->county(),
+            'county' => fake('en_GB')->optional(0.7)->county(),
             'postal_code' => fake()->postcode(),
             'country' => 'United Kingdom',
             'is_primary' => false,

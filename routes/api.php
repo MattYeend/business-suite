@@ -267,8 +267,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // Company Address management routes
-    Route::prefix('company-address')->name(
-        'company-address.'
+    Route::prefix('company-addresses')->name(
+        'company-addresses.'
     )->group(function () {
         Route::post(
             '/bulk/delete',
