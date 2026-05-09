@@ -267,7 +267,7 @@ class CompanyAddressController extends Controller
         );
 
         return response()->json([
-            'message' => 'Company addresss deleted successfully',
+            'message' => 'Company address deleted successfully',
             'deleted_count' => count($deleted),
             'deleted_ids' => $deleted,
         ]);
@@ -297,7 +297,7 @@ class CompanyAddressController extends Controller
         );
 
         return response()->json([
-            'message' => 'Company addresss restored successfully',
+            'message' => 'Company address restored successfully',
             'restored_count' => count($restored),
             'restored_ids' => $restored,
         ]);

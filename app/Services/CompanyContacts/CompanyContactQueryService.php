@@ -82,7 +82,7 @@ class CompanyContactQueryService
         $paginator = $query->paginate($perPage);
 
         return [
-            'company_industries' => $paginator->items(),
+            'company_contacts' => $paginator->items(),
             'pagination' => [
                 'current_page' => $paginator->currentPage(),
                 'last_page' => $paginator->lastPage(),

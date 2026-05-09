@@ -48,7 +48,7 @@ class CompanyAddressQueryService
         $address = $this->findCompanyIndustry($id, $withTrashed);
 
         return array_merge(
-            ['company_contact' => $this->formatterService->format($address)],
+            ['company_address' => $this->formatterService->format($address)],
             $this->getPermissions(),
             $this->baseData(),
         );
@@ -82,7 +82,7 @@ class CompanyAddressQueryService
         $paginator = $query->paginate($perPage);
 
         return [
-            'company_industries' => $paginator->items(),
+            'company_addresses' => $paginator->items(),
             'pagination' => [
                 'current_page' => $paginator->currentPage(),
                 'last_page' => $paginator->lastPage(),
