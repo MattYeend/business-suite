@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyAddressController;
 use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyIndustryController;
@@ -262,6 +263,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [CompanyPhoneController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Company Address management routes
+    Route::prefix('company-address')->name(
+        'company-address.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [CompanyAddressController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [CompanyAddressController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [CompanyAddressController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [CompanyAddressController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{company_address}',
+            [CompanyAddressController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{company_address}',
+            [CompanyAddressController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{company_address}',
+            [CompanyAddressController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{company_address}',
+            [CompanyAddressController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [CompanyAddressController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [CompanyAddressController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
