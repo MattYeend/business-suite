@@ -49,11 +49,11 @@ class CompanyCreatorService
         array $data,
         int $createdBy
     ): Company {
-        $industryData = $this->dataPreparation->prepareForCreation(
+        $companyData = $this->dataPreparation->prepareForCreation(
             $data,
             $createdBy
         );
 
-        return Company::create($industryData);
+        return Company::create($companyData);
     }
 }

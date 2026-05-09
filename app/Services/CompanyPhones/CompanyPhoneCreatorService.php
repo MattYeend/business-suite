@@ -49,11 +49,11 @@ class CompanyPhoneCreatorService
         array $data,
         int $createdBy
     ): CompanyPhone {
-        $industryData = $this->dataPreparation->prepareForCreation(
+        $phoneData = $this->dataPreparation->prepareForCreation(
             $data,
             $createdBy
         );
 
-        return CompanyPhone::create($industryData);
+        return CompanyPhone::create($phoneData);
     }
 }

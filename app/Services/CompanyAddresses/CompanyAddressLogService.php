@@ -22,7 +22,7 @@ class CompanyAddressLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($address) + [
+        $data = $this->baseAddressData($address) + [
             'created_at' => now(),
             'created_by' => $actor?->name,
         ];
@@ -50,7 +50,7 @@ class CompanyAddressLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($address) + [
+        $data = $this->baseAddressData($address) + [
             'shown_at' => now(),
             'shown_by' => $actor?->name,
         ];
@@ -77,7 +77,7 @@ class CompanyAddressLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($address) + [
+        $data = $this->baseAddressData($address) + [
             'updated_at' => now(),
             'updated_by' => $actor?->name,
         ];
@@ -105,7 +105,7 @@ class CompanyAddressLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($address) + [
+        $data = $this->baseAddressData($address) + [
             'deleted_at' => now(),
             'deleted_by' => $actor?->name,
         ];
@@ -133,7 +133,7 @@ class CompanyAddressLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($address) + [
+        $data = $this->baseAddressData($address) + [
             'force_deleted_at' => now(),
             'force_deleted_by' => $actor?->name,
         ];
@@ -162,7 +162,7 @@ class CompanyAddressLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($address) + [
+        $data = $this->baseAddressData($address) + [
             'restored_at' => now(),
             'restored_by' => $actor?->name,
         ];
@@ -246,7 +246,7 @@ class CompanyAddressLogService
     public function logUpdateByCron(
         CompanyAddress $address,
     ): array {
-        $data = $this->baseIndustryData($address) + [
+        $data = $this->baseAddressData($address) + [
             'updated_at' => now(),
             'updated_by' => 'System (Cron)',
         ];
@@ -267,13 +267,13 @@ class CompanyAddressLogService
      *
      * @return array
      */
-    protected function baseIndustryData(CompanyAddress $address): array
+    protected function baseAddressData(CompanyAddress $address): array
     {
         if (! $address) {
             return $this->getNullData();
         }
 
-        return $this->getContactData($address);
+        return $this->getAddressData($address);
     }
 
     /**
@@ -304,7 +304,7 @@ class CompanyAddressLogService
      *
      * @return array
      */
-    private function getContactData(CompanyAddress $address): array
+    private function getAddressData(CompanyAddress $address): array
     {
         return [
             'id' => $address->id,

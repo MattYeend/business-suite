@@ -64,7 +64,7 @@ class CompanyAddressPolicyAuthorizationService
 
     /**
      * Determine whether the user can view the model.
-     * Only admins can view company industries.
+     * Only admins can view company addresses.
      *
      * @param  User $user
      * @param  CompanyAddress $address

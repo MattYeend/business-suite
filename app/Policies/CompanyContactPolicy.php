@@ -18,7 +18,7 @@ class CompanyContactPolicy
 
     /**
      * Determine whether the user can view any models.
-     * Only admins can view the list of company industries.
+     * Only admins can view the list of company contacts.
      */
     public function viewAny(User $user): bool
     {

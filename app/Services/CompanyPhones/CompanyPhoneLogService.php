@@ -22,7 +22,7 @@ class CompanyPhoneLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($companyPhone) + [
+        $data = $this->basePhoneData($companyPhone) + [
             'created_at' => now(),
             'created_by' => $actor?->name,
         ];
@@ -50,7 +50,7 @@ class CompanyPhoneLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($companyPhone) + [
+        $data = $this->basePhoneData($companyPhone) + [
             'shown_at' => now(),
             'shown_by' => $actor?->name,
         ];
@@ -77,7 +77,7 @@ class CompanyPhoneLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($companyPhone) + [
+        $data = $this->basePhoneData($companyPhone) + [
             'updated_at' => now(),
             'updated_by' => $actor?->name,
         ];
@@ -105,7 +105,7 @@ class CompanyPhoneLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($companyPhone) + [
+        $data = $this->basePhoneData($companyPhone) + [
             'deleted_at' => now(),
             'deleted_by' => $actor?->name,
         ];
@@ -134,7 +134,7 @@ class CompanyPhoneLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($companyPhone) + [
+        $data = $this->basePhoneData($companyPhone) + [
             'force_deleted_at' => now(),
             'force_deleted_by' => $actor?->name,
         ];
@@ -163,7 +163,7 @@ class CompanyPhoneLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($companyPhone) + [
+        $data = $this->basePhoneData($companyPhone) + [
             'restored_at' => now(),
             'restored_by' => $actor?->name,
         ];
@@ -248,7 +248,7 @@ class CompanyPhoneLogService
     public function logUpdateByCron(
         CompanyPhone $companyPhone,
     ): array {
-        $data = $this->baseIndustryData($companyPhone) + [
+        $data = $this->basePhoneData($companyPhone) + [
             'updated_at' => now(),
             'updated_by' => 'System (Cron)',
         ];
@@ -269,7 +269,7 @@ class CompanyPhoneLogService
      *
      * @return array
      */
-    protected function baseIndustryData(CompanyPhone $companyPhone): array
+    protected function basePhoneData(CompanyPhone $companyPhone): array
     {
         if (! $companyPhone) {
             return $this->getNullData();

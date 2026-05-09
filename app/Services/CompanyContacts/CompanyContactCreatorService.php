@@ -30,7 +30,7 @@ class CompanyContactCreatorService
         $actor = User::findOrFail($createdBy);
 
         return DB::transaction(function () use ($data, $createdBy, $actor) {
-            $contact = $this->createCompanyIndustry($data, $createdBy);
+            $contact = $this->createCompanyContact($data, $createdBy);
             $this->logService->logCreation($contact, $actor, $createdBy);
 
             return $contact;
@@ -45,15 +45,15 @@ class CompanyContactCreatorService
      *
      * @return CompanyContact
      */
-    protected function createCompanyIndustry(
+    protected function createCompanyContact(
         array $data,
         int $createdBy
     ): CompanyContact {
-        $industryData = $this->dataPreparation->prepareForCreation(
+        $contactData = $this->dataPreparation->prepareForCreation(
             $data,
             $createdBy
         );
 
-        return CompanyContact::create($industryData);
+        return CompanyContact::create($contactData);
     }
 }

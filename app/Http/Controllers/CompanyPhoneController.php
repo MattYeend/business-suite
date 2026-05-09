@@ -256,7 +256,7 @@ class CompanyPhoneController extends Controller
     {
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'required|integer|exists:company_industries,id',
+            'ids.*' => 'required|integer|exists:company_phones,id',
         ]);
 
         $auth = auth()->user();

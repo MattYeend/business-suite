@@ -64,7 +64,7 @@ class CompanyContactPolicyAuthorizationService
 
     /**
      * Determine whether the user can view the model.
-     * Only admins can view company industries.
+     * Only admins can view company contacts.
      *
      * @param  User $user
      * @param  CompanyContact $contact

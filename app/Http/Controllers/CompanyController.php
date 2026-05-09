@@ -256,7 +256,7 @@ class CompanyController extends Controller
     {
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'required|integer|exists:company_industries,id',
+            'ids.*' => 'required|integer|exists:companies,id',
         ]);
 
         $auth = auth()->user();

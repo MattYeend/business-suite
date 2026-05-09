@@ -22,7 +22,7 @@ class CompanyContactLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($contact) + [
+        $data = $this->baseContactData($contact) + [
             'created_at' => now(),
             'created_by' => $actor?->name,
         ];
@@ -50,7 +50,7 @@ class CompanyContactLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($contact) + [
+        $data = $this->baseContactData($contact) + [
             'shown_at' => now(),
             'shown_by' => $actor?->name,
         ];
@@ -77,7 +77,7 @@ class CompanyContactLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($contact) + [
+        $data = $this->baseContactData($contact) + [
             'updated_at' => now(),
             'updated_by' => $actor?->name,
         ];
@@ -105,7 +105,7 @@ class CompanyContactLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($contact) + [
+        $data = $this->baseContactData($contact) + [
             'deleted_at' => now(),
             'deleted_by' => $actor?->name,
         ];
@@ -133,7 +133,7 @@ class CompanyContactLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($contact) + [
+        $data = $this->baseContactData($contact) + [
             'force_deleted_at' => now(),
             'force_deleted_by' => $actor?->name,
         ];
@@ -162,7 +162,7 @@ class CompanyContactLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($contact) + [
+        $data = $this->baseContactData($contact) + [
             'restored_at' => now(),
             'restored_by' => $actor?->name,
         ];
@@ -246,7 +246,7 @@ class CompanyContactLogService
     public function logUpdateByCron(
         CompanyContact $contact,
     ): array {
-        $data = $this->baseIndustryData($contact) + [
+        $data = $this->baseContactData($contact) + [
             'updated_at' => now(),
             'updated_by' => 'System (Cron)',
         ];
@@ -267,7 +267,7 @@ class CompanyContactLogService
      *
      * @return array
      */
-    protected function baseIndustryData(CompanyContact $contact): array
+    protected function baseContactData(CompanyContact $contact): array
     {
         if (! $contact) {
             return $this->getNullData();

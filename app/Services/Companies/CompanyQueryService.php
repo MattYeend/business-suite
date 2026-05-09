@@ -45,7 +45,7 @@ class CompanyQueryService
      */
     public function getById(int $id, bool $withTrashed = false): array
     {
-        $company = $this->findCompanyIndustry($id, $withTrashed);
+        $company = $this->findCompany($id, $withTrashed);
 
         return array_merge(
             ['company' => $this->formatterService->format($company)],
@@ -137,7 +137,7 @@ class CompanyQueryService
      *
      * @return Company
      */
-    private function findCompanyIndustry(
+    private function findCompany(
         int $id,
         bool $withTrashed = false
     ): Company {

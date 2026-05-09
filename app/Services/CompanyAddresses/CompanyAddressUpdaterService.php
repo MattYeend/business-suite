@@ -33,7 +33,7 @@ class CompanyAddressUpdaterService
         return DB::transaction(function () use ($address, $data, $updatedBy) {
             $actor = User::findOrFail($updatedBy);
 
-            $this->updateCompanyIndustryData($address, $data, $updatedBy);
+            $this->updateCompanyAddressData($address, $data, $updatedBy);
             $this->logService->logUpdate($address, $actor, $updatedBy);
 
             return $address->fresh();
@@ -49,7 +49,7 @@ class CompanyAddressUpdaterService
      *
      * @return void
      */
-    protected function updateCompanyIndustryData(
+    protected function updateCompanyAddressData(
         CompanyAddress $address,
         array $data,
         ?int $updatedBy

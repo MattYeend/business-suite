@@ -14,9 +14,9 @@ class CompanyContactDeleterService
     }
 
     /**
-     * Soft delete a company industry.
+     * Soft delete a company contact.
      *
-     * @param  CompanyContact $industry
+     * @param  CompanyContact $contact
      * @param  int|null $deletedBy
      *
      * @return bool
@@ -24,26 +24,26 @@ class CompanyContactDeleterService
      * @throws \Exception
      */
     public function delete(
-        CompanyContact $industry,
+        CompanyContact $contact,
         ?int $deletedBy = null
     ): bool {
-        return DB::transaction(function () use ($industry, $deletedBy) {
+        return DB::transaction(function () use ($contact, $deletedBy) {
             $actor = User::findOrFail($deletedBy);
-            $industry->deleted_by = $deletedBy;
-            $industry->save();
+            $contact->deleted_by = $deletedBy;
+            $contact->save();
 
-            $result = $industry->delete();
+            $result = $contact->delete();
 
-            $this->logService->logDeletion($industry, $actor, $deletedBy);
+            $this->logService->logDeletion($contact, $actor, $deletedBy);
 
             return $result;
         });
     }
 
     /**
-     * Force delete a company industry (permanent deletion).
+     * Force delete a company contact (permanent deletion).
      *
-     * @param  CompanyContact $industry
+     * @param  CompanyContact $contact
      * @param  int|null $deletedBy
      *
      * @return bool
@@ -51,14 +51,14 @@ class CompanyContactDeleterService
      * @throws \Exception
      */
     public function forceDelete(
-        CompanyContact $industry,
+        CompanyContact $contact,
         ?int $deletedBy = null
     ): bool {
-        return DB::transaction(function () use ($industry, $deletedBy) {
+        return DB::transaction(function () use ($contact, $deletedBy) {
             $actor = User::findOrFail($deletedBy);
-            $this->logService->logForceDeletion($industry, $actor, $deletedBy);
+            $this->logService->logForceDeletion($contact, $actor, $deletedBy);
 
-            return $industry->forceDelete();
+            return $contact->forceDelete();
         });
     }
 
@@ -81,8 +81,8 @@ class CompanyContactDeleterService
         DB::transaction(function () use ($contactIds, $deletedBy, &$count) {
             $contacts = CompanyContact::whereIn('id', $contactIds)->get();
 
-            foreach ($contacts as $industry) {
-                if ($this->delete($industry, $deletedBy)) {
+            foreach ($contacts as $contact) {
+                if ($this->delete($contact, $deletedBy)) {
                     $count++;
                 }
             }

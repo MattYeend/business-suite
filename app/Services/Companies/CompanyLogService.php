@@ -22,7 +22,7 @@ class CompanyLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($company) + [
+        $data = $this->baseCompanyData($company) + [
             'created_at' => now(),
             'created_by' => $actor?->name,
         ];
@@ -50,7 +50,7 @@ class CompanyLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($company) + [
+        $data = $this->baseCompanyData($company) + [
             'shown_at' => now(),
             'shown_by' => $actor?->name,
         ];
@@ -77,7 +77,7 @@ class CompanyLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($company) + [
+        $data = $this->baseCompanyData($company) + [
             'updated_at' => now(),
             'updated_by' => $actor?->name,
         ];
@@ -105,7 +105,7 @@ class CompanyLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($company) + [
+        $data = $this->baseCompanyData($company) + [
             'deleted_at' => now(),
             'deleted_by' => $actor?->name,
         ];
@@ -133,7 +133,7 @@ class CompanyLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($company) + [
+        $data = $this->baseCompanyData($company) + [
             'force_deleted_at' => now(),
             'force_deleted_by' => $actor?->name,
         ];
@@ -162,7 +162,7 @@ class CompanyLogService
         User $actor,
         int $actorId
     ): array {
-        $data = $this->baseIndustryData($company) + [
+        $data = $this->baseCompanyData($company) + [
             'restored_at' => now(),
             'restored_by' => $actor?->name,
         ];
@@ -246,7 +246,7 @@ class CompanyLogService
     public function logUpdateByCron(
         Company $company,
     ): array {
-        $data = $this->baseIndustryData($company) + [
+        $data = $this->baseCompanyData($company) + [
             'updated_at' => now(),
             'updated_by' => 'System (Cron)',
         ];
@@ -267,7 +267,7 @@ class CompanyLogService
      *
      * @return array
      */
-    protected function baseIndustryData(Company $company): array
+    protected function baseCompanyData(Company $company): array
     {
         if (! $company) {
             return $this->getNullData();
