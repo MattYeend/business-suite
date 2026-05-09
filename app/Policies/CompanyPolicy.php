@@ -4,12 +4,12 @@ namespace App\Policies;
 
 use App\Models\Company;
 use App\Models\User;
-use App\Services\Companies\CompanyPolicyAuthorizationService;
+use App\Services\Companies\CompanyPolicyAuthorisationService;
 
 class CompanyPolicy
 {
     public function __construct(
-        protected CompanyPolicyAuthorizationService $authorizationService
+        protected CompanyPolicyAuthorisationService $authorizationService
     ) {
     }
 

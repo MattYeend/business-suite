@@ -4,12 +4,12 @@ namespace App\Policies;
 
 use App\Models\CompanyPhone;
 use App\Models\User;
-use App\Services\CompanyPhones\CompanyPhonePolicyAuthorizationService;
+use App\Services\CompanyPhones\CompanyPhonePolicyAuthorisationService;
 
 class CompanyPhonePolicy
 {
     public function __construct(
-        protected CompanyPhonePolicyAuthorizationService $authorizationService
+        protected CompanyPhonePolicyAuthorisationService $authorizationService
     ) {
     }
 

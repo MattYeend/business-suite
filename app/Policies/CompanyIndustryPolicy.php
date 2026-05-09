@@ -4,14 +4,14 @@ namespace App\Policies;
 
 use App\Models\CompanyIndustry;
 use App\Models\User;
-use App\Services\CompanyIndustries\CompanyIndustryPolicyAuthorizationService;
+use App\Services\CompanyIndustries\CompanyIndustryPolicyAuthorisationService;
 
 class CompanyIndustryPolicy
 {
-    protected CompanyIndustryPolicyAuthorizationService $authorizationService;
+    protected CompanyIndustryPolicyAuthorisationService $authorizationService;
 
     public function __construct(
-        CompanyIndustryPolicyAuthorizationService $authorizationService
+        CompanyIndustryPolicyAuthorisationService $authorizationService
     ) {
         $this->authorizationService = $authorizationService;
     }

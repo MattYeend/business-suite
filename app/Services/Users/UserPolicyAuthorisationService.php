@@ -8,7 +8,7 @@ use App\Services\UserRoleCheckerService;
 /**
  * Handles user authorization checks for policies.
  */
-class UserPolicyAuthorizationService
+class UserPolicyAuthorisationService
 {
     public function __construct(
         protected UserActiveCheckerService $activeChecker,

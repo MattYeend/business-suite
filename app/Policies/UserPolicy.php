@@ -3,12 +3,12 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Services\Users\UserPolicyAuthorizationService;
+use App\Services\Users\UserPolicyAuthorisationService;
 
 class UserPolicy
 {
     public function __construct(
-        protected UserPolicyAuthorizationService $authorizationService
+        protected UserPolicyAuthorisationService $authorizationService
     ) {
     }
 

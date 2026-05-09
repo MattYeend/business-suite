@@ -6,7 +6,7 @@ use App\Models\CompanyContact;
 use App\Models\User;
 use App\Services\UserRoleCheckerService;
 
-class CompanyContactPolicyAuthorizationService
+class CompanyContactPolicyAuthorisationService
 {
     public function __construct(
         protected CompanyContactActiveCheckerService $activeChecker,

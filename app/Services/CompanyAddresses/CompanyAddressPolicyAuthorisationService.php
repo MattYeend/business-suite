@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\CompanyIndustries;
+namespace App\Services\CompanyAddresses;
 
-use App\Models\CompanyIndustry;
+use App\Models\CompanyAddress;
 use App\Models\User;
 use App\Services\UserRoleCheckerService;
 
-class CompanyIndustryPolicyAuthorizationService
+class CompanyAddressPolicyAuthorisationService
 {
     public function __construct(
-        protected CompanyIndustryActiveCheckerService $activeChecker,
+        protected CompanyAddressActiveCheckerService $activeChecker,
         protected UserRoleCheckerService $roleChecker
     ) {
     }
@@ -39,42 +39,42 @@ class CompanyIndustryPolicyAuthorizationService
     }
 
     /**
-     * Check if industry is active (not soft-deleted).
+     * Check if address is active (not soft-deleted).
      *
-     * @param  CompanyIndustry $companyIndustry
+     * @param  CompanyAddress $companyAddress
      *
      * @return bool
      */
-    public function isActive(CompanyIndustry $companyIndustry): bool
+    public function isActive(CompanyAddress $companyAddress): bool
     {
-        return $this->activeChecker->isActive($companyIndustry);
+        return $this->activeChecker->isActive($companyAddress);
     }
 
     /**
-     * Check if industry is soft-deleted.
+     * Check if address is soft-deleted.
      *
-     * @param  CompanyIndustry $companyIndustry
+     * @param  CompanyAddress $companyAddress
      *
      * @return bool
      */
-    public function isTrashed(CompanyIndustry $companyIndustry): bool
+    public function isTrashed(CompanyAddress $companyAddress): bool
     {
-        return $this->activeChecker->isTrashed($companyIndustry);
+        return $this->activeChecker->isTrashed($companyAddress);
     }
 
     /**
      * Determine whether the user can view the model.
-     * Only admins can view company industries.
+     * Only admins can view company addresses.
      *
      * @param  User $user
-     * @param  CompanyIndustry $industry
+     * @param  CompanyAddress $address
      *
      * @return bool
      */
-    public function canView(User $user, CompanyIndustry $industry): bool
+    public function canView(User $user, CompanyAddress $address): bool
     {
         return $this->isAdmin($user) && $this->activeChecker->isActive(
-            $industry
+            $address
         );
     }
 
@@ -82,14 +82,14 @@ class CompanyIndustryPolicyAuthorizationService
      * Determine whether the user can update the model.
      *
      * @param  User $user
-     * @param  CompanyIndustry $industry
+     * @param  CompanyAddress $address
      *
      * @return bool
      */
-    public function canUpdate(User $user, CompanyIndustry $industry): bool
+    public function canUpdate(User $user, CompanyAddress $address): bool
     {
         return $this->isAdmin($user) && $this->activeChecker->isActive(
-            $industry
+            $address
         );
     }
 
@@ -97,14 +97,14 @@ class CompanyIndustryPolicyAuthorizationService
      * Determine whether the user can delete the model.
      *
      * @param  User $user
-     * @param  CompanyIndustry $industry
+     * @param  CompanyAddress $address
      *
      * @return bool
      */
-    public function canDelete(User $user, CompanyIndustry $industry): bool
+    public function canDelete(User $user, CompanyAddress $address): bool
     {
         return $this->isAdmin($user) && $this->activeChecker->canBeModified(
-            $industry
+            $address
         );
     }
 
@@ -112,28 +112,28 @@ class CompanyIndustryPolicyAuthorizationService
      * Determine whether the user can restore the model.
      *
      * @param  User $user
-     * @param  CompanyIndustry $industry
+     * @param  CompanyAddress $address
      *
      * @return bool
      */
-    public function canRestore(User $user, CompanyIndustry $industry): bool
+    public function canRestore(User $user, CompanyAddress $address): bool
     {
         return $this->isAdmin($user) &&
-            $this->activeChecker->canBeRestoredOrForceDeleted($industry);
+            $this->activeChecker->canBeRestoredOrForceDeleted($address);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  User $user
-     * @param  CompanyIndustry $industry
+     * @param  CompanyAddress $address
      *
      * @return bool
      */
-    public function canForceDelete(User $user, CompanyIndustry $industry): bool
+    public function canForceDelete(User $user, CompanyAddress $address): bool
     {
         return $this->activeChecker->canUserPerformAction(
-            $industry,
+            $address,
             'restoreOrForceDelete',
             $user
         );
