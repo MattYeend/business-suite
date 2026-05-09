@@ -197,4 +197,3 @@ class UpdateCompanyAddressRequest extends FormRequest
         ];
     }
 }
-

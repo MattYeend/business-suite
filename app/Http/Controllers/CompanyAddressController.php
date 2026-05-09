@@ -325,4 +325,3 @@ class CompanyAddressController extends Controller
         }
     }
 }
-

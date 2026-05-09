@@ -20,13 +20,17 @@ class CompanyAddressSortingService
         ?string $sortBy = 'created_at',
         ?string $sortDirection = 'desc'
     ): Builder {
-        $sortBy = $sortBy ?? 'created_at';
-        $sortDirection = strtolower($sortDirection) === 'asc' ? 'asc' :
-            'desc';
+        $sortDirection = strtolower($sortDirection) === 'asc' ? 'asc' : 'desc';
 
         return match ($sortBy) {
-            'address_line_1' => $query->orderBy('address_line_1', $sortDirection),
-            'address_line_2' => $query->orderBy('address_line_2', $sortDirection),
+            'address_line_1' => $query->orderBy(
+                'address_line_1',
+                $sortDirection
+            ),
+            'address_line_2' => $query->orderBy(
+                'address_line_2',
+                $sortDirection
+            ),
             'type' => $query->orderBy('type', $sortDirection),
             'city' => $query->orderBy('city', $sortDirection),
             'county' => $query->orderBy('county', $sortDirection),
