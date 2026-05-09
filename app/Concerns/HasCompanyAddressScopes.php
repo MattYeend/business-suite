@@ -60,6 +60,30 @@ trait HasCompanyAddressScopes
     }
 
     /**
+     * Scope a query to only include branch addresses.
+     *
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeBranch(Builder $query): Builder
+    {
+        return $query->where('type', CompanyAddress::TYPE_BRANCH);
+    }
+
+    /**
+     * Scope a query to only include factory addresses.
+     *
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeFactory(Builder $query): Builder
+    {
+        return $query->where('type', CompanyAddress::TYPE_FACTORY);
+    }
+
+    /**
      * Scope a query to only include shipping addresses.
      *
      * @param Builder $query
@@ -69,6 +93,30 @@ trait HasCompanyAddressScopes
     public function scopeShipping(Builder $query): Builder
     {
         return $query->where('type', CompanyAddress::TYPE_SHIPPING);
+    }
+
+    /**
+     * Scope a query to only include showroom addresses.
+     *
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeShowroom(Builder $query): Builder
+    {
+        return $query->where('type', CompanyAddress::TYPE_SHOWROOM);
+    }
+
+    /**
+     * Scope a query to only include retail addresses.
+     *
+     * @param Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeeRetail(Builder $query): Builder
+    {
+        return $query->where('type', CompanyAddress::TYPE_RETAIL);
     }
 
     /**

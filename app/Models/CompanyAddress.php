@@ -47,7 +47,11 @@ class CompanyAddress extends Model
         HasCompanyAddressScopes;
 
     public const TYPE_BILLING = 'billing';
+    public const TYPE_BRANCH = 'branch';
+    public const TYPE_FACTORY = 'factory';
     public const TYPE_SHIPPING = 'shipping';
+    public const TYPE_SHOWROOM = 'showroom';
+    public const TYPE_RETAIL = 'retail';
     public const TYPE_OFFICE = 'office';
     public const TYPE_WAREHOUSE = 'warehouse';
 

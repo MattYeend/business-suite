@@ -21,12 +21,7 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             CompanyContactSeeder::class,
             CompanyPhoneSeeder::class,
+            CompanyAddressSeeder::class,
         ]);
-        // User::factory(10)->create();
-
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

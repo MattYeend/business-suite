@@ -14,10 +14,11 @@ class CompanyContactSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::first();
+        $companies = Company::all();
+        $users = User::all();
         
-        if (!$user) {
-            $this->command->error('No users found. Please run UserSeeder first.');
+        if ($companies->isEmpty() || $users->isEmpty()) {
+            $this->command->warn('No companies or users found. Please run CompanySeeder and UserSeeder first.');
             return;
         }
 
@@ -70,7 +71,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $armId,
@@ -82,7 +83,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Sage Group
@@ -96,7 +97,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $sageId,
@@ -108,7 +109,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Raspberry Pi Ltd
@@ -122,7 +123,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Sophos Ltd
@@ -136,7 +137,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Rolls-Royce Motor Cars
@@ -150,7 +151,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Bentley Motors
@@ -164,7 +165,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chairman & CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Aston Martin Lagonda
@@ -178,7 +179,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $astonMartinId,
@@ -190,7 +191,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // McLaren Automotive
@@ -204,7 +205,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Tesco PLC
@@ -218,7 +219,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $tescoId,
@@ -230,7 +231,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Marks & Spencer
@@ -244,7 +245,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $marksAndSpencerId,
@@ -256,7 +257,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // John Lewis Partnership
@@ -270,7 +271,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Next PLC
@@ -284,7 +285,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $nextId,
@@ -296,7 +297,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Diageo PLC
@@ -310,7 +311,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $diageoId,
@@ -322,7 +323,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Greggs PLC
@@ -336,7 +337,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $greggsId,
@@ -348,7 +349,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Pret A Manger
@@ -362,7 +363,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Whitbread PLC
@@ -376,7 +377,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $whitbreadId,
@@ -388,7 +389,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Burberry Group
@@ -402,7 +403,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $burberryId,
@@ -414,7 +415,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Mulberry Group
@@ -428,7 +429,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Barbour
@@ -442,7 +443,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // HSBC Holdings
@@ -456,7 +457,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Group CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $hsbcId,
@@ -468,7 +469,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Barclays PLC
@@ -482,7 +483,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Group CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $barclaysId,
@@ -494,7 +495,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Lloyds Banking Group
@@ -508,7 +509,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Group CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $lloydsId,
@@ -520,7 +521,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // NatWest Group
@@ -534,7 +535,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $natwestId,
@@ -546,7 +547,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // AstraZeneca PLC
@@ -560,7 +561,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $astrazenecaId,
@@ -572,7 +573,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // GlaxoSmithKline
@@ -586,7 +587,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $gskId,
@@ -598,7 +599,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // BT Group PLC
@@ -612,7 +613,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $btId,
@@ -624,7 +625,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Vodafone Group
@@ -638,7 +639,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Group CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $vodafoneId,
@@ -650,7 +651,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // BP PLC
@@ -664,7 +665,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $bpId,
@@ -676,7 +677,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Shell PLC
@@ -690,7 +691,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $shellId,
@@ -702,7 +703,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Rolls-Royce Holdings
@@ -716,7 +717,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $rollsRoyceHoldingsId,
@@ -728,7 +729,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // BAE Systems
@@ -742,7 +743,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $baeSystemsId,
@@ -754,7 +755,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // PricewaterhouseCoopers UK
@@ -768,7 +769,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'UK Chairman',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $pwcId,
@@ -780,7 +781,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'UK Senior Partner',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // KPMG UK
@@ -794,7 +795,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'UK Chairman',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // BBC Studios
@@ -808,7 +809,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
 
             // Sky UK
@@ -822,7 +823,7 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Group CEO',
                 'is_primary' => true,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
             [
                 'company_id' => $skyId,
@@ -834,14 +835,27 @@ class CompanyContactSeeder extends Seeder
                 'job_title' => 'Chief Financial Officer',
                 'is_primary' => false,
                 'is_real' => true,
-                'created_by' => $user->id,
+                'created_by' => User::inRandomOrder()->first()?->id,
             ],
         ];
 
+        $created = 0;
+
         foreach ($contacts as $contactData) {
-            CompanyContact::create($contactData);
+
+            $contact = CompanyContact::firstOrCreate(
+                [
+                    'company_id' => $contactData['company_id'],
+                    'email' => $contactData['email'],
+                ],
+                $contactData
+            );
+
+            if ($contact->wasRecentlyCreated) {
+                $created++;
+            }
         }
 
-        $this->command->info('Created ' . count($contacts) . ' company contacts.');
+        $this->command->info("Created {$created} company contacts.");
     }
 }

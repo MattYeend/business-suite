@@ -74,6 +74,26 @@ trait HasCompanyAddressHelpers
     }
 
     /**
+     * Check if this is a branch address
+     *
+     * @return bool
+     */
+    public function isBranch(): bool
+    {
+        return $this->type === CompanyAddress::TYPE_BRANCH;
+    }
+
+    /**
+     * Check if this is a factoy address
+     *
+     * @return bool
+     */
+    public function isFactory(): bool
+    {
+        return $this->type === CompanyAddress::TYPE_FACTORY;
+    }
+
+    /**
      * Check if this is a shipping address.
      *
      * @return bool
@@ -81,6 +101,26 @@ trait HasCompanyAddressHelpers
     public function isShipping(): bool
     {
         return $this->type === CompanyAddress::TYPE_SHIPPING;
+    }
+
+    /**
+     * Check if this is a showroom address
+     *
+     * @return bool
+     */
+    public function isShowroom(): bool
+    {
+        return $this->type === CompanyAddress::TYPE_SHOWROOM;
+    }
+
+    /**
+     * Check if this is a retail address
+     *
+     * @return bool
+     */
+    public function isRetail(): bool
+    {
+        return $this->type === CompanyAddress::TYPE_RETAIL;
     }
 
     /**
@@ -148,7 +188,11 @@ trait HasCompanyAddressHelpers
     {
         return [
             CompanyAddress::TYPE_BILLING,
+            CompanyAddress::TYPE_BRANCH,
+            CompanyAddress::TYPE_FACTORY,
             CompanyAddress::TYPE_SHIPPING,
+            CompanyAddress::TYPE_SHOWROOM,
+            CompanyAddress::TYPE_RETAIL,
             CompanyAddress::TYPE_OFFICE,
             CompanyAddress::TYPE_WAREHOUSE,
         ];
@@ -163,7 +207,11 @@ trait HasCompanyAddressHelpers
     {
         return match ($this->type) {
             CompanyAddress::TYPE_BILLING => 'Billing',
+            CompanyAddress::TYPE_BRANCH => 'Branch',
+            CompanyAddress::TYPE_FACTORY => 'Factory',
             CompanyAddress::TYPE_SHIPPING => 'Shipping',
+            CompanyAddress::TYPE_SHOWROOM => 'Showroom',
+            CompanyAddress::TYPE_RETAIL => 'Retail',
             CompanyAddress::TYPE_OFFICE => 'Office',
             CompanyAddress::TYPE_WAREHOUSE => 'Warehouse',
             default => ucfirst($this->type),

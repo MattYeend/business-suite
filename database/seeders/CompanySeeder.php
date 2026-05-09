@@ -754,7 +754,7 @@ class CompanySeeder extends Seeder
         ];
 
         foreach ($companies as $companyData) {
-            Company::create($companyData);
+            Company::firstOrCreate($companyData);
         }
     }
 }
