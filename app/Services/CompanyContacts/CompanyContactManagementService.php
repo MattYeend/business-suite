@@ -61,17 +61,17 @@ class CompanyContactManagementService
      *
      * @param  UpdateCompanyContactRequest $request Validated
      * request containing updated company contact data.
-     * @param  CompanyContact $companyIndustry The company contact
+     * @param  CompanyContact $companyContact The company contact
      * instance to update.
      *
      * @return CompanyContact The updated company contact.
      */
     public function update(
         UpdateCompanyContactRequest $request,
-        CompanyContact $companyIndustry
+        CompanyContact $companyContact
     ): CompanyContact {
         return $this->updater->update(
-            $companyIndustry,
+            $companyContact,
             $request->validated(),
             $request->user()->id
         );
@@ -80,13 +80,13 @@ class CompanyContactManagementService
     /**
      * Soft delete a company contact.
      *
-     * @param  CompanyContact $companyIndustry The company contact to delete.
+     * @param  CompanyContact $companyContact The company contact to delete.
      *
      * @return void
      */
-    public function destroy(CompanyContact $companyIndustry): void
+    public function destroy(CompanyContact $companyContact): void
     {
-        $this->destructor->delete($companyIndustry, auth()->id());
+        $this->destructor->delete($companyContact, auth()->id());
     }
 
     /**
@@ -98,8 +98,8 @@ class CompanyContactManagementService
      */
     public function restore(int $id): CompanyContact
     {
-        $companyIndustry = CompanyContact::withTrashed()->findOrFail($id);
-        return $this->restorer->restore($companyIndustry, auth()->id());
+        $companyContact = CompanyContact::withTrashed()->findOrFail($id);
+        return $this->restorer->restore($companyContact, auth()->id());
     }
 
     /**
@@ -112,8 +112,8 @@ class CompanyContactManagementService
      */
     public function forceDelete(int $id): void
     {
-        $companyIndustry = CompanyContact::withTrashed()->findOrFail($id);
-        $this->destructor->forceDelete($companyIndustry, auth()->id());
+        $companyContact = CompanyContact::withTrashed()->findOrFail($id);
+        $this->destructor->forceDelete($companyContact, auth()->id());
     }
 
     /**

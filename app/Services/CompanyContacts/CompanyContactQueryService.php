@@ -17,7 +17,7 @@ class CompanyContactQueryService
     }
 
     /**
-     * Get paginated company industries with filters.
+     * Get paginated company contacts with filters.
      *
      * @param  array $filters
      *

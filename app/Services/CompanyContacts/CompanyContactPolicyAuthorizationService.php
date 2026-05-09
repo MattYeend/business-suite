@@ -41,25 +41,25 @@ class CompanyContactPolicyAuthorizationService
     /**
      * Check if contact is active (not soft-deleted).
      *
-     * @param  CompanyContact $companyIndustry
+     * @param  CompanyContact $companyContact
      *
      * @return bool
      */
-    public function isActive(CompanyContact $companyIndustry): bool
+    public function isActive(CompanyContact $companyContact): bool
     {
-        return $this->activeChecker->isActive($companyIndustry);
+        return $this->activeChecker->isActive($companyContact);
     }
 
     /**
      * Check if contact is soft-deleted.
      *
-     * @param  CompanyContact $companyIndustry
+     * @param  CompanyContact $companyContact
      *
      * @return bool
      */
-    public function isTrashed(CompanyContact $companyIndustry): bool
+    public function isTrashed(CompanyContact $companyContact): bool
     {
-        return $this->activeChecker->isTrashed($companyIndustry);
+        return $this->activeChecker->isTrashed($companyContact);
     }
 
     /**

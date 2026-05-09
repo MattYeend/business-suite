@@ -35,12 +35,10 @@ class CompanyContactRestorerService
             $contact->restored_at = now();
             $contact->save();
 
-            // restore() returns boolean, so we don't assign it
             $contact->restore();
 
             $this->logService->logRestoration($contact, $actor, $restoredBy);
 
-            // Return the fresh model instance
             return $contact->fresh();
         });
     }

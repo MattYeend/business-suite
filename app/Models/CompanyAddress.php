@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'city',
     'county',
     'country',
-    'post_code',
+    'postal_code',
     'is_primary',
     'is_real',
     'meta',
