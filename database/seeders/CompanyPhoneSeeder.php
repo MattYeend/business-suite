@@ -101,7 +101,6 @@ class CompanyPhoneSeeder extends Seeder
         $created = 0;
 
         foreach ($phones as $phoneData) {
-
             $phone = CompanyPhone::firstOrCreate(
                 [
                     'company_id' => $phoneData['company_id'],

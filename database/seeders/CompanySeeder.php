@@ -753,8 +753,19 @@ class CompanySeeder extends Seeder
             ],
         ];
 
+        $created = 0;
+
         foreach ($companies as $companyData) {
-            Company::firstOrCreate($companyData);
+            $company = Company::firstOrCreate(
+                ['name' => $companyData['name']],
+                $companyData
+            );
+
+            if ($company->wasRecentlyCreated) {
+                $created++;
+            }
         }
+
+        $this->command->info("Created {$created} companies.");
     }
 }

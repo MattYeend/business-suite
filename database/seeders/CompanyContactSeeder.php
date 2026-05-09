@@ -842,7 +842,6 @@ class CompanyContactSeeder extends Seeder
         $created = 0;
 
         foreach ($contacts as $contactData) {
-
             $contact = CompanyContact::firstOrCreate(
                 [
                     'company_id' => $contactData['company_id'],
