@@ -53,3 +53,61 @@ describe('index', function () {
         $response->assertUnauthorized();
     });
 });
+
+describe('store', function () {
+    test('can create a company contact', function () {
+        $user = adminUser();
+
+        $company = Company::factory()->create();
+        
+        $data = [
+            'company_id' => $company->id,
+            'address_line_1' => '1 Dave Street',
+            'type' => 'office',
+            'city' => 'City',
+            'postal_code' => 'PO5 5SG',
+            'country' => 'Country',
+            'is_primary' => true,
+        ];
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-addresses.store'), $data);
+
+        $response->assertCreated()
+            ->assertJsonFragment([
+                'address_line_1' => '1 Dave Street',
+                'type' => 'office',
+            ]);
+
+        $this->assertDatabaseHas('company_addresses', [
+            'company_id' => $company->id,
+            'address_line_1' => '1 Dave Street',
+            'type' => 'office',
+            'city' => 'City',
+            'postal_code' => 'PO5 5SG',
+            'country' => 'Country',
+            'is_primary' => true,
+        ]);
+    });
+
+    test('validation fails with missing required fields', function () {
+        $user = adminUser();
+        
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('company-addresses.store'), []);
+
+        $response->assertUnprocessable()
+            ->assertJsonValidationErrors(['address_line_1']);
+    });
+
+    test('unauthorized user cannot create company contact', function () {
+        $unauthorizedUser = User::factory()->create();
+        
+        $response = $this->actingAs($unauthorizedUser, 'sanctum')
+            ->postJson(route('company-addresses.store'), [
+                'address_line_1' => '1 Dave Street',
+            ]);
+
+        $response->assertForbidden();
+    });
+});
