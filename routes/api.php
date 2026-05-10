@@ -5,6 +5,8 @@ use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyIndustryController;
 use App\Http\Controllers\CompanyPhoneController;
+use App\Http\Controllers\PipelineController;
+use App\Http\Controllers\PipelineStageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -313,6 +315,106 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [CompanyAddressController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Pipeline management routes
+    Route::prefix('pipelines')->name(
+        'pipelines.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [PipelineController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [PipelineController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [PipelineController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [PipelineController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{pipeline}',
+            [PipelineController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{pipeline}',
+            [PipelineController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{pipeline}',
+            [PipelineController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{pipeline}',
+            [PipelineController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [PipelineController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [PipelineController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Pipeline Stage management routes
+    Route::prefix('pipeline-stages')->name(
+        'pipeline-stages.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [PipelineStageController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [PipelineStageController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [PipelineStageController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [PipelineStageController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{pipeline_stage}',
+            [PipelineStageController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{pipeline_stage}',
+            [PipelineStageController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{pipeline_stage}',
+            [PipelineStageController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{pipeline_stage}',
+            [PipelineStageController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [PipelineStageController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [PipelineStageController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
