@@ -52,17 +52,17 @@ class PipelineStage extends Model
     public const REJECTED_TERMINAL = 'rejected_terminal';
 
     /**
-     * Get the company that owns the phone.
+     * Get the pipeline that owns the stage.
      *
      * @return BelongsTo
      */
-    public function company(): BelongsTo
+    public function pipeline(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Pipeline::class);
     }
 
     /**
-     * Get the user who created the phone.
+     * Get the user who created the stage.
      *
      * @return BelongsTo
      */
@@ -72,7 +72,7 @@ class PipelineStage extends Model
     }
 
     /**
-     * Get the user who last updated the phone.
+     * Get the user who last updated the stage.
      *
      * @return BelongsTo
      */
@@ -82,7 +82,7 @@ class PipelineStage extends Model
     }
 
     /**
-     * Get the user who deleted the phone.
+     * Get the user who deleted the stage.
      *
      * @return BelongsTo
      */
@@ -92,7 +92,7 @@ class PipelineStage extends Model
     }
 
     /**
-     * Get the user who restored the phone.
+     * Get the user who restored the stage.
      *
      * @return BelongsTo
      */

@@ -28,8 +28,6 @@ return new class extends Migration
             $table->timestamp('restored_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->unique(['entity_type', 'is_default'], 'unique_default_per_entity');
         });
     }
 

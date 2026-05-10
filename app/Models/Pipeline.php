@@ -61,17 +61,7 @@ class Pipeline extends Model
     }
 
     /**
-     * Get the company that owns the phone.
-     *
-     * @return BelongsTo
-     */
-    public function company(): BelongsTo
-    {
-        return $this->belongsTo(Company::class);
-    }
-
-    /**
-     * Get the user who created the phone.
+     * Get the user who created the pipeline.
      *
      * @return BelongsTo
      */
@@ -81,7 +71,7 @@ class Pipeline extends Model
     }
 
     /**
-     * Get the user who last updated the phone.
+     * Get the user who last updated the pipeline.
      *
      * @return BelongsTo
      */
@@ -91,7 +81,7 @@ class Pipeline extends Model
     }
 
     /**
-     * Get the user who deleted the phone.
+     * Get the user who deleted the pipeline.
      *
      * @return BelongsTo
      */
@@ -101,7 +91,7 @@ class Pipeline extends Model
     }
 
     /**
-     * Get the user who restored the phone.
+     * Get the user who restored the pipeline.
      *
      * @return BelongsTo
      */

@@ -256,7 +256,7 @@ class PipelineController extends Controller
     {
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'required|integer|exists:company_phones,id',
+            'ids.*' => 'required|integer|exists:pipelines,id',
         ]);
 
         $auth = auth()->user();
