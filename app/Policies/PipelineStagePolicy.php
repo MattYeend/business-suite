@@ -4,12 +4,12 @@ namespace App\Policies;
 
 use App\Models\PipelineStage;
 use App\Models\User;
-use App\Services\PipelineStages\PipelineStageActiveCheckerService;
+use App\Services\PipelineStages\PipelineStagePolicyAuthorisationService;
 
 class PipelineStagePolicy
 {
     public function __construct(
-        protected PipelineStageActiveCheckerService $authorizationService
+        protected PipelineStagePolicyAuthorisationService $authorizationService
     ) {
     }
 
