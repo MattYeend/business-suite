@@ -14,7 +14,7 @@ class UpdatePipelineStageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('pipelineStage'));
+        return $this->user()->can('update', $this->route('pipeline_stage'));
     }
 
     /**
