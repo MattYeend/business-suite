@@ -90,7 +90,9 @@ trait HasCompanyPhoneTypeHelpers
             CompanyPhone::TYPE_FAX => 'Fax',
             CompanyPhone::TYPE_TOLL_FREE => 'Toll Free',
             CompanyPhone::TYPE_MOBILE => 'Mobile',
-            default => $this->type ? ucfirst(str_replace('_', ' ', $this->type)) : null,
+            default => $this->type ? ucfirst(
+                str_replace('_', ' ', $this->type)
+            ) : null,
         };
     }
 }

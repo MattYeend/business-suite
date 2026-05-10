@@ -63,8 +63,10 @@ trait HasPipelineScopes
      *
      * @return Builder
      */
-    public function scopeForEntityType(Builder $query, string $entityType): Builder
-    {
+    public function scopeForEntityType(
+        Builder $query,
+        string $entityType
+    ): Builder {
         return $query->where('entity_type', $entityType);
     }
 

@@ -178,7 +178,9 @@ trait HasPipelineStageHelpers
             PipelineStage::COMPLETED_TERMINAL => 'Completed',
             PipelineStage::CANCELLED_TERMINAL => 'Cancelled',
             PipelineStage::REJECTED_TERMINAL => 'Rejected',
-            default => $this->terminal_type ? ucfirst(str_replace('_', ' ', $this->terminal_type)) : null,
+            default => $this->terminal_type ? ucfirst(
+                str_replace('_', ' ', $this->terminal_type)
+            ) : null,
         };
     }
 

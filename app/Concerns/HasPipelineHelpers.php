@@ -157,7 +157,9 @@ trait HasPipelineHelpers
             Pipeline::PROJECT_ENTITY => 'Project',
             Pipeline::CANDIDATE_ENTITY => 'Candidate',
             Pipeline::QUOTE_ENTITY => 'Quote',
-            default => $this->entity ? ucfirst(str_replace('_', ' ', $this->entity)) : null,
+            default => $this->entity ? ucfirst(
+                str_replace('_', ' ', $this->entity)
+            ) : null,
         };
     }
 }
