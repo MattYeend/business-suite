@@ -138,6 +138,28 @@ class Log extends Model
     public const ACTION_EXPORT_COMPANY_ADDRESS = 83;
     public const ACTION_COMPANY_ADDRESS_UPDATED_BY_CRON = 84;
 
+    // Pipeline Management
+    public const ACTION_CREATE_PIPELINE = 85;
+    public const ACTION_UPDATE_PIPELINE = 86;
+    public const ACTION_DELETE_PIPELINE = 87;
+    public const ACTION_SHOW_PIPELINE = 88;
+    public const ACTION_FORCE_DELETE_PIPELINE = 89;
+    public const ACTION_RESTORE_PIPELINE = 90;
+    public const ACTION_IMPORT_PIPELINE = 91;
+    public const ACTION_EXPORT_PIPELINE = 92;
+    public const ACTION_PIPELINE_UPDATED_BY_CRON = 93;
+
+    // Pipeline Stage Management
+    public const ACTION_CREATE_PIPELINE_STAGE = 94;
+    public const ACTION_UPDATE_PIPELINE_STAGE = 95;
+    public const ACTION_DELETE_PIPELINE_STAGE = 96;
+    public const ACTION_SHOW_PIPELINE_STAGE = 97;
+    public const ACTION_FORCE_DELETE_PIPELINE_STAGE = 98;
+    public const ACTION_RESTORE_PIPELINE_STAGE = 99;
+    public const ACTION_IMPORT_PIPELINE_STAGE = 100;
+    public const ACTION_EXPORT_PIPELINE_STAGE = 101;
+    public const ACTION_PIPELINE_STAGE_UPDATED_BY_CRON = 102;
+
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
     // Ensure to update the documentation accordingly.
