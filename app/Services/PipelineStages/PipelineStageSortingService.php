@@ -30,7 +30,10 @@ class PipelineStageSortingService
             'terminal_type' => $query->orderBy('terminal_type', $sortDirection),
             'probability' => $query->orderBy('probability', $sortDirection),
             'sla_hours' => $query->orderBy('sla_hours', $sortDirection),
-            'requires_approval' => $query->orderBy('requires_approval', $sortDirection),
+            'requires_approval' => $query->orderBy(
+                'requires_approval',
+                $sortDirection
+            ),
             'is_real' => $query->orderBy('is_real', $sortDirection),
             'created_at' => $query->orderBy('created_at', $sortDirection),
             'updated_at' => $query->orderBy('updated_at', $sortDirection),

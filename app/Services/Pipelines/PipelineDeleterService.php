@@ -5,6 +5,7 @@ namespace App\Services\Pipelines;
 use App\Models\Pipeline;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+
 class PipelineDeleterService
 {
     public function __construct(

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PipelineFilterService
 {
-/**
+    /**
      * Apply search filter to query.
      *
      * @param  Builder $query
