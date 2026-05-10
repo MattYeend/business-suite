@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Concerns\HasCompanyContactHelpers;
-use App\Concerns\HasCompanyContactScopes;
+use App\Concerns\Companies\HasCompanyContactHelpers;
+use App\Concerns\Companies\HasCompanyContactScopes;
 use Database\Factories\CompanyContactFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

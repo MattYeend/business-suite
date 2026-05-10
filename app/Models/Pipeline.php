@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Concerns\HasPipelineHelpers;
-use App\Concerns\HasPipelineScopes;
+use App\Concerns\Pipelines\HasPipelineHelpers;
+use App\Concerns\Pipelines\HasPipelineScopes;
 use Database\Factories\PipelineFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

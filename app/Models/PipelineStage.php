@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Concerns\HasPipelineStageHelpers;
-use App\Concerns\HasPipelineStageScopes;
+use App\Concerns\Pipelines\HasPipelineStageHelpers;
+use App\Concerns\Pipelines\HasPipelineStageScopes;
 use Database\Factories\PipelineStageFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

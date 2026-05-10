@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Concerns\HasCompanyAddressHelpers;
-use App\Concerns\HasCompanyAddressScopes;
+use App\Concerns\Companies\HasCompanyAddressHelpers;
+use App\Concerns\Companies\HasCompanyAddressScopes;
 use Database\Factories\CompanyAddressFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
