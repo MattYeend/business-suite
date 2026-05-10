@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             CompanyContactSeeder::class,
             CompanyPhoneSeeder::class,
             CompanyAddressSeeder::class,
+            PipelineSeeder::class,
+            PipelineStageSeeder::class,
         ]);
     }
 }
