@@ -84,7 +84,7 @@ class PipelineStageController extends Controller
 
         return response()->json($pipelineStage, 201);
     }
-    
+
     /**
      * Display the specified resource.
      *
@@ -92,8 +92,8 @@ class PipelineStageController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  PipelineStage $pipelineStage Route-model-bound pipelineStage stage
-     * instance.
+     * @param  PipelineStage $pipelineStage Route-model-bound
+     * pipeline stage instance.
      *
      * @return JsonResponse The resolved pipelineStage resource.
      */
@@ -117,8 +117,8 @@ class PipelineStageController extends Controller
      *
      * @param  UpdatePipelineStageRequest $request Validated request
      * containing updated pipelineStage stage data.
-     * @param  PipelineStage $pipelineStage Route-model-bound pipelineStage stage instance
-     * to update.
+     * @param  PipelineStage $pipelineStage Route-model-bound pipeline stage
+     * instance to update.
      *
      * @return JsonResponse The updated pipelineStage resource.
      */
@@ -148,10 +148,11 @@ class PipelineStageController extends Controller
      * Authorises via the 'delete' policy before proceeding.
      *
      * The audit log entry is written before the deletion so that the
-     * pipelineStage pipelineStage instance is still fully accessible during logging.
+     * pipelineStage pipelineStage instance is still fully accessible
+     * during logging.
      *
-     * @param  PipelineStage $pipelineStage Route-model-bound pipelineStage instance
-     * to delete.
+     * @param  PipelineStage $pipelineStage Route-model-bound
+     * pipelineStage instance to delete.
      *
      * @return JsonResponse Empty response with HTTP 204 No Content.
      */
