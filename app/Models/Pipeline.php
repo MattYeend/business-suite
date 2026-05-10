@@ -30,6 +30,34 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'restored_at',
     'restored_by',
 ])]
+
+/**
+ * Pipeline model for managing sales/workflow pipelines with stages.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property string $entity_type
+ * @property bool $is_default
+ * @property bool $is_active
+ * @property int $position
+ * @property bool $is_real
+ * @property array|null $meta
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property int|null $restored_by
+ * @property Carbon|null $restored_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ *
+ * @property-read Collection<int,PipelineStage> $stages
+ * @property-read User|null $creator
+ * @property-read User|null $updater
+ * @property-read User|null $deleter
+ * @property-read User|null $restorer
+ */
 class Pipeline extends Model
 {
     /**

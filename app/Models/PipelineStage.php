@@ -32,6 +32,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'restored_at',
     'restored_by',
 ])]
+
+/**
+ * Pipeline stage model representing individual stages within a pipeline.
+ *
+ * @property int $id
+ * @property int $pipeline_id
+ * @property string $name
+ * @property string|null $colour
+ * @property int $position
+ * @property bool $is_terminal
+ * @property string|null $terminal_type
+ * @property int|null $probability
+ * @property int|null $sla_hours
+ * @property bool $requires_approval
+ * @property bool $is_real
+ * @property array|null $meta
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property int|null $restored_by
+ * @property Carbon|null $restored_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ *
+ * @property-read Pipeline $pipeline
+ * @property-read User|null $creator
+ * @property-read User|null $updater
+ * @property-read User|null $deleter
+ * @property-read User|null $restorer
+ */
 class PipelineStage extends Model
 {
     /**

@@ -70,6 +70,8 @@ use Illuminate\Support\Carbon;
  * @property-read User|null $deleter
  * @property-read User|null $restorer
  * @property-read Collection<int,CompanyContact> $companyContacts
+ * @property-read Collection<int,CompanyPhone> $companyPhones
+ * @property-read Collection<int,CompanyAddress> $companyAddresses
  */
 
 class Company extends Model

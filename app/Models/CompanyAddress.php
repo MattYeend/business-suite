@@ -33,6 +33,36 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'restored_by',
 ])]
 
+/**
+ * Company address model for managing multiple addresses per company.
+ *
+ * @property int $id
+ * @property int $company_id
+ * @property string $type
+ * @property string $address_line_1
+ * @property string|null $address_line_2
+ * @property string $city
+ * @property string|null $county
+ * @property string $country
+ * @property string|null $postal_code
+ * @property bool $is_primary
+ * @property bool $is_real
+ * @property array|null $meta
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property int|null $restored_by
+ * @property Carbon|null $restored_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ *
+ * @property-read Company $company
+ * @property-read User|null $creator
+ * @property-read User|null $updater
+ * @property-read User|null $deleter
+ * @property-read User|null $restorer
+ */
 class CompanyAddress extends Model
 {
     /**

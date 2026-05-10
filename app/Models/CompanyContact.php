@@ -32,6 +32,35 @@ use Illuminate\Database\Eloquent\SoftDeletes;
     'restored_by',
 ])]
 
+/**
+ * Company contact model for managing contacts associated with companies.
+ *
+ * @property int $id
+ * @property int $company_id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string|null $email
+ * @property string|null $phone
+ * @property string|null $mobile
+ * @property string|null $job_title
+ * @property bool $is_primary
+ * @property bool $is_real
+ * @property array|null $meta
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @property int|null $deleted_by
+ * @property int|null $restored_by
+ * @property Carbon|null $restored_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ *
+ * @property-read Company $company
+ * @property-read User|null $creator
+ * @property-read User|null $updater
+ * @property-read User|null $deleter
+ * @property-read User|null $restorer
+ */
 class CompanyContact extends Model
 {
     /**
