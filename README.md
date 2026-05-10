@@ -39,7 +39,7 @@ A Laravel 13 CRM, ERP, HR, LMS system
         6. [Marketing](#marketing)
         7. [Learning and Development](#learning-and-development)
         8. [Project Management](#project-management)
-        9. [Specialized Roles](#specialized-roles)
+        9. [Specialised Roles](#specialised-roles)
     8. [Team-Based Permission Management](#team-based-permission-management)
         1. [User Model Features](#user-model-features)
             1. [HasTeam Trait](#hasteam-trait)
@@ -51,7 +51,7 @@ A Laravel 13 CRM, ERP, HR, LMS system
     10. [Usage Examples](#usage-examples)
         1. [Complete User Setup with Team and Roles](#complete-user-setup-with-team-and-roles)
         2. [Checking Permissions](#checking-permissions)
-        3. [Controller Authorization](#controller-authorization)
+        3. [Controller Authorisation](#controller-authorisation)
         4. [Blade/Vue Directives](#bladevue-directives)
         5. [Route Middleware](#route-middleware)
     11. [CLI Commands](#cli-commands)
@@ -97,7 +97,7 @@ This project is an all-in-one CRM/ERP/HR/LMS system designed to help businesses 
 ### Core Features
 
 - **Customer & Lead Management** - Organise contacts, track leads, and maintain detailed profiles
-- **Role-Based Access Control** - Secure user management with customizable permissions
+- **Role-Based Access Control** - Secure user management with customisable permissions
 - **Analytics & Reporting** - Gain insights into business performance with dynamic dashboards
 
 ### Key Functional Areas
@@ -301,7 +301,7 @@ Event listeners are registered in `AppServiceProvider::boot()` using `Event::lis
 
 ### Model Observers
 
-The system uses observers to automatically handle role synchronization and data ownership:
+The system uses observers to automatically handle role synchronisation and data ownership:
 
 | Model | Observer | Description |
 | --- | --- | --- |
@@ -327,7 +327,7 @@ It provides a robust Role-Based Access Control (RBAC) system suitable for comple
 
 - **Role**: A collection of permissions scoped to a team (e.g., `super-admin`, `sales-manager`, `hr-staff`)
 - **Permission**: A specific action within a module (e.g., `create leads`, `edit invoices`, `view reports`, `approve payments`)
-- **Team**: A departmental or organizational unit that scopes role and permission assignments
+- **Team**: A departmental or organisational unit that scopes role and permission assignments
 - **User Assignment**: Users belong to a team and can have one or multiple roles within that team context
 - **Role Permissions**: Roles can have multiple permissions assigned
 - **Direct Permissions**: Individual permissions can be assigned directly to users for exceptions
@@ -345,10 +345,10 @@ The system implements **team-scoped permissions** using Spatie's built-in teams 
 
 **Key Components:**
 
-1. **`RolesEnum`** - Centralized enum defining all system roles with labels and department categorization
+1. **`RolesEnum`** - Centralised enum defining all system roles with labels and department categorisation
 2. **`Teams` Constants** - Defines team IDs and provides team name resolution
 3. **`HasTeam` Trait** - Manages team context for users (switching teams, scoping queries)
-4. **`HasUserRoles` Trait** - Provides specialized role management beyond base roles
+4. **`HasUserRoles` Trait** - Provides specialised role management beyond base roles
 5. **`HasUserScopes` Trait** - Query scopes for filtering users by role type
 6. **User Model** - Combines all traits and implements team-based permission checking
 
@@ -386,7 +386,7 @@ Permissions follow a consistent naming convention: `{action} {module}`
 
 **Modules**:
 
-- **CRM**: `companies`, `contacts`, `deals`, `leads`, `opportunities`, `quotes`, `invoices`, `payments`
+- **CRM**: `companies`, `contacts`, `deals`, `industries`, `leads`, `opportunities`, `quotes`, `invoices`, `payments`
 - **Projects**: `projects`, `tasks`, `activities`, `documents`
 - **HR**: `employees`, `departments`, `positions`, `attendance`, `payroll`, `leaves`, `performance`, `recruitment`
 - **LMS**: `courses`, `lessons`, `assessments`, `certifications`, `learning_paths`
@@ -407,7 +407,7 @@ Permissions follow a consistent naming convention: `{action} {module}`
 
 ### RolesEnum Structure
 
-The `RolesEnum` provides a type-safe, centralized definition of all system roles:
+The `RolesEnum` provides a type-safe, centralised definition of all system roles:
 
 ```php
 use App\Enums\RolesEnum;
@@ -418,9 +418,9 @@ $label = RolesEnum::SALES_MANAGER->label(); // "Sales Manager"
 // Get role department
 $dept = RolesEnum::ACCOUNTANT->department(); // "Finance"
 
-// Check if role is base or specialized
+// Check if role is base or specialised
 $isBase = RolesEnum::ADMIN->isBase(); // true
-$isSpecialized = RolesEnum::HR_MANAGER->isSpecialized(); // true
+$isSpecialised = RolesEnum::HR_MANAGER->isSpecialised(); // true
 
 // Get all roles by department
 $salesRoles = RolesEnum::byDepartment('Sales');
@@ -430,8 +430,8 @@ $salesRoles = RolesEnum::byDepartment('Sales');
 $departments = RolesEnum::departments();
 // ['Base', 'Sales', 'Finance', 'HR', 'LMS', 'IT', ...]
 
-// Get all specialized roles (non-base)
-$specializedRoles = RolesEnum::specializedRoles();
+// Get all specialised roles (non-base)
+$specialisedRoles = RolesEnum::specialisedRoles();
 
 // Get role from string value
 $role = RolesEnum::fromValue('sales-manager');
@@ -533,7 +533,7 @@ $roleLabels = RolesEnum::labels();
 | `support-agent` | `RolesEnum::SUPPORT_AGENT` | Customer support, ticket management |
 | `executive-assistant` | `RolesEnum::EXECUTIVE_ASSISTANT` | Administrative support, calendar management |
 
-#### Specialized Roles
+#### Specialised Roles
 
 | Role | Enum | Description |
 | --- | --- | --- |
@@ -575,20 +575,20 @@ echo $user->teamName; // "Sales Department"
 ##### HasUserRoles Trait
 
 ```php
-// Assign specialized roles
+// Assign specialised roles
 $user->assignSpecialisedRole(RolesEnum::SALES_MANAGER->value);
 $user->assignSpecialisedRole([
     RolesEnum::ACCOUNTANT->value,
     RolesEnum::BUDGET_ANALYST->value
 ]);
 
-// Remove specialized roles
+// Remove specialised roles
 $user->removeSpecialisedRole(RolesEnum::SALES_REP->value);
 
-// Get only specialized roles (excludes super-admin, admin, user)
-$specializedRoles = $user->specialisedRoles; // Collection
+// Get only specialised roles (excludes super-admin, admin, user)
+$specialisedRoles = $user->specialisedRoles; // Collection
 
-// Check if user has any specialized roles
+// Check if user has any specialised roles
 if ($user->hasSpecialisedRoles()) {
     // User has roles beyond base roles
 }
@@ -705,7 +705,7 @@ $user = User::create([
 // Assign base role in team context
 $user->assignRoleInTeam(RolesEnum::USER->value);
 
-// Assign specialized role
+// Assign specialised role
 $user->assignSpecialisedRole(RolesEnum::SALES_MANAGER->value);
 
 // User now has permissions scoped to Sales Department
@@ -760,7 +760,7 @@ $rolesList = $user->rolesList; // "user, sales-manager"
 $roleDisplay = $user->roleDisplay; // "User", "Admin", or "Super Admin"
 ```
 
-#### Controller Authorization
+#### Controller Authorisation
 
 ```php
 class DealController extends Controller
@@ -824,9 +824,9 @@ class DealController extends Controller
 <p>Role: {{ auth()->user()->roleDisplay }}</p>
 <p>Initials: {{ auth()->user()->initials }}</p>
 
-{{-- Check specialized roles --}}
+{{-- Check specialised roles --}}
 @if(auth()->user()->hasSpecialisedRoles())
-    <p>Specialized Roles: {{ auth()->user()->specialisedRoles->pluck('name')->implode(', ') }}</p>
+    <p>Specialised Roles: {{ auth()->user()->specialisedRoles->pluck('name')->implode(', ') }}</p>
 @endif
 ```
 
@@ -905,7 +905,7 @@ Route::middleware(['auth'])->group(function () {
 
 #### Sync User Roles
 
-Synchronizes Spatie roles with user boolean flags across all teams:
+Synchronises Spatie roles with user boolean flags across all teams:
 
 ```bash
 php artisan app:sync-user-roles
@@ -963,7 +963,7 @@ php artisan db:seed --class=AssignRolesToUsersSeeder
 This:
 
 - Assigns base roles based on `is_super_admin`, `is_admin`, `is_user` flags
-- Assigns specialized roles based on email/name patterns
+- Assigns specialised roles based on email/name patterns
 - Sets correct team context using `setPermissionsTeamId()`
 - Ensures all role assignments are team-scoped
 
@@ -983,13 +983,13 @@ php artisan db:seed --class=AssignRolesToUsersSeeder
 **Leverage team scoping** - All role/permission operations automatically respect team boundaries  
 **Use roles as the foundation** - Assign standard permission sets via roles, not individual permissions  
 **Use direct permissions sparingly** - Only for exceptions or temporary access  
-**Check permissions in policies** - Centralize authorization logic in Policy classes  
+**Check permissions in policies** - Centralise authorisation logic in Policy classes  
 **Use model scopes for data filtering** - Implement team-scoped queries via global scopes  
 **Protect routes with middleware** - Layer security at the route level with role/permission middleware  
-**Share permissions with frontend** - Make authorization decisions in both backend and UI  
+**Share permissions with frontend** - Make authorisation decisions in both backend and UI  
 **Document custom permissions** - Maintain clarity on what each permission controls  
 **Regular permission audits** - Review and clean up unused permissions  
-**Test permission boundaries** - Ensure users can't access unauthorized resources across team boundaries  
+**Test permission boundaries** - Ensure users can't access unauthorised resources across team boundaries  
 **Use User model helper methods** - `hasPermissionInTeam()`, `hasRoleInTeam()`, `assignRoleInTeam()`  
 **Sync roles after bulk operations** - Run `app:sync-user-roles` after imports or mass updates
 
@@ -999,10 +999,10 @@ php artisan db:seed --class=AssignRolesToUsersSeeder
 - **Hybrid Model**: Combines boolean flags (`is_user`, `is_admin`, `is_super_admin`) with Spatie roles for flexibility
 - **Automatic Sync**: User roles automatically sync with boolean flags via `UserObserver`
 - **Type-Safe Roles**: `RolesEnum` provides compile-time safety and IDE autocomplete for all roles
-- **Team Constants**: `Teams` class centralizes team ID management and name resolution
+- **Team Constants**: `Teams` class centralises team ID management and name resolution
 - **Data Isolation**: Users with `manage own data only` see only their assigned records within their team
 - **Permission Caching**: Spatie caches permissions per team for performance
-- **Policy-Based**: Complex authorization logic lives in dedicated Policy classes
+- **Policy-Based**: Complex authorisation logic lives in dedicated Policy classes
 - **Auditable**: Permission checks can be logged via audit logs for compliance
 - **Scalable**: Supports 50+ roles and 300+ permissions without performance impact
 - **Trait Composition**: User model composes `HasTeam`, `HasUserRoles`, `HasUserScopes` for clean separation

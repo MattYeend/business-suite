@@ -154,11 +154,11 @@ enum RolesEnum: string
     }
 
     /**
-     * Get all specialized roles (non-base).
+     * Get all specialised roles (non-base).
      *
      * @return array<self>
      */
-    public static function specializedRoles(): array
+    public static function specialisedRoles(): array
     {
         return array_values(
             array_filter(
