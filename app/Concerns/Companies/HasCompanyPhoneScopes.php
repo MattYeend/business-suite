@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Concerns;
+namespace App\Concerns\Companies;
 
 use App\Models\CompanyPhone;
 use Illuminate\Database\Eloquent\Builder;

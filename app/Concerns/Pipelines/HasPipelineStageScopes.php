@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Concerns;
+namespace App\Concerns\Pipelines;
 
 use App\Models\PipelineStage;
 use Illuminate\Database\Eloquent\Builder;

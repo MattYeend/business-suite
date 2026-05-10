@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Concerns;
+namespace App\Concerns\Companies;
 
 /**
  * Detect US/Canada phone numbers.

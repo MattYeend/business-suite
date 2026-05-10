@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Concerns;
+namespace App\Concerns\Users;
 
 use Illuminate\Support\Collection;
 use Spatie\Permission\Contracts\Role;
