@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Concerns\HasTeam;
-use App\Concerns\HasUserRoles;
-use App\Concerns\HasUserScopes;
+use App\Concerns\Users\HasUserRoles;
+use App\Concerns\Users\HasUserScopes;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
