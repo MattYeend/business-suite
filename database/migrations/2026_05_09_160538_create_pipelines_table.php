@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('entity_type'); // deal, order, task, ticket, project, candidate, quote
+            $table->string('entity_type');
             $table->boolean('is_default')->default(false);
             $table->boolean('is_active')->default(true);
             $table->integer('position')->default(0);

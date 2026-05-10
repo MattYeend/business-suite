@@ -2,11 +2,125 @@
 
 namespace App\Models;
 
+use App\Concerns\HasPipelineStageHelpers;
+use App\Concerns\HasPipelineStageScopes;
+use Database\Factories\PipelineStageFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[Fillable([
+    'pipeline_id',
+    'name',
+    'colour',
+    'position',
+    'is_terminal',
+    'terminal_type',
+    'probability',
+    'sla_hours',
+    'requires_approval',
+    'is_real',
+    'meta',
+    'created_at',
+    'created_by',
+    'updated_at',
+    'updated_by',
+    'deleted_at',
+    'deleted_by',
+    'restored_at',
+    'restored_by',
+])]
 class PipelineStage extends Model
 {
-    /** @use HasFactory<\Database\Factories\PipelineStageFactory> */
-    use HasFactory;
+    /**
+     * @use HasFactory<PipelineStageFactory>
+     * @use SoftDeletes<SoftDeletes>
+     * @use HasPipelineStageHelpers<HasPipelineStageHelpers>
+     * @use HasPipelineStageScopes<HasPipelineStageScopes>
+     */
+    use HasFactory,
+        SoftDeletes,
+        HasPipelineStageHelpers,
+        HasPipelineStageScopes;
+
+    public const WON_TERMINAL = 'won_terminal';
+    public const LOST_TERMINAL = 'lost_terminal';
+    public const COMPLETED_TERMINAL = 'completed_terminal';
+    public const CANCELLED_TERMINAL = 'cancelled_terminal';
+    public const REJECTED_TERMINAL = 'rejected_terminal';
+
+    /**
+     * Get the company that owns the phone.
+     *
+     * @return BelongsTo
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Get the user who created the phone.
+     *
+     * @return BelongsTo
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * Get the user who last updated the phone.
+     *
+     * @return BelongsTo
+     */
+    public function updater(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    /**
+     * Get the user who deleted the phone.
+     *
+     * @return BelongsTo
+     */
+    public function deleter(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
+    }
+
+    /**
+     * Get the user who restored the phone.
+     *
+     * @return BelongsTo
+     */
+    public function restorer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'restored_by');
+    }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string,string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_terminal' => 'boolean',
+            'is_active' => 'boolean',
+            'is_real' => 'boolean',
+            'requires_approval' => 'boolean',
+            'position' => 'integer',
+            'probability' => 'integer',
+            'sla_hours' => 'integer',
+            'meta' => 'array',
+            'restored_at' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+            'deleted_at' => 'datetime',
+        ];
+    }
 }

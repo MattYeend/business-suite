@@ -7,12 +7,12 @@ use App\Models\CompanyPhone;
 /**
  * Company phone helper methods.
  *
- * @property bool   $is_real
- * @property bool   $is_primary
+ * @property bool $is_real
+ * @property bool $is_primary
  * @property string $type
  * @property string $number
- * @property int    $company_id
- * @property int    $id
+ * @property int $company_id
+ * @property int $id
  *
  * @mixin CompanyPhone
  */

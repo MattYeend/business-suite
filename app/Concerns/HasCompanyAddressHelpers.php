@@ -214,7 +214,7 @@ trait HasCompanyAddressHelpers
             CompanyAddress::TYPE_RETAIL => 'Retail',
             CompanyAddress::TYPE_OFFICE => 'Office',
             CompanyAddress::TYPE_WAREHOUSE => 'Warehouse',
-            default => ucfirst($this->type),
+            default => $this->type ? ucfirst(str_replace('_', ' ', $this->type)) : null,
         };
     }
 }

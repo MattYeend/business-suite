@@ -36,7 +36,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $salesPipelineId,
                 'name' => 'Lead',
-                'color' => '#94A3B8',
+                'colour' => '#94A3B8',
                 'position' => 0,
                 'probability' => 10,
                 'is_terminal' => false,
@@ -49,7 +49,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $salesPipelineId,
                 'name' => 'Qualified',
-                'color' => '#60A5FA',
+                'colour' => '#60A5FA',
                 'position' => 1,
                 'probability' => 25,
                 'is_terminal' => false,
@@ -62,7 +62,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $salesPipelineId,
                 'name' => 'Proposal',
-                'color' => '#FBBF24',
+                'colour' => '#FBBF24',
                 'position' => 2,
                 'probability' => 50,
                 'is_terminal' => false,
@@ -75,7 +75,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $salesPipelineId,
                 'name' => 'Negotiation',
-                'color' => '#FB923C',
+                'colour' => '#FB923C',
                 'position' => 3,
                 'probability' => 75,
                 'is_terminal' => false,
@@ -88,7 +88,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $salesPipelineId,
                 'name' => 'Closed Won',
-                'color' => '#34D399',
+                'colour' => '#34D399',
                 'position' => 4,
                 'probability' => 100,
                 'is_terminal' => true,
@@ -101,7 +101,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $salesPipelineId,
                 'name' => 'Closed Lost',
-                'color' => '#EF4444',
+                'colour' => '#EF4444',
                 'position' => 5,
                 'probability' => 0,
                 'is_terminal' => true,
@@ -116,7 +116,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $orderPipelineId,
                 'name' => 'Pending',
-                'color' => '#94A3B8',
+                'colour' => '#94A3B8',
                 'position' => 0,
                 'probability' => null,
                 'is_terminal' => false,
@@ -129,7 +129,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $orderPipelineId,
                 'name' => 'Processing',
-                'color' => '#60A5FA',
+                'colour' => '#60A5FA',
                 'position' => 1,
                 'probability' => null,
                 'is_terminal' => false,
@@ -142,7 +142,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $orderPipelineId,
                 'name' => 'Shipped',
-                'color' => '#FBBF24',
+                'colour' => '#FBBF24',
                 'position' => 2,
                 'probability' => null,
                 'is_terminal' => false,
@@ -155,7 +155,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $orderPipelineId,
                 'name' => 'Delivered',
-                'color' => '#34D399',
+                'colour' => '#34D399',
                 'position' => 3,
                 'probability' => null,
                 'is_terminal' => true,
@@ -168,7 +168,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $orderPipelineId,
                 'name' => 'Cancelled',
-                'color' => '#EF4444',
+                'colour' => '#EF4444',
                 'position' => 4,
                 'probability' => null,
                 'is_terminal' => true,
@@ -183,7 +183,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $ticketPipelineId,
                 'name' => 'New',
-                'color' => '#94A3B8',
+                'colour' => '#94A3B8',
                 'position' => 0,
                 'probability' => null,
                 'is_terminal' => false,
@@ -196,7 +196,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $ticketPipelineId,
                 'name' => 'Assigned',
-                'color' => '#60A5FA',
+                'colour' => '#60A5FA',
                 'position' => 1,
                 'probability' => null,
                 'is_terminal' => false,
@@ -209,7 +209,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $ticketPipelineId,
                 'name' => 'In Progress',
-                'color' => '#FBBF24',
+                'colour' => '#FBBF24',
                 'position' => 2,
                 'probability' => null,
                 'is_terminal' => false,
@@ -222,7 +222,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $ticketPipelineId,
                 'name' => 'Pending Customer',
-                'color' => '#FB923C',
+                'colour' => '#FB923C',
                 'position' => 3,
                 'probability' => null,
                 'is_terminal' => false,
@@ -235,7 +235,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $ticketPipelineId,
                 'name' => 'Resolved',
-                'color' => '#34D399',
+                'colour' => '#34D399',
                 'position' => 4,
                 'probability' => null,
                 'is_terminal' => true,
@@ -248,7 +248,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $ticketPipelineId,
                 'name' => 'Closed',
-                'color' => '#64748B',
+                'colour' => '#64748B',
                 'position' => 5,
                 'probability' => null,
                 'is_terminal' => true,
@@ -263,7 +263,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $projectPipelineId,
                 'name' => 'Planning',
-                'color' => '#94A3B8',
+                'colour' => '#94A3B8',
                 'position' => 0,
                 'probability' => null,
                 'is_terminal' => false,
@@ -276,7 +276,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $projectPipelineId,
                 'name' => 'In Progress',
-                'color' => '#60A5FA',
+                'colour' => '#60A5FA',
                 'position' => 1,
                 'probability' => null,
                 'is_terminal' => false,
@@ -289,7 +289,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $projectPipelineId,
                 'name' => 'Review',
-                'color' => '#FBBF24',
+                'colour' => '#FBBF24',
                 'position' => 2,
                 'probability' => null,
                 'is_terminal' => false,
@@ -302,7 +302,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $projectPipelineId,
                 'name' => 'Testing',
-                'color' => '#FB923C',
+                'colour' => '#FB923C',
                 'position' => 3,
                 'probability' => null,
                 'is_terminal' => false,
@@ -315,7 +315,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $projectPipelineId,
                 'name' => 'Delivered',
-                'color' => '#34D399',
+                'colour' => '#34D399',
                 'position' => 4,
                 'probability' => null,
                 'is_terminal' => true,
@@ -328,7 +328,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $projectPipelineId,
                 'name' => 'On Hold',
-                'color' => '#64748B',
+                'colour' => '#64748B',
                 'position' => 5,
                 'probability' => null,
                 'is_terminal' => false,
@@ -341,7 +341,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $projectPipelineId,
                 'name' => 'Cancelled',
-                'color' => '#EF4444',
+                'colour' => '#EF4444',
                 'position' => 6,
                 'probability' => null,
                 'is_terminal' => true,
@@ -356,7 +356,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $taskPipelineId,
                 'name' => 'To Do',
-                'color' => '#94A3B8',
+                'colour' => '#94A3B8',
                 'position' => 0,
                 'probability' => null,
                 'is_terminal' => false,
@@ -369,7 +369,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $taskPipelineId,
                 'name' => 'In Progress',
-                'color' => '#60A5FA',
+                'colour' => '#60A5FA',
                 'position' => 1,
                 'probability' => null,
                 'is_terminal' => false,
@@ -382,7 +382,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $taskPipelineId,
                 'name' => 'Review',
-                'color' => '#FBBF24',
+                'colour' => '#FBBF24',
                 'position' => 2,
                 'probability' => null,
                 'is_terminal' => false,
@@ -395,7 +395,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $taskPipelineId,
                 'name' => 'Done',
-                'color' => '#34D399',
+                'colour' => '#34D399',
                 'position' => 3,
                 'probability' => null,
                 'is_terminal' => true,
@@ -410,7 +410,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $candidatePipelineId,
                 'name' => 'Applied',
-                'color' => '#94A3B8',
+                'colour' => '#94A3B8',
                 'position' => 0,
                 'probability' => null,
                 'is_terminal' => false,
@@ -423,7 +423,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $candidatePipelineId,
                 'name' => 'Screening',
-                'color' => '#60A5FA',
+                'colour' => '#60A5FA',
                 'position' => 1,
                 'probability' => null,
                 'is_terminal' => false,
@@ -436,7 +436,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $candidatePipelineId,
                 'name' => 'Interview',
-                'color' => '#FBBF24',
+                'colour' => '#FBBF24',
                 'position' => 2,
                 'probability' => null,
                 'is_terminal' => false,
@@ -449,7 +449,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $candidatePipelineId,
                 'name' => 'Offer',
-                'color' => '#FB923C',
+                'colour' => '#FB923C',
                 'position' => 3,
                 'probability' => null,
                 'is_terminal' => false,
@@ -462,7 +462,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $candidatePipelineId,
                 'name' => 'Hired',
-                'color' => '#34D399',
+                'colour' => '#34D399',
                 'position' => 4,
                 'probability' => null,
                 'is_terminal' => true,
@@ -475,7 +475,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $candidatePipelineId,
                 'name' => 'Rejected',
-                'color' => '#EF4444',
+                'colour' => '#EF4444',
                 'position' => 5,
                 'probability' => null,
                 'is_terminal' => true,
@@ -490,7 +490,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $quotePipelineId,
                 'name' => 'Draft',
-                'color' => '#94A3B8',
+                'colour' => '#94A3B8',
                 'position' => 0,
                 'probability' => null,
                 'is_terminal' => false,
@@ -503,7 +503,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $quotePipelineId,
                 'name' => 'Sent',
-                'color' => '#60A5FA',
+                'colour' => '#60A5FA',
                 'position' => 1,
                 'probability' => null,
                 'is_terminal' => false,
@@ -516,7 +516,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $quotePipelineId,
                 'name' => 'Under Review',
-                'color' => '#FBBF24',
+                'colour' => '#FBBF24',
                 'position' => 2,
                 'probability' => null,
                 'is_terminal' => false,
@@ -529,7 +529,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $quotePipelineId,
                 'name' => 'Accepted',
-                'color' => '#34D399',
+                'colour' => '#34D399',
                 'position' => 3,
                 'probability' => null,
                 'is_terminal' => true,
@@ -542,7 +542,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $quotePipelineId,
                 'name' => 'Declined',
-                'color' => '#EF4444',
+                'colour' => '#EF4444',
                 'position' => 4,
                 'probability' => null,
                 'is_terminal' => true,
@@ -555,7 +555,7 @@ class PipelineStageSeeder extends Seeder
             [
                 'pipeline_id' => $quotePipelineId,
                 'name' => 'Expired',
-                'color' => '#64748B',
+                'colour' => '#64748B',
                 'position' => 5,
                 'probability' => null,
                 'is_terminal' => true,

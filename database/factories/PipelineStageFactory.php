@@ -22,7 +22,7 @@ class PipelineStageFactory extends Factory
         return [
             'pipeline_id' => Pipeline::factory(),
             'name' => fake()->words(2, true),
-            'color' => fake()->optional(0.8)->hexColor(),
+            'colour' => fake()->optional(0.8)->hexColor(),
             'position' => fake()->numberBetween(0, 10),
             'is_terminal' => false,
             'terminal_type' => null,

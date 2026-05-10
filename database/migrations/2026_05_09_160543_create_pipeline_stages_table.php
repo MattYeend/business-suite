@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pipeline_id')->constrained('pipelines')->cascadeOnDelete();
             $table->string('name');
-            $table->string('color')->nullable();
+            $table->string('colour')->nullable();
             $table->integer('position')->default(0);
             $table->boolean('is_terminal')->default(false); // Final stage (completed/won/lost/cancelled)
-            $table->string('terminal_type')->nullable(); // won, lost, completed, cancelled, rejected
+            $table->string('terminal_type')->nullable();
             $table->integer('probability')->nullable(); // Win probability % (0-100) for sales
             $table->integer('sla_hours')->nullable(); // Time limit for stage completion
             $table->boolean('requires_approval')->default(false);
