@@ -22,8 +22,8 @@ class CompanyIndustryController extends Controller
      *
      * @param  CompanyIndustryLogService $logger Handles audit logging for
      * company industry events.
-     * @param  CompanyIndustryManagementService $management Handles
-     * company industry create/update/delete/restore.
+     * @param  CompanyIndustryManagementService $management Handles company
+     * industry create/update/delete/restore.
      * @param  CompanyIndustryQueryService $query Handles company industry
      * listing and retrieval.
      */

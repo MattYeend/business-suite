@@ -22,8 +22,8 @@ class CompanyPhoneController extends Controller
      *
      * @param  CompanyPhoneLogService $logger Handles audit logging for
      * company phone events.
-     * @param  CompanyPhoneManagementService $management Handles
-     * company phone create/update/delete/restore.
+     * @param  CompanyPhoneManagementService $management Handles company
+     * phone create/update/delete/restore.
      * @param  CompanyPhoneQueryService $query Handles company phone
      * listing and retrieval.
      */

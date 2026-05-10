@@ -22,10 +22,10 @@ class CompanyController extends Controller
      *
      * @param  CompanyLogService $logger Handles audit logging for
      * company events.
-     * @param  CompanyManagementService $management Handles
-     * company create/update/delete/restore.
-     * @param  CompanyQueryService $query Handles company
-     * listing and retrieval.
+     * @param  CompanyManagementService $management Handles company
+     * create/update/delete/restore.
+     * @param  CompanyQueryService $query Handles company listing
+     * and retrieval.
      */
     public function __construct(
         protected CompanyLogService $logger,

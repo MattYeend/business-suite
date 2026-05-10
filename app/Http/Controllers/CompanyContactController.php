@@ -22,8 +22,8 @@ class CompanyContactController extends Controller
      *
      * @param  CompanyContactLogService $logger Handles audit logging for
      * company contact events.
-     * @param  CompanyContactManagementService $management Handles
-     * company contact create/update/delete/restore.
+     * @param  CompanyContactManagementService $management Handles company
+     * contact create/update/delete/restore.
      * @param  CompanyContactQueryService $query Handles company contact
      * listing and retrieval.
      */

@@ -22,8 +22,8 @@ class CompanyAddressController extends Controller
      *
      * @param  CompanyAddressLogService $logger Handles audit logging for
      * company address events.
-     * @param  CompanyAddressManagementService $management Handles
-     * company address create/update/delete/restore.
+     * @param  CompanyAddressManagementService $management Handles company
+     * address create/update/delete/restore.
      * @param  CompanyAddressQueryService $query Handles company address
      * listing and retrieval.
      */
