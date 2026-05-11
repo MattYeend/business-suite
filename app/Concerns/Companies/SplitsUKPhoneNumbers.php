@@ -72,6 +72,13 @@ trait SplitsUKPhoneNumbers
         return $this->splitStandardUKNumber($digits);
     }
 
+    /**
+     * Check if the given code is a valid five-digit UK area code.
+     *
+     * @param  string $code
+     *
+     * @return bool
+     */
     protected function hasFiveDigitAreaCode(
         string $code
     ): bool {
@@ -82,6 +89,13 @@ trait SplitsUKPhoneNumbers
         );
     }
 
+    /**
+     * Check if the given code is a valid three-digit UK area code.
+     *
+     * @param  string $code
+     *
+     * @return bool
+     */
     protected function hasThreeDigitAreaCode(
         string $code
     ): bool {
@@ -93,6 +107,11 @@ trait SplitsUKPhoneNumbers
     }
 
     /**
+     * Split a UK number with a five-digit area code.
+     *
+     * @param  string $digits
+     * @param  string $areaCode
+     *
      * @return array<int,string>
      */
     protected function splitFiveDigitAreaCode(
@@ -107,6 +126,11 @@ trait SplitsUKPhoneNumbers
     }
 
     /**
+     * Split a UK number with a three-digit area code.
+     *
+     * @param  string $digits
+     * @param  string $areaCode
+     *
      * @return array<int,string>
      */
     protected function splitThreeDigitAreaCode(
@@ -121,6 +145,10 @@ trait SplitsUKPhoneNumbers
     }
 
     /**
+     * Split a standard four-digit area code UK number.
+     *
+     * @param  string $digits
+     *
      * @return array<int,string>
      */
     protected function splitStandardUKNumber(

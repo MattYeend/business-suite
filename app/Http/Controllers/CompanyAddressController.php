@@ -20,12 +20,9 @@ class CompanyAddressController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  CompanyAddressLogService $logger Handles audit logging for
-     * company address events.
-     * @param  CompanyAddressManagementService $management Handles company
-     * address create/update/delete/restore.
-     * @param  CompanyAddressQueryService $query Handles company address
-     * listing and retrieval.
+     * @param  CompanyAddressLogService $logger
+     * @param  CompanyAddressManagementService $management
+     * @param  CompanyAddressQueryService $query
      */
     public function __construct(
         protected CompanyAddressLogService $logger,
@@ -43,11 +40,9 @@ class CompanyAddressController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated company address data with pagination
-     * metadata and permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -66,11 +61,9 @@ class CompanyAddressController extends Controller
      * After storing, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  StoreCompanyAddressRequest $request Validated request
-     * containing company address data.
+     * @param  StoreCompanyAddressRequest $request
      *
-     * @return JsonResponse The newly created company address, with HTTP
-     * 201 Created.
+     * @return JsonResponse
      */
     public function store(StoreCompanyAddressRequest $request): JsonResponse
     {
@@ -92,10 +85,9 @@ class CompanyAddressController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  CompanyAddress $companyAddress Route-model-bound company
-     * address instance.
+     * @param  CompanyAddress $companyAddress
      *
-     * @return JsonResponse The resolved company address resource.
+     * @return JsonResponse
      */
     public function show(CompanyAddress $companyAddress): JsonResponse
     {
@@ -115,12 +107,10 @@ class CompanyAddressController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdateCompanyAddressRequest $request Validated request
-     * containing updated company address data.
-     * @param  CompanyAddress $companyAddress Route-model-bound company
-     * address instance to update.
+     * @param  UpdateCompanyAddressRequest $request
+     * @param  CompanyAddress $companyAddress
      *
-     * @return JsonResponse The updated company address resource.
+     * @return JsonResponse
      */
     public function update(
         UpdateCompanyAddressRequest $request,
@@ -150,10 +140,9 @@ class CompanyAddressController extends Controller
      * The audit log entry is written before the deletion so that the
      * company address instance is still fully accessible during logging.
      *
-     * @param  CompanyAddress $companyAddress Route-model-bound company
-     * address instance to delete.
+     * @param  CompanyAddress $companyAddress
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(CompanyAddress $companyAddress): JsonResponse
     {
@@ -178,12 +167,11 @@ class CompanyAddressController extends Controller
      * checks if it exists and is trashed before authorization.
      * Returns 404 if the company address is not currently soft-deleted.
      *
-     * @param  int|string $id The primary key of the soft-deleted
-     * company address.
+     * @param  int|string $id
      *
-     * @return JsonResponse The restored company address resource.
+     * @return JsonResponse
      *
-     * @throws HttpException If the company address is not trashed (404).
+     * @throws HttpException
      */
     public function restore($id): JsonResponse
     {
@@ -218,10 +206,10 @@ class CompanyAddressController extends Controller
      * that the company address instance is still fully accessible during
      * logging.
      *
-     * @param  int|string $id The primary key of the company address to
+     * @param  int|string $id
      * permanently delete.
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function forceDelete($id): JsonResponse
     {
@@ -248,9 +236,9 @@ class CompanyAddressController extends Controller
      * to delete. Each company address is authorised individually via the
      * 'delete' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkDelete(Request $request): JsonResponse
     {
@@ -276,9 +264,9 @@ class CompanyAddressController extends Controller
     /**
      * Restore multiple company addresss from soft deletion in bulk.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkRestore(Request $request): JsonResponse
     {

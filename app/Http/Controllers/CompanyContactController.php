@@ -20,12 +20,9 @@ class CompanyContactController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  CompanyContactLogService $logger Handles audit logging for
-     * company contact events.
-     * @param  CompanyContactManagementService $management Handles company
-     * contact create/update/delete/restore.
-     * @param  CompanyContactQueryService $query Handles company contact
-     * listing and retrieval.
+     * @param  CompanyContactLogService $logger
+     * @param  CompanyContactManagementService $management
+     * @param  CompanyContactQueryService $query
      */
     public function __construct(
         protected CompanyContactLogService $logger,
@@ -43,11 +40,9 @@ class CompanyContactController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated company contact data with pagination
-     * metadata and permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -66,11 +61,9 @@ class CompanyContactController extends Controller
      * After storing, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  StoreCompanyContactRequest $request Validated request
-     * containing company contact data.
+     * @param  StoreCompanyContactRequest $request
      *
-     * @return JsonResponse The newly created company contact, with HTTP
-     * 201 Created.
+     * @return JsonResponse
      */
     public function store(StoreCompanyContactRequest $request): JsonResponse
     {
@@ -92,10 +85,9 @@ class CompanyContactController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  CompanyContact $companyContact Route-model-bound company
-     * contact instance.
+     * @param  CompanyContact $companyContact
      *
-     * @return JsonResponse The resolved company contact resource.
+     * @return JsonResponse
      */
     public function show(CompanyContact $companyContact): JsonResponse
     {
@@ -115,12 +107,10 @@ class CompanyContactController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdateCompanyContactRequest $request Validated request
-     * containing updated company contact data.
-     * @param  CompanyContact $companyContact Route-model-bound company
-     * contact instance to update.
+     * @param  UpdateCompanyContactRequest $request
+     * @param  CompanyContact $companyContact
      *
-     * @return JsonResponse The updated company contact resource.
+     * @return JsonResponse
      */
     public function update(
         UpdateCompanyContactRequest $request,
@@ -150,10 +140,9 @@ class CompanyContactController extends Controller
      * The audit log entry is written before the deletion so that the
      * company contact instance is still fully accessible during logging.
      *
-     * @param  CompanyContact $companyContact Route-model-bound company
-     * contact instance to delete.
+     * @param  CompanyContact $companyContact
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(CompanyContact $companyContact): JsonResponse
     {

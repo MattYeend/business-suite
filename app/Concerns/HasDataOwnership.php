@@ -36,17 +36,14 @@ trait HasDataOwnership
      */
     public function scopeAccessibleBy(Builder $query, User $user): Builder
     {
-        // Super admin and those with "view all data" see everything
         if ($user->hasRole('super-admin') || $user->can('view all data')) {
             return $query;
         }
 
-        // Users with "manage own data only" see only their records
         if ($user->can('manage own data only')) {
             return $query->ownedBy($user->id);
         }
 
-        // Default: no access
         return $query->whereRaw('1 = 0');
     }
 }

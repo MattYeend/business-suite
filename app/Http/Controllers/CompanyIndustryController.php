@@ -20,12 +20,9 @@ class CompanyIndustryController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  CompanyIndustryLogService $logger Handles audit logging for
-     * company industry events.
-     * @param  CompanyIndustryManagementService $management Handles company
-     * industry create/update/delete/restore.
-     * @param  CompanyIndustryQueryService $query Handles company industry
-     * listing and retrieval.
+     * @param  CompanyIndustryLogService $logger
+     * @param  CompanyIndustryManagementService $management
+     * @param  CompanyIndustryQueryService $query
      */
     public function __construct(
         protected CompanyIndustryLogService $logger,
@@ -43,11 +40,9 @@ class CompanyIndustryController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated company industry data with pagination
-     * metadata and permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -66,11 +61,9 @@ class CompanyIndustryController extends Controller
      * After storing, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  StoreCompanyIndustryRequest $request Validated request
-     * containing company industry data.
+     * @param  StoreCompanyIndustryRequest $request
      *
-     * @return JsonResponse The newly created company industry, with HTTP
-     * 201 Created.
+     * @return JsonResponse 
      */
     public function store(StoreCompanyIndustryRequest $request): JsonResponse
     {
@@ -92,10 +85,9 @@ class CompanyIndustryController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  CompanyIndustry $companyIndustry Route-model-bound company
-     * industry instance.
+     * @param  CompanyIndustry $companyIndustry
      *
-     * @return JsonResponse The resolved company industry resource.
+     * @return JsonResponse
      */
     public function show(CompanyIndustry $companyIndustry): JsonResponse
     {
@@ -115,12 +107,10 @@ class CompanyIndustryController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdateCompanyIndustryRequest $request Validated request
-     * containing updated company industry data.
-     * @param  CompanyIndustry $companyIndustry Route-model-bound company
-     * industry instance to update.
+     * @param  UpdateCompanyIndustryRequest $request
+     * @param  CompanyIndustry $companyIndustry
      *
-     * @return JsonResponse The updated company industry resource.
+     * @return JsonResponse
      */
     public function update(
         UpdateCompanyIndustryRequest $request,
@@ -150,10 +140,9 @@ class CompanyIndustryController extends Controller
      * The audit log entry is written before the deletion so that the
      * company industry instance is still fully accessible during logging.
      *
-     * @param  CompanyIndustry $companyIndustry Route-model-bound company
-     * industry instance to delete.
+     * @param  CompanyIndustry $companyIndustry
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(CompanyIndustry $companyIndustry): JsonResponse
     {
@@ -178,12 +167,11 @@ class CompanyIndustryController extends Controller
      * checks if it exists and is trashed before authorization.
      * Returns 404 if the company industry is not currently soft-deleted.
      *
-     * @param  int|string $id The primary key of the soft-deleted
-     * company industry.
+     * @param  int|string $id
      *
-     * @return JsonResponse The restored company industry resource.
+     * @return JsonResponse
      *
-     * @throws HttpException If the company industry is not trashed (404).
+     * @throws HttpException
      */
     public function restore($id): JsonResponse
     {
@@ -218,10 +206,9 @@ class CompanyIndustryController extends Controller
      * that the company industry instance is still fully accessible during
      * logging.
      *
-     * @param  int|string $id The primary key of the company industry to
-     * permanently delete.
+     * @param  int|string $id
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function forceDelete($id): JsonResponse
     {
@@ -248,9 +235,9 @@ class CompanyIndustryController extends Controller
      * to delete. Each company industry is authorised individually via the
      * 'delete' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkDelete(Request $request): JsonResponse
     {
@@ -276,9 +263,9 @@ class CompanyIndustryController extends Controller
     /**
      * Restore multiple company industries from soft deletion in bulk.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkRestore(Request $request): JsonResponse
     {

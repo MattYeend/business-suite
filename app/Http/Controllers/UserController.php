@@ -19,12 +19,9 @@ class UserController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  UserLogService $logger Handles audit logging for
-     * user events.
-     * @param  UserManagementService $management Handles user
-     * create/update/delete/restore.
-     * @param  UserQueryService $query Handles user listing and
-     * retrieval.
+     * @param  UserLogService $logger
+     * @param  UserManagementService $management
+     * @param  UserQueryService $query
      */
     public function __construct(
         protected UserLogService $logger,
@@ -41,11 +38,9 @@ class UserController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated user data with pagination metadata and
-     * permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -64,10 +59,9 @@ class UserController extends Controller
      * After storing, an audit log entry is written against the authenticated
      * user.
      *
-     * @param  StoreUserRequest $request Validated request containing
-     * user data.
+     * @param  StoreUserRequest $request
      *
-     * @return JsonResponse The newly created user, with HTTP 201 Created.
+     * @return JsonResponse
      */
     public function store(StoreUserRequest $request): JsonResponse
     {
@@ -89,9 +83,9 @@ class UserController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  User $user Route-model-bound user instance.
+     * @param  User $user
      *
-     * @return JsonResponse The resolved user resource.
+     * @return JsonResponse
      */
     public function show(User $user): JsonResponse
     {
@@ -111,11 +105,10 @@ class UserController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdateUserRequest $request Validated request containing
-     * updated user data.
-     * @param  User $user Route-model-bound user instance to update.
+     * @param  UpdateUserRequest $request
+     * @param  User $user
      *
-     * @return JsonResponse The updated user resource.
+     * @return JsonResponse
      */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
@@ -140,9 +133,9 @@ class UserController extends Controller
      * The audit log entry is written before the deletion so that the
      * user instance is still fully accessible during logging.
      *
-     * @param  User $user Route-model-bound user instance to delete.
+     * @param  User $user
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(User $user): JsonResponse
     {
@@ -167,11 +160,11 @@ class UserController extends Controller
      * the 'restore' policy. Returns 404 if the user is not currently
      * soft-deleted, preventing accidental double-restores.
      *
-     * @param  int|string $id The primary key of the soft-deleted user.
+     * @param  int|string $id
      *
-     * @return JsonResponse The restored user resource.
+     * @return JsonResponse
      *
-     * @throws HttpException If the user is not trashed (404).
+     * @throws HttpException
      */
     public function restore($id): JsonResponse
     {
@@ -205,10 +198,9 @@ class UserController extends Controller
      * The audit log entry is written before the permanent deletion so
      * that the user instance is still fully accessible during logging.
      *
-     * @param  int|string $id The primary key of the user to permanently
-     * delete.
+     * @param  int|string $id
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function forceDelete($id): JsonResponse
     {
@@ -234,9 +226,9 @@ class UserController extends Controller
      * Expects a 'ids' array in the request containing user IDs to delete.
      * Each user is authorised individually via the 'delete' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkDelete(Request $request): JsonResponse
     {
@@ -265,9 +257,9 @@ class UserController extends Controller
      * Expects a 'ids' array in the request containing user IDs to restore.
      * Each user is authorised individually via the 'restore' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkRestore(Request $request): JsonResponse
     {

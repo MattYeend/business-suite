@@ -20,12 +20,9 @@ class CompanyPhoneController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  CompanyPhoneLogService $logger Handles audit logging for
-     * company phone events.
-     * @param  CompanyPhoneManagementService $management Handles company
-     * phone create/update/delete/restore.
-     * @param  CompanyPhoneQueryService $query Handles company phone
-     * listing and retrieval.
+     * @param  CompanyPhoneLogService $logger
+     * @param  CompanyPhoneManagementService $management
+     * @param  CompanyPhoneQueryService $query
      */
     public function __construct(
         protected CompanyPhoneLogService $logger,
@@ -43,11 +40,9 @@ class CompanyPhoneController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated company phone data with pagination
-     * metadata and permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -66,11 +61,9 @@ class CompanyPhoneController extends Controller
      * After storing, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  StoreCompanyPhoneRequest $request Validated request
-     * containing company phone data.
+     * @param  StoreCompanyPhoneRequest $request
      *
-     * @return JsonResponse The newly created company phone, with HTTP
-     * 201 Created.
+     * @return JsonResponse
      */
     public function store(StoreCompanyPhoneRequest $request): JsonResponse
     {
@@ -92,10 +85,9 @@ class CompanyPhoneController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  CompanyPhone $companyPhone Route-model-bound company
-     * phone instance.
+     * @param  CompanyPhone $companyPhone
      *
-     * @return JsonResponse The resolved company phone resource.
+     * @return JsonResponse
      */
     public function show(CompanyPhone $companyPhone): JsonResponse
     {
@@ -115,12 +107,10 @@ class CompanyPhoneController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdateCompanyPhoneRequest $request Validated request
-     * containing updated company phone data.
-     * @param  CompanyPhone $companyPhone Route-model-bound company
-     * phone instance to update.
+     * @param  UpdateCompanyPhoneRequest $request
+     * @param  CompanyPhone $companyPhone
      *
-     * @return JsonResponse The updated company phone resource.
+     * @return JsonResponse
      */
     public function update(
         UpdateCompanyPhoneRequest $request,
@@ -150,10 +140,9 @@ class CompanyPhoneController extends Controller
      * The audit log entry is written before the deletion so that the
      * company phone instance is still fully accessible during logging.
      *
-     * @param  CompanyPhone $companyPhone Route-model-bound company
-     * phone instance to delete.
+     * @param  CompanyPhone $companyPhone
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(CompanyPhone $companyPhone)
     {
@@ -178,12 +167,11 @@ class CompanyPhoneController extends Controller
      * checks if it exists and is trashed before authorization.
      * Returns 404 if the company phone is not currently soft-deleted.
      *
-     * @param  int|string $id The primary key of the soft-deleted
-     * company phone.
+     * @param  int|string $id
      *
-     * @return JsonResponse The restored company phone resource.
+     * @return JsonResponse
      *
-     * @throws HttpException If the company phone is not trashed (404).
+     * @throws HttpException
      */
     public function restore($id): JsonResponse
     {
@@ -218,10 +206,9 @@ class CompanyPhoneController extends Controller
      * that the company phone instance is still fully accessible during
      * logging.
      *
-     * @param  int|string $id The primary key of the company phone to
-     * permanently delete.
+     * @param  int|string $id
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function forceDelete($id): JsonResponse
     {
@@ -248,9 +235,9 @@ class CompanyPhoneController extends Controller
      * to delete. Each company phone is authorised individually via the
      * 'delete' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkDelete(Request $request): JsonResponse
     {
@@ -276,9 +263,9 @@ class CompanyPhoneController extends Controller
     /**
      * Restore multiple company phones from soft deletion in bulk.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkRestore(Request $request): JsonResponse
     {

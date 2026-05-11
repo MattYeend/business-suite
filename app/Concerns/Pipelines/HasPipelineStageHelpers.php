@@ -80,7 +80,7 @@ trait HasPipelineStageHelpers
     /**
      * Determine whether the stage is of a given terminal type.
      *
-     * @param string $terminalType
+     * @param  string $terminalType
      *
      * @return bool
      */

@@ -10,7 +10,7 @@ trait HasPipelineScopes
     /**
      * Scope a query to only include real pipelines.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -22,7 +22,7 @@ trait HasPipelineScopes
     /**
      * Scope a query to only include active pipelines.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -34,7 +34,7 @@ trait HasPipelineScopes
     /**
      * Scope a query to only include inactive pipelines.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -46,7 +46,7 @@ trait HasPipelineScopes
     /**
      * Scope a query to only include default pipelines.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -58,8 +58,8 @@ trait HasPipelineScopes
     /**
      * Scope a query to filter by entity type.
      *
-     * @param Builder $query
-     * @param string $entityType
+     * @param  Builder $query
+     * @param  string $entityType
      *
      * @return Builder
      */
@@ -73,8 +73,8 @@ trait HasPipelineScopes
     /**
      * Scope a query to order by position.
      *
-     * @param Builder $query
-     * @param string $direction
+     * @param  Builder $query
+     * @param  string $direction
      *
      * @return Builder
      */

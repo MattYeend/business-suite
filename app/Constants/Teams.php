@@ -2,6 +2,13 @@
 
 namespace App\Constants;
 
+/**
+ * Team identifier constants for the CRM system.
+ *
+ * Provides constant definitions for organizational teams/departments
+ * used throughout the application, particularly for Spatie Permission
+ * team-scoped permissions and authorization.
+ */
 class Teams
 {
     public const HEAD_OFFICE = 1;
@@ -11,6 +18,13 @@ class Teams
     public const FINANCE_DEPARTMENT = 5;
     public const MARKETING_DEPARTMENT = 6;
 
+    /**
+     * Get the human-readable name for a given team ID.
+     *
+     * @param  int $teamId
+     *
+     * @return string
+     */
     public static function getName(int $teamId): string
     {
         return match ($teamId) {
@@ -24,6 +38,11 @@ class Teams
         };
     }
 
+    /**
+     * Get all teams as an associative array.
+     *
+     * @return array<int,string>
+     */
     public static function all(): array
     {
         return [

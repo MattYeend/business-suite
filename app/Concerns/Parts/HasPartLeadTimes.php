@@ -20,7 +20,7 @@ trait HasPartLeadTimes
     /**
      * Get lead time in weeks.
      *
-     * @return bool
+     * @return float|null
      */
     public function getLeadTimeWeeksAttribute(): ?float
     {

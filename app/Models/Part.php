@@ -120,15 +120,12 @@ class Part extends Model
     /**
      * @use HasFactory<PartFactory>
      * @use SoftDeletes<SoftDeletes>
-     * @use HasPartAccessors<HasPartAccessors>
      * @use HasPartHelpers<HasPartHelpers>
      * @use HasPartScopes<HasPartScopes>
      */
     use HasFactory,
         SoftDeletes,
-        HasPartAccessors,
-        HasPartHelpers,
-        HasPartScopes;
+        HasPartHelpers;
 
     public const TYPE_RAW_MATERIAL = 'raw_material';
     public const TYPE_FINISHED_GOOD = 'finished_good';

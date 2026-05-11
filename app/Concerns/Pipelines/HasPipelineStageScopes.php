@@ -10,7 +10,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include real stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -22,7 +22,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include active stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -34,7 +34,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include inactive stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -46,7 +46,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include terminal stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -58,7 +58,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include non-terminal stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -70,8 +70,8 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to filter by terminal type.
      *
-     * @param Builder $query
-     * @param string $terminalType
+     * @param  Builder $query
+     * @param  string $terminalType
      *
      * @return Builder
      */
@@ -85,7 +85,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include stages requiring approval.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -97,7 +97,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include won terminal stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -112,7 +112,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include lost terminal stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -127,7 +127,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include completed terminal stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -142,7 +142,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include cancelled terminal stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -157,7 +157,7 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to only include rejected terminal stages.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -172,8 +172,8 @@ trait HasPipelineStageScopes
     /**
      * Scope a query to order by position.
      *
-     * @param Builder $query
-     * @param string $direction
+     * @param  Builder $query
+     * @param  string $direction
      *
      * @return Builder
      */

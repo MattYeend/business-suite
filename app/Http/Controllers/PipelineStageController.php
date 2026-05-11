@@ -20,12 +20,9 @@ class PipelineStageController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  PipelineStageLogService $logger Handles audit logging for
-     * pipelineStage events.
-     * @param  PipelineStageManagementService $management Handles pipelineStage
-     * create/update/delete/restore.
-     * @param  PipelineStageQueryService $query Handles pipelineStage listing
-     * and retrieval.
+     * @param  PipelineStageLogService $logger
+     * @param  PipelineStageManagementService $management
+     * @param  PipelineStageQueryService $query
      */
     public function __construct(
         protected PipelineStageLogService $logger,
@@ -43,11 +40,9 @@ class PipelineStageController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated pipelin data with pagination
-     * metadata and permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -66,11 +61,9 @@ class PipelineStageController extends Controller
      * After storing, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  StorePipelineStageRequest $request Validated request
-     * containing pipelineStage stage data.
+     * @param  StorePipelineStageRequest $request
      *
-     * @return JsonResponse The newly created pipelineStage stage, with HTTP
-     * 201 Created.
+     * @return JsonResponse
      */
     public function store(StorePipelineStageRequest $request): JsonResponse
     {
@@ -92,10 +85,9 @@ class PipelineStageController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  PipelineStage $pipelineStage Route-model-bound
-     * pipeline stage instance.
+     * @param  PipelineStage $pipelineStage
      *
-     * @return JsonResponse The resolved pipelineStage resource.
+     * @return JsonResponse
      */
     public function show(PipelineStage $pipelineStage): JsonResponse
     {
@@ -115,12 +107,10 @@ class PipelineStageController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdatePipelineStageRequest $request Validated request
-     * containing updated pipelineStage stage data.
-     * @param  PipelineStage $pipelineStage Route-model-bound pipeline stage
-     * instance to update.
+     * @param  UpdatePipelineStageRequest $request
+     * @param  PipelineStage $pipelineStage
      *
-     * @return JsonResponse The updated pipelineStage resource.
+     * @return JsonResponse
      */
     public function update(
         UpdatePipelineStageRequest $request,
@@ -151,10 +141,9 @@ class PipelineStageController extends Controller
      * pipelineStage pipelineStage instance is still fully accessible
      * during logging.
      *
-     * @param  PipelineStage $pipelineStage Route-model-bound
-     * pipelineStage instance to delete.
+     * @param  PipelineStage $pipelineStage
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(PipelineStage $pipelineStage): JsonResponse
     {
@@ -179,12 +168,11 @@ class PipelineStageController extends Controller
      * checks if it exists and is trashed before authorization.
      * Returns 404 if the pipelineStage is not currently soft-deleted.
      *
-     * @param  int|string $id The primary key of the soft-deleted
-     * pipelineStage.
+     * @param  int|string $id
      *
-     * @return JsonResponse The restored pipelineStage resource.
+     * @return JsonResponse
      *
-     * @throws HttpException If the pipelineStage is not trashed (404).
+     * @throws HttpException
      */
     public function restore($id): JsonResponse
     {
@@ -219,10 +207,9 @@ class PipelineStageController extends Controller
      * that the pipelineStage instance is still fully accessible during
      * logging.
      *
-     * @param  int|string $id The primary key of the pipelineStage to
-     * permanently delete.
+     * @param  int|string $id
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function forceDelete($id): JsonResponse
     {
@@ -249,9 +236,9 @@ class PipelineStageController extends Controller
      * to delete. Each pipeline stage is authorised individually via the
      * 'delete' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkDelete(Request $request): JsonResponse
     {
@@ -277,9 +264,9 @@ class PipelineStageController extends Controller
     /**
      * Restore multiple Pipeline stages from soft deletion in bulk.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkRestore(Request $request): JsonResponse
     {

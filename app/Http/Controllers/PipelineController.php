@@ -20,12 +20,9 @@ class PipelineController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  PipelineLogService $logger Handles audit logging for
-     * pipeline events.
-     * @param  PipelineManagementService $management Handles pipeline
-     * create/update/delete/restore.
-     * @param  PipelineQueryService $query Handles pipeline listing
-     * and retrieval.
+     * @param  PipelineLogService $logger
+     * @param  PipelineManagementService $management
+     * @param  PipelineQueryService $query
      */
     public function __construct(
         protected PipelineLogService $logger,
@@ -43,11 +40,9 @@ class PipelineController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated pipelin data with pagination
-     * metadata and permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -66,11 +61,9 @@ class PipelineController extends Controller
      * After storing, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  StorePipelineRequest $request Validated request
-     * containing pipeline data.
+     * @param  StorePipelineRequest $request
      *
-     * @return JsonResponse The newly created pipeline, with HTTP
-     * 201 Created.
+     * @return JsonResponse
      */
     public function store(StorePipelineRequest $request): JsonResponse
     {
@@ -92,10 +85,9 @@ class PipelineController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  Pipeline $pipeline Route-model-bound pipeline
-     * instance.
+     * @param  Pipeline $pipeline
      *
-     * @return JsonResponse The resolved pipeline resource.
+     * @return JsonResponse
      */
     public function show(Pipeline $pipeline): JsonResponse
     {
@@ -115,12 +107,10 @@ class PipelineController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdatePipelineRequest $request Validated request
-     * containing updated pipeline data.
-     * @param  Pipeline $pipeline Route-model-bound pipeline instance
-     * to update.
+     * @param  UpdatePipelineRequest $request
+     * @param  Pipeline $pipeline
      *
-     * @return JsonResponse The updated pipeline resource.
+     * @return JsonResponse
      */
     public function update(
         UpdatePipelineRequest $request,
@@ -150,10 +140,10 @@ class PipelineController extends Controller
      * The audit log entry is written before the deletion so that the
      * pipeline pipeline instance is still fully accessible during logging.
      *
-     * @param  Pipeline $pipeline Route-model-bound pipeline instance
+     * @param  Pipeline $pipeline
      * to delete.
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(Pipeline $pipeline): JsonResponse
     {
@@ -178,12 +168,11 @@ class PipelineController extends Controller
      * checks if it exists and is trashed before authorization.
      * Returns 404 if the pipeline is not currently soft-deleted.
      *
-     * @param  int|string $id The primary key of the soft-deleted
-     * pipeline.
+     * @param  int|string $id
      *
-     * @return JsonResponse The restored pipeline resource.
+     * @return JsonResponse
      *
-     * @throws HttpException If the pipeline is not trashed (404).
+     * @throws HttpException
      */
     public function restore($id): JsonResponse
     {
@@ -218,10 +207,9 @@ class PipelineController extends Controller
      * that the pipeline instance is still fully accessible during
      * logging.
      *
-     * @param  int|string $id The primary key of the pipeline to
-     * permanently delete.
+     * @param  int|string $id
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function forceDelete($id): JsonResponse
     {
@@ -248,9 +236,9 @@ class PipelineController extends Controller
      * to delete. Each pipeline is authorised individually via the
      * 'delete' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkDelete(Request $request): JsonResponse
     {
@@ -276,9 +264,9 @@ class PipelineController extends Controller
     /**
      * Restore multiple pipelines from soft deletion in bulk.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkRestore(Request $request): JsonResponse
     {
