@@ -110,10 +110,10 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  *
- * @property-read Collection|Image[] $images
- * @property-read Collection|Category[] $categories
- * @property-read Collection|BillOfMaterialItem[] $billOfMaterialItems
- * @property-read Collection|Product[] $products
+ * @property-read Collection<int,Image> $images
+ * @property-read Collection<int,Category> $categories
+ * @property-read Collection<int,BillOfMaterialItem> $billOfMaterialItems
+ * @property-read Collection<int,Product> $products
  */
 class Part extends Model
 {
