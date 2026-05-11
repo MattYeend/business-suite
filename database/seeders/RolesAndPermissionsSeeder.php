@@ -164,6 +164,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view leads', 'create leads', 'edit leads', 'delete leads',
                 'view quotes', 'create quotes', 'edit quotes', 'delete quotes',
                 'view invoices', 'create invoices', 'edit invoices', 'delete invoices',
+                'view parts', 'create parts', 'edit parts', 'delete parts',
                 'view payments', 'create payments', 'edit payments',
                 'view products', 'create products', 'edit products', 'delete products',
                 'view tasks', 'create tasks', 'edit tasks', 'delete tasks',
@@ -191,6 +192,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view quotes', 'create quotes', 'edit quotes', 'delete quotes',
                 'approve quotes',
                 'view invoices',
+                'view parts',
                 'view products',
                 'view tasks', 'create tasks', 'edit tasks',
                 'view activities', 'create activities', 'edit activities',
@@ -212,6 +214,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view opportunities', 'create opportunities', 'edit opportunities',
                 'view quotes', 'create quotes', 'edit quotes',
                 'view invoices',
+                'view parts',
                 'view products',
                 'view tasks', 'create tasks', 'edit tasks',
                 'view activities', 'create activities', 'edit activities',
@@ -229,6 +232,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view industries',
                 'view deals', 'view quotes',
                 'view invoices', 'create invoices', 'edit invoices', 'delete invoices',
+                'view parts',
                 'view payments', 'create payments', 'edit payments', 'delete payments',
                 'approve payments',
                 'view products',
@@ -359,6 +363,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view industries',
                 'view deals', 'view leads',
                 'view quotes', 'view invoices',
+                'view_parts',
                 'view products',
                 'view tasks', 'create tasks', 'edit tasks',
                 'view activities', 'create activities', 'edit activities',
@@ -615,6 +620,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'approve requisitions',
                 'view bids', 'create bids', 'edit bids',
                 'view contracts', 'create contracts', 'edit contracts',
+                'view parts', 'create parts', 'edit parts',
                 'view products', 'create products', 'edit products',
                 'view suppliers', 'create suppliers', 'edit suppliers',
                 'view inventory',
@@ -632,6 +638,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view requisitions', 'create requisitions', 'edit requisitions',
                 'view bids', 'create bids', 'edit bids',
                 'view contracts',
+                'view parts',
                 'view products',
                 'view suppliers',
                 'export purchase_orders',
@@ -642,6 +649,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $inventoryManager = Role::firstOrCreate(['name' => 'inventory-manager']);
         if (!$inventoryManager->permissions->count()) {
             $inventoryManager->givePermissionTo([
+                'view parts', 'create parts', 'edit parts', 'delete parts',
                 'view products', 'create products', 'edit products', 'delete products',
                 'view inventory', 'create inventory', 'edit inventory', 'delete inventory',
                 'view warehouses', 'create warehouses', 'edit warehouses',
@@ -650,7 +658,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view returns', 'create returns', 'edit returns',
                 'view quality_control', 'create quality_control', 'edit quality_control',
                 'access reports',
-                'export inventory', 'export products',
+                'export inventory', 'export parts', 'export products',
             ]);
         }
 
@@ -658,6 +666,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $warehouseSupervisor = Role::firstOrCreate(['name' => 'warehouse-supervisor']);
         if (!$warehouseSupervisor->permissions->count()) {
             $warehouseSupervisor->givePermissionTo([
+                'view parts',
                 'view products',
                 'view inventory', 'create inventory', 'edit inventory',
                 'view warehouses', 'edit warehouses',
@@ -672,6 +681,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $warehouseStaff = Role::firstOrCreate(['name' => 'warehouse-staff']);
         if (!$warehouseStaff->permissions->count()) {
             $warehouseStaff->givePermissionTo([
+                'view parts',
                 'view products',
                 'view inventory', 'edit inventory',
                 'view shipments', 'edit shipments',
@@ -683,6 +693,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $logisticsCoordinator = Role::firstOrCreate(['name' => 'logistics-coordinator']);
         if (!$logisticsCoordinator->permissions->count()) {
             $logisticsCoordinator->givePermissionTo([
+                'view parts',
                 'view products', 'view inventory',
                 'view warehouses',
                 'view shipments', 'create shipments', 'edit shipments',
@@ -815,6 +826,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'view companies', 'view contacts', 'view industries',
                 'view deals', 'view leads', 'view opportunities',
                 'view quotes', 'view invoices',
+                'view parts',
                 'view products', 'view inventory',
                 'view projects', 'view tasks',
                 'view employees', 'view departments',
@@ -853,6 +865,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $qaManager = Role::firstOrCreate(['name' => 'qa-manager']);
         if (!$qaManager->permissions->count()) {
             $qaManager->givePermissionTo([
+                'view parts',
                 'view products', 'view inventory',
                 'view quality_control', 'create quality_control', 'edit quality_control', 'delete quality_control',
                 'view returns',
@@ -899,6 +912,7 @@ class RolesAndPermissionsSeeder extends Seeder
         if (!$opsManager->permissions->count()) {
             $opsManager->givePermissionTo([
                 'view all data',
+                'view parts',
                 'view products', 'view inventory',
                 'view warehouses', 'edit warehouses',
                 'view shipments', 'edit shipments',
@@ -933,6 +947,7 @@ class RolesAndPermissionsSeeder extends Seeder
             $intern->givePermissionTo([
                 'manage own data only',
                 'view companies', 'view contacts', 'view industries',
+                'view parts',
                 'view products',
                 'view tasks', 'create tasks',
                 'view documents',

@@ -160,6 +160,17 @@ class Log extends Model
     public const ACTION_EXPORT_PIPELINE_STAGE = 101;
     public const ACTION_PIPELINE_STAGE_UPDATED_BY_CRON = 102;
 
+    // Part Management
+    public const ACTION_CREATE_PART = 103;
+    public const ACTION_UPDATE_PART = 104;
+    public const ACTION_DELETE_PART = 105;
+    public const ACTION_SHOW_PART = 106;
+    public const ACTION_FORCE_DELETE_PART = 107;
+    public const ACTION_RESTORE_PART = 108;
+    public const ACTION_IMPORT_PART = 109;
+    public const ACTION_EXPORT_PART = 110;
+    public const ACTION_PART_UPDATED_BY_CRON = 111;
+
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
     // Ensure to update the documentation accordingly.
