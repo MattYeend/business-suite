@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyIndustryController;
 use App\Http\Controllers\CompanyPhoneController;
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\PipelineStageController;
 use App\Http\Controllers\UserController;
@@ -415,6 +416,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [PipelineStageController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Part management routes
+    Route::prefix('parts')->name(
+        'parts.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [PartController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [PartController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [PartController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [PipelineController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{part}',
+            [PartController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{part}',
+            [PartController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{part}',
+            [PartController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{part}',
+            [PartController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [PartController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [PartController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
