@@ -188,6 +188,21 @@ class Part extends Model
      */
     protected function casts(): array
     {
+        return array_merge(
+            $this->decimalCasts(),
+            $this->integerCasts(),
+            $this->booleanCasts(),
+            $this->otherCasts(),
+        );
+    }
+
+    /**
+     * Decimal casts.
+     *
+     * @return array<string,string>
+     */
+    protected function decimalCasts(): array
+    {
         return [
             'height' => 'decimal:2',
             'width' => 'decimal:2',
@@ -198,12 +213,34 @@ class Part extends Model
             'cost_price' => 'decimal:2',
             'tax_rate' => 'decimal:2',
             'discount_percentage' => 'decimal:2',
+        ];
+    }
+
+    /**
+     * Integer casts.
+     *
+     * @return array<string,string>
+     */
+    protected function integerCasts(): array
+    {
+        return [
             'quantity' => 'integer',
             'min_stock_level' => 'integer',
             'max_stock_level' => 'integer',
             'reorder_point' => 'integer',
             'reorder_quantity' => 'integer',
             'lead_time_days' => 'integer',
+        ];
+    }
+
+    /**
+     * Boolean casts.
+     *
+     * @return array<string,string>
+     */
+    protected function booleanCasts(): array
+    {
+        return [
             'is_active' => 'boolean',
             'is_purchasable' => 'boolean',
             'is_sellable' => 'boolean',
@@ -211,6 +248,17 @@ class Part extends Model
             'is_serialised' => 'boolean',
             'is_batch_tracked' => 'boolean',
             'is_real' => 'boolean',
+        ];
+    }
+
+    /**
+     * Other casts.
+     *
+     * @return array<string,string>
+     */
+    protected function otherCasts(): array
+    {
+        return [
             'meta' => 'array',
             'restored_at' => 'datetime',
             'created_at' => 'datetime',
