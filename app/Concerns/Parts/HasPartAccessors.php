@@ -149,11 +149,11 @@ trait HasPartAccessors
      */
     public function getProfitMargin(): ?float
     {
-        if ($this->cost_price === null || $this->cost_price == 0) {
+        if ($this->cost_price === null || $this->cost_price === 0) {
             return null;
         }
 
-        return (($this->price - $this->cost_price) / $this->price) * 100;
+        return ($this->price - $this->cost_price) / $this->price * 100;
     }
 
     /**

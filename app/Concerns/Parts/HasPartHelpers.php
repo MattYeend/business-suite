@@ -425,11 +425,10 @@ trait HasPartHelpers
      * Adjust stock quantity.
      *
      * @param int $quantity
-     * @param string|null $reason
      *
      * @return bool
      */
-    public function adjustStock(int $quantity, string $reason = null): bool
+    public function adjustStock(int $quantity): bool
     {
         $this->quantity += $quantity;
 
@@ -450,41 +449,24 @@ trait HasPartHelpers
      * Increase stock quantity.
      *
      * @param int $quantity
-     * @param string|null $reason
      *
      * @return bool
      */
-    public function increaseStock(int $quantity, string $reason = null): bool
+    public function increaseStock(int $quantity): bool
     {
-        return $this->adjustStock($quantity, $reason);
+        return $this->adjustStock($quantity);
     }
 
     /**
      * Decrease stock quantity.
      *
      * @param int $quantity
-     * @param string|null $reason
      *
      * @return bool
      */
-    public function decreaseStock(int $quantity, string $reason = null): bool
+    public function decreaseStock(int $quantity): bool
     {
-        return $this->adjustStock(-$quantity, $reason);
-    }
-
-    /**
-     * Set stock quantity to a specific value.
-     *
-     * @param int $quantity
-     * @param string|null $reason
-     *
-     * @return bool
-     */
-    public function setStock(int $quantity, string $reason = null): bool
-    {
-        $adjustment = $quantity - $this->quantity;
-
-        return $this->adjustStock($adjustment, $reason);
+        return $this->adjustStock(-$quantity);
     }
 
     /**
@@ -508,11 +490,11 @@ trait HasPartHelpers
      */
     public function getStockPercentage(): ?float
     {
-        if ($this->max_stock_level === null || $this->max_stock_level == 0) {
+        if ($this->max_stock_level === null || $this->max_stock_level === 0) {
             return null;
         }
 
-        return ($this->quantity / $this->max_stock_level) * 100;
+        return $this->quantity / $this->max_stock_level * 100;
     }
 
     /**

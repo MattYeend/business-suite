@@ -20,12 +20,9 @@ class CompanyController extends Controller
     /**
      * Inject the required services into the controller.
      *
-     * @param  CompanyLogService $logger Handles audit logging for
-     * company events.
-     * @param  CompanyManagementService $management Handles company
-     * create/update/delete/restore.
-     * @param  CompanyQueryService $query Handles company listing
-     * and retrieval.
+     * @param  CompanyLogService $logger
+     * @param  CompanyManagementService $management
+     * @param  CompanyQueryService $query
      */
     public function __construct(
         protected CompanyLogService $logger,
@@ -43,11 +40,9 @@ class CompanyController extends Controller
      *
      * Authorises via the 'viewAny' policy before returning data.
      *
-     * @param  Request $request Incoming HTTP request; may carry
-     * filter/pagination params.
+     * @param  Request $request
      *
-     * @return JsonResponse Paginated company data with pagination
-     * metadata and permissions.
+     * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -66,11 +61,9 @@ class CompanyController extends Controller
      * After storing, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  StoreCompanyRequest $request Validated request
-     * containing company data.
+     * @param  StoreCompanyRequest $request
      *
-     * @return JsonResponse The newly created company, with HTTP
-     * 201 Created.
+     * @return JsonResponse
      */
     public function store(StoreCompanyRequest $request): JsonResponse
     {
@@ -92,10 +85,9 @@ class CompanyController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  Company $company Route-model-bound company
-     * instance.
+     * @param  Company $company
      *
-     * @return JsonResponse The resolved company resource.
+     * @return JsonResponse
      */
     public function show(Company $company): JsonResponse
     {
@@ -115,12 +107,10 @@ class CompanyController extends Controller
      * After updating, an audit log entry is written against the
      * authenticated user.
      *
-     * @param  UpdateCompanyRequest $request Validated request
-     * containing updated company data.
-     * @param  Company $company Route-model-bound company
-     * instance to update.
+     * @param  UpdateCompanyRequest $request
+     * @param  Company $company
      *
-     * @return JsonResponse The updated company resource.
+     * @return JsonResponse
      */
     public function update(
         UpdateCompanyRequest $request,
@@ -150,10 +140,9 @@ class CompanyController extends Controller
      * The audit log entry is written before the deletion so that the
      * company instance is still fully accessible during logging.
      *
-     * @param  Company $company Route-model-bound company
-     * instance to delete.
+     * @param  Company $company
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function destroy(Company $company): JsonResponse
     {
@@ -181,9 +170,9 @@ class CompanyController extends Controller
      * @param  int|string $id The primary key of the soft-deleted
      * company.
      *
-     * @return JsonResponse The restored company resource.
+     * @return JsonResponse
      *
-     * @throws HttpException If the company company is not trashed (404).
+     * @throws HttpException
      */
     public function restore($id): JsonResponse
     {
@@ -218,10 +207,9 @@ class CompanyController extends Controller
      * that the company instance is still fully accessible during
      * logging.
      *
-     * @param  int|string $id The primary key of the company to
-     * permanently delete.
+     * @param  int|string $id
      *
-     * @return JsonResponse Empty response with HTTP 204 No Content.
+     * @return JsonResponse
      */
     public function forceDelete($id): JsonResponse
     {
@@ -248,9 +236,9 @@ class CompanyController extends Controller
      * to delete. Each company company is authorised individually via the
      * 'delete' policy.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkDelete(Request $request): JsonResponse
     {
@@ -276,9 +264,9 @@ class CompanyController extends Controller
     /**
      * Restore multiple company from soft deletion in bulk.
      *
-     * @param  Request $request Incoming HTTP request with 'ids' array.
+     * @param  Request $request
      *
-     * @return JsonResponse Summary of the bulk operation.
+     * @return JsonResponse
      */
     public function bulkRestore(Request $request): JsonResponse
     {
