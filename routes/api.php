@@ -439,7 +439,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('index');
         Route::post(
             '/',
-            [PipelineController::class, 'store']
+            [PartController::class, 'store']
         )->name('store');
         Route::get(
             '/{part}',
