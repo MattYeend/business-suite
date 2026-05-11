@@ -104,7 +104,7 @@ class PartManagementService
     /**
      * Bulk restore parts.
      *
-     * @param  array $ids 
+     * @param  array $ids
      * @param  User $actor
      * @param  callable $authoriseCallback
      *

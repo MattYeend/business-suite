@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Concerns\Parts\HasPartAccessors;
 use App\Concerns\Parts\HasPartHelpers;
 use App\Concerns\Parts\HasPartScopes;
 use Database\Factories\PartFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Fillable([
     'sku',
@@ -64,8 +65,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 
 /**
- * Represents a physical part/component in the inventory that can be used in products
- * 
+ * Represents a physical part/component in the
+ * inventory that can be used in products
+ *
  * @property int $id
  * @property string $sku
  * @property string|null $part_number
@@ -107,22 +109,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * 
- * @property-read Collection|\App\Models\Image[] $images
- * @property-read Collection|\App\Models\Category[] $categories
- * @property-read Collection|\App\Models\BillOfMaterialItem[] $billOfMaterialItems
- * @property-read Collection|\App\Models\Product[] $products
+ *
+ * @property-read Collection|Image[] $images
+ * @property-read Collection|Category[] $categories
+ * @property-read Collection|BillOfMaterialItem[] $billOfMaterialItems
+ * @property-read Collection|Product[] $products
  */
 class Part extends Model
 {
     /**
      * @use HasFactory<PartFactory>
      * @use SoftDeletes<SoftDeletes>
+     * @use HasPartAccessors<HasPartAccessors>
      * @use HasPartHelpers<HasPartHelpers>
      * @use HasPartScopes<HasPartScopes>
      */
     use HasFactory,
         SoftDeletes,
+        HasPartAccessors,
         HasPartHelpers,
         HasPartScopes;
 
@@ -215,4 +219,3 @@ class Part extends Model
         ];
     }
 }
-

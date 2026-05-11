@@ -86,9 +86,11 @@ class UpdatePartRequest extends FormRequest
             'price.min' => 'The price must be at least 0.',
             'cost_price.min' => 'The cost price must be at least 0.',
             'tax_rate.between' => 'The tax rate must be between 0 and 100.',
-            'discount_percentage.between' => 'The discount percentage must be between 0 and 100.',
+            'discount_percentage.between' => 'The discount percentage must
+                be between 0 and 100.',
             'quantity.integer' => 'The quantity must be a whole number.',
-            'min_stock_level.integer' => 'The minimum stock level must be a whole number.',
+            'min_stock_level.integer' => 'The minimum stock level must 
+                be a whole number.',
         ];
     }
 

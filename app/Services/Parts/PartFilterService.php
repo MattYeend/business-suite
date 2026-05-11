@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PartFilterService
 {
-     /**
+    /**
      * Apply search filter to query.
      *
      * @param  Builder $query

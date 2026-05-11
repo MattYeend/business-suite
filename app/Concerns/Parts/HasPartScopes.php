@@ -271,8 +271,10 @@ trait HasPartScopes
      *
      * @return Builder
      */
-    public function scopeByManufacturer(Builder $query, string $manufacturer): Builder
-    {
+    public function scopeByManufacturer(
+        Builder $query,
+        string $manufacturer
+    ): Builder {
         return $query->where('manufacturer', $manufacturer);
     }
 

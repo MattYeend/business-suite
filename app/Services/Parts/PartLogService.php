@@ -283,6 +283,35 @@ class PartLogService
      */
     private function getNullData(): array
     {
+        return array_merge(
+            $this->getNullBaseData(),
+            $this->getNullMeasureData(),
+            $this->getNullPriceData(),
+            $this->getNullQuantityData(),
+            $this->getNullFlagAndMetaData(),
+        );
+    }
+
+    /**
+     * Get part data.
+     *
+     * @param  Part $part
+     *
+     * @return array
+     */
+    private function getPartData(Part $part): array
+    {
+        return array_merge(
+            $this->getBaseData($part),
+            $this->getMeasureData($part),
+            $this->getPriceData($part),
+            $this->getQuantityData($part),
+            $this->getFlagAndMetaData($part),
+        );
+    }
+
+    private function getNullBaseData(): array
+    {
         return [
             'id' => null,
             'sku' => null,
@@ -290,6 +319,24 @@ class PartLogService
             'barcode' => null,
             'name' => null,
             'description' => null,
+        ];
+    }
+
+    private function getBaseData(Part $part): array
+    {
+        return [
+            'id' => $part->id,
+            'sku' => $part->sku,
+            'part_number' => $part->part_number,
+            'barcode' => $part->barcode,
+            'name' => $part->name,
+            'description' => $part->description,
+        ];
+    }
+
+    private function getNullMeasureData(): array
+    {
+        return [
             'brand' => null,
             'manufacturer' => null,
             'type' => null,
@@ -302,46 +349,12 @@ class PartLogService
             'volume' => null,
             'colour' => null,
             'material' => null,
-            'price' => null,
-            'cost_price' => null,
-            'currency' => null,
-            'tax_rate' => null,
-            'tax_code' => null,
-            'discount_percentage' => null,
-            'quantity' => null,
-            'min_stock_level' => null,
-            'max_stock_level' => null,
-            'reorder_point' => null,
-            'reorder_quantity' => null,
-            'lead_time_days' => null,
-            'warehouse_location' => null,
-            'bin_location' => null,
-            'is_active' => null,
-            'is_purchasable' => null,
-            'is_sellable' => null,
-            'is_manufactured' => null,
-            'is_serialised' => null,
-            'is_batch_tracked' => null,
-            'meta' => null,
         ];
     }
 
-    /**
-     * Get part data.
-     *
-     * @param  Part $part
-     *
-     * @return array
-     */
-    private function getPartData(Part $part): array
+    private function getMeasureData(Part $part): array
     {
         return [
-            'id' => $part->id,
-            'sku' => $part->sku,
-            'part_number' => $part->part_number,
-            'barcode' => $part->barcode,
-            'name' => $part->name,
-            'description' => $part->description,
             'brand' => $part->brand,
             'manufacturer' => $part->manufacturer,
             'type' => $part->type,
@@ -354,12 +367,50 @@ class PartLogService
             'volume' => $part->volume,
             'colour' => $part->colour,
             'material' => $part->material,
+        ];
+    }
+
+    private function getNullPriceData(): array
+    {
+        return [
+            'price' => null,
+            'cost_price' => null,
+            'currency' => null,
+            'tax_rate' => null,
+            'tax_code' => null,
+            'discount_percentage' => null,
+        ];
+    }
+
+    private function getPriceData(Part $part): array
+    {
+        return [
             'price' => $part->price,
             'cost_price' => $part->cost_price,
             'currency' => $part->currency,
-            'tax_rate' => $part->tax_rate,
-            'tax_code' => $part->tax_code,
+            'tax_rate' => $part->tax_code,
+            'tax_code' => $part->tax_rate,
             'discount_percentage' => $part->discount_percentage,
+        ];
+    }
+
+    private function getNullQuantityData(): array
+    {
+        return [
+            'quantity' => null,
+            'min_stock_level' => null,
+            'max_stock_level' => null,
+            'reorder_point' => null,
+            'reorder_quantity' => null,
+            'lead_time_days' => null,
+            'warehouse_location' => null,
+            'bin_location' => null,
+        ];
+    }
+
+    private function getQuantityData(Part $part): array
+    {
+        return [
             'quantity' => $part->quantity,
             'min_stock_level' => $part->min_stock_level,
             'max_stock_level' => $part->max_stock_level,
@@ -368,6 +419,25 @@ class PartLogService
             'lead_time_days' => $part->lead_time_days,
             'warehouse_location' => $part->warehouse_location,
             'bin_location' => $part->bin_location,
+        ];
+    }
+
+    private function getNullFlagAndMetaData(): array
+    {
+        return [
+            'is_active' => null,
+            'is_purchasable' => null,
+            'is_sellable' => null,
+            'is_manufactured' => null,
+            'is_serialised' => null,
+            'is_batch_tracked' => null,
+            'meta' => null,
+        ];
+    }
+
+    private function getFlagAndMetaData(Part $part): array
+    {
+        return [
             'is_active' => $part->is_active,
             'is_purchasable' => $part->is_purchasable,
             'is_sellable' => $part->is_sellable,
