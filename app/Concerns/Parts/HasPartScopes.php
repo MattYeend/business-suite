@@ -162,7 +162,7 @@ trait HasPartScopes
      */
     public function scopeConsumables(Builder $query): Builder
     {
-        return $query->where('type', Part::TYPE_CONUMABLE);
+        return $query->where('type', Part::TYPE_CONSUMABLE);
     }
 
     /**

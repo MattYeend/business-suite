@@ -132,7 +132,7 @@ class Part extends Model
 
     public const TYPE_RAW_MATERIAL = 'raw_material';
     public const TYPE_FINISHED_GOOD = 'finished_good';
-    public const TYPE_CONUMABLE = 'consumable';
+    public const TYPE_CONSUMABLE = 'consumable';
     public const TYPE_SPARE_PART = 'spare_part';
     public const TYPE_SUB_ASSEMBLY = 'sub_assebly';
 
