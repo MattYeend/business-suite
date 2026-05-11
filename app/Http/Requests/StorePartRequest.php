@@ -24,46 +24,13 @@ class StorePartRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'sku' => $this->skuRules(),
-            'part_number' => $this->partNumberRules(),
-            'barcode' => $this->barcodeRules(),
-            'name' => $this->nameRules(),
-            'description' => $this->descriptionRules(),
-            'brand' => $this->brandRules(),
-            'manufacturer' => $this->manufacturerRules(),
-            'type' => $this->typeRules(),
-            'status' => $this->statusRules(),
-            'unit_of_measure' => $this->unitOfMeasureRules(),
-            'height' => $this->heightRules(),
-            'width' => $this->widthRules(),
-            'length' => $this->lengthRules(),
-            'weight' => $this->weightRules(),
-            'volume' => $this->volumeRules(),
-            'colour' => $this->colourRules(),
-            'material' => $this->materialRules(),
-            'price' => $this->priceRules(),
-            'cost_price' => $this->costPriceRules(),
-            'currency' => $this->currencyRules(),
-            'tax_rate' => $this->taxRateRules(),
-            'tax_code' => $this->taxCodeRules(),
-            'discount_percentage' => $this->discountPercentageRules(),
-            'quantity' => $this->quantityRules(),
-            'min_stock_level' => $this->minStockLevelRules(),
-            'max_stock_level' => $this->maxStockLevelRules(),
-            'reorder_point' => $this->reorderPointRules(),
-            'reorder_quantity' => $this->reorderQuantityRules(),
-            'lead_time_days' => $this->leadTimeDaysRules(),
-            'warehouse_location' => $this->warehouseLocationRules(),
-            'bin_location' => $this->binLocationRules(),
-            'is_active' => $this->isActiveRules(),
-            'is_purchasable' => $this->isPurchasableRules(),
-            'is_sellable' => $this->isSellableRules(),
-            'is_manufactured' => $this->isManufacturedRules(),
-            'is_serialised' => $this->isSerialisedRules(),
-            'is_batch_tracked' => $this->isBatchTrackedRules(),
-            'meta' => $this->metaRules(),
-        ];
+        return array_merge(
+            $this->baseRelatedRules(),
+            $this->measureRelatedRules(),
+            $this->priceRelatedRules(),
+            $this->quantityRelatedRules(),
+            $this->flagAndMetaRelatedRules(),
+        );
     }
 
     /**
@@ -640,6 +607,99 @@ class StorePartRequest extends FormRequest
         return [
             'nullable',
             'array',
+        ];
+    }
+
+    /**
+     * Base rules
+     *
+     * @return array
+     */
+    private function baseRelatedRules(): array
+    {
+        return [
+            'sku' => $this->skuRules(),
+            'part_number' => $this->partNumberRules(),
+            'barcode' => $this->barcodeRules(),
+            'name' => $this->nameRules(),
+            'description' => $this->descriptionRules(),
+        ];
+    }
+
+    /**
+     * Measurable rules
+     *
+     * @return array
+     */
+    private function measureRelatedRules(): array
+    {
+        return [
+            'brand' => $this->brandRules(),
+            'manufacturer' => $this->manufacturerRules(),
+            'type' => $this->typeRules(),
+            'status' => $this->statusRules(),
+            'unit_of_measure' => $this->unitOfMeasureRules(),
+            'height' => $this->heightRules(),
+            'width' => $this->widthRules(),
+            'length' => $this->lengthRules(),
+            'weight' => $this->weightRules(),
+            'volume' => $this->volumeRules(),
+            'colour' => $this->colourRules(),
+            'material' => $this->materialRules(),
+        ];
+    }
+
+    /**
+     * Price rules
+     *
+     * @return array
+     */
+    private function priceRelatedRules(): array
+    {
+        return [
+            'price' => $this->priceRules(),
+            'cost_price' => $this->costPriceRules(),
+            'currency' => $this->currencyRules(),
+            'tax_rate' => $this->taxRateRules(),
+            'tax_code' => $this->taxCodeRules(),
+            'discount_percentage' => $this->discountPercentageRules(),
+        ];
+    }
+
+    /**
+     * Quantity rules
+     *
+     * @return array
+     */
+    private function quantityRelatedRules(): array
+    {
+        return [
+            'quantity' => $this->quantityRules(),
+            'min_stock_level' => $this->minStockLevelRules(),
+            'max_stock_level' => $this->maxStockLevelRules(),
+            'reorder_point' => $this->reorderPointRules(),
+            'reorder_quantity' => $this->reorderQuantityRules(),
+            'lead_time_days' => $this->leadTimeDaysRules(),
+            'warehouse_location' => $this->warehouseLocationRules(),
+            'bin_location' => $this->binLocationRules(),
+        ];
+    }
+
+    /**
+     * Flag and meta rules
+     *
+     * @return array
+     */
+    private function flagAndMetaRelatedRules(): array
+    {
+        return [
+            'is_active' => $this->isActiveRules(),
+            'is_purchasable' => $this->isPurchasableRules(),
+            'is_sellable' => $this->isSellableRules(),
+            'is_manufactured' => $this->isManufacturedRules(),
+            'is_serialised' => $this->isSerialisedRules(),
+            'is_batch_tracked' => $this->isBatchTrackedRules(),
+            'meta' => $this->metaRules(),
         ];
     }
 }
