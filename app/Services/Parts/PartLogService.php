@@ -326,7 +326,7 @@ class PartLogService
             'description' => null,
         ];
     }
-    
+
     /**
      * Get base part data.
      *
