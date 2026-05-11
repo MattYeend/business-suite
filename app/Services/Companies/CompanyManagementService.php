@@ -7,27 +7,15 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Models\User;
 
-/**
- * Orchestrates company lifecycle operations by delegating to focused
- * sub-services.
- *
- * Acts as the single entry point for company create, update, delete,
- * and restore operations, keeping controllers decoupled from the underlying
- * service implementations.
- */
 class CompanyManagementService
 {
     /**
      * Inject the required services into the management service.
      *
-     * @param  CompanyCreatorService $creator Handles company company
-     * creation.
-     * @param  CompanyUpdaterService $updater Handles company company
-     * updates.
-     * @param  CompanyDeleterService $destructor Handles company
-     * company deletion.
-     * @param  CompanyRestorerService $restorer Handles company company
-     * restoration.
+     * @param  CompanyCreatorService $creator
+     * @param  CompanyUpdaterService $updater
+     * @param  CompanyDeleterService $destructor
+     * @param  CompanyRestorerService $restorer
      *
      * @return void
      */
@@ -42,10 +30,9 @@ class CompanyManagementService
     /**
      * Create a new company.
      *
-     * @param StoreCompanyRequest $request Validated request
-     * containing company data.
+     * @param StoreCompanyRequest $request
      *
-     * @return Company The newly created company.
+     * @return Company
      */
     public function store(
         StoreCompanyRequest $request
@@ -59,12 +46,10 @@ class CompanyManagementService
     /**
      * Update an existing company.
      *
-     * @param  UpdateCompanyRequest $request Validated
-     * request containing updated company data.
-     * @param  Company $company The company
-     * instance to update.
+     * @param  UpdateCompanyRequest $request
+     * @param  Company $company
      *
-     * @return Company The updated company.
+     * @return Company
      */
     public function update(
         UpdateCompanyRequest $request,
@@ -80,7 +65,7 @@ class CompanyManagementService
     /**
      * Soft delete a company.
      *
-     * @param  Company $company The company to delete.
+     * @param  Company $company
      *
      * @return void
      */
@@ -92,9 +77,9 @@ class CompanyManagementService
     /**
      * Restore a soft-deleted company.
      *
-     * @param  int $id The ID of the company to restore.
+     * @param  int $id
      *
-     * @return Company The restored company.
+     * @return Company
      */
     public function restore(int $id): Company
     {
@@ -106,7 +91,7 @@ class CompanyManagementService
      * Force delete a company, permanently removing it from the
      * database.
      *
-     * @param  int $id The ID of the company to force delete.
+     * @param  int $id
      *
      * @return void
      */
@@ -119,24 +104,22 @@ class CompanyManagementService
     /**
      * Bulk restore companies.
      *
-     * @param  array $ids The IDs of the companies to restore.
-     * @param  User $actor The user performing the restoration, used for
-     * logging.
-     * @param  callable $authorizeCallback The callback to authorize
-     * each company company.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the companies that were restored.
+     * @return array
      */
     public function bulkRestore(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $restored = [];
 
         foreach ($ids as $id) {
             $company = Company::withTrashed()->findOrFail($id);
-            $authorizeCallback($company);
+            $authoriseCallback($company);
 
             if ($company->trashed()) {
                 $this->restorer->restore($company, $actor->id);
@@ -150,23 +133,22 @@ class CompanyManagementService
     /**
      * Bulk soft delete companies.
      *
-     * @param  array $ids The IDs of the companies to delete.
-     * @param  User $actor The user performing the deletion, used for logging.
-     * @param  callable $authorizeCallback The callback to authorize each
-     * company.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the companies that were deleted.
+     * @return array
      */
     public function bulkDelete(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $deleted = [];
 
         foreach ($ids as $id) {
             $company = Company::findOrFail($id);
-            $authorizeCallback($company);
+            $authoriseCallback($company);
 
             $this->destructor->delete($company, $actor->id);
             $deleted[] = $id;

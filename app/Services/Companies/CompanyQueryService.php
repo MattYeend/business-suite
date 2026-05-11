@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Builder;
 
 class CompanyQueryService
 {
+    /**
+     * Inject the required services into the query service.
+     *
+     * @param  CompanySortingService $sortingService
+     * @param  CompanyTrashFilterService $trashFilterService
+     * @param  CompanyFilterService $filterService
+     * @param  CompanyFormatterService $formatterService
+     *
+     * @return void
+     */
     public function __construct(
         protected CompanySortingService $sortingService,
         protected CompanyTrashFilterService $trashFilterService,

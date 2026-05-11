@@ -7,27 +7,15 @@ use App\Http\Requests\UpdateCompanyAddressRequest;
 use App\Models\CompanyAddress;
 use App\Models\User;
 
-/**
- * Orchestrates company address lifecycle operations by delegating to focused
- * sub-services.
- *
- * Acts as the single entry point for company address create, update, delete,
- * and restore operations, keeping controllers decoupled from the underlying
- * service implementations.
- */
 class CompanyAddressManagementService
 {
     /**
      * Inject the required services into the management service.
      *
-     * @param  CompanyAddressCreatorService $creator Handles company address
-     * creation.
-     * @param  CompanyAddressUpdaterService $updater Handles company address
-     * updates.
-     * @param  CompanyAddressDeleterService $destructor Handles company
-     * address deletion.
-     * @param  CompanyAddressRestorerService $restorer Handles company address
-     * restoration.
+     * @param  CompanyAddressCreatorService $creator
+     * @param  CompanyAddressUpdaterService $updater
+     * @param  CompanyAddressDeleterService $destructor
+     * @param  CompanyAddressRestorerService $restorer
      *
      * @return void
      */
@@ -42,10 +30,9 @@ class CompanyAddressManagementService
     /**
      * Create a new company address.
      *
-     * @param StoreCompanyAddressRequest $request Validated request
-     * containing company address data.
+     * @param StoreCompanyAddressRequest $request
      *
-     * @return CompanyAddress The newly created company address.
+     * @return CompanyAddress
      */
     public function store(
         StoreCompanyAddressRequest $request
@@ -59,10 +46,8 @@ class CompanyAddressManagementService
     /**
      * Update an existing company address.
      *
-     * @param  UpdateCompanyAddressRequest $request Validated
-     * request containing updated company address data.
-     * @param  CompanyAddress $companyAddress The company address
-     * instance to update.
+     * @param  UpdateCompanyAddressRequest $request
+     * @param  CompanyAddress $companyAddress
      *
      * @return CompanyAddress The updated company address.
      */
@@ -80,7 +65,7 @@ class CompanyAddressManagementService
     /**
      * Soft delete a company address.
      *
-     * @param  CompanyAddress $companyAddress The company address to delete.
+     * @param  CompanyAddress $companyAddress
      *
      * @return void
      */
@@ -92,9 +77,9 @@ class CompanyAddressManagementService
     /**
      * Restore a soft-deleted company address.
      *
-     * @param  int $id The ID of the company address to restore.
+     * @param  int $id
      *
-     * @return CompanyAddress The restored company address.
+     * @return CompanyAddress
      */
     public function restore(int $id): CompanyAddress
     {
@@ -106,7 +91,7 @@ class CompanyAddressManagementService
      * Force delete a company address, permanently removing it from the
      * database.
      *
-     * @param  int $id The ID of the company address to force delete.
+     * @param  int $id
      *
      * @return void
      */
@@ -119,24 +104,22 @@ class CompanyAddressManagementService
     /**
      * Bulk restore company addresses.
      *
-     * @param  array $ids The IDs of the company addresses to restore.
-     * @param  User $actor The user performing the restoration, used for
-     * logging.
-     * @param  callable $authorizeCallback The callback to authorize
-     * each company address.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the company addresses that were restored.
+     * @return array
      */
     public function bulkRestore(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $restored = [];
 
         foreach ($ids as $id) {
             $address = CompanyAddress::withTrashed()->findOrFail($id);
-            $authorizeCallback($address);
+            $authoriseCallback($address);
 
             if ($address->trashed()) {
                 $this->restorer->restore($address, $actor->id);
@@ -150,23 +133,22 @@ class CompanyAddressManagementService
     /**
      * Bulk soft delete company addresses.
      *
-     * @param  array $ids The IDs of the company addresses to delete.
-     * @param  User $actor The user performing the deletion, used for logging.
-     * @param  callable $authorizeCallback The callback to authorize each
-     * company address.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the company addresses that were deleted.
+     * @return array
      */
     public function bulkDelete(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $deleted = [];
 
         foreach ($ids as $id) {
             $address = CompanyAddress::findOrFail($id);
-            $authorizeCallback($address);
+            $authoriseCallback($address);
 
             $this->destructor->delete($address, $actor->id);
             $deleted[] = $id;

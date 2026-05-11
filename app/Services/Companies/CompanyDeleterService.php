@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyDeleterService
 {
+    /**
+     * Inject the required services into the deleter service.
+     *
+     * @param  CompanyLogService $logService
+     *
+     * @return void
+     */
     public function __construct(
         protected CompanyLogService $logService
     ) {
