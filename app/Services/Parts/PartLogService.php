@@ -310,6 +310,11 @@ class PartLogService
         );
     }
 
+    /**
+     * Get null base part data.
+     *
+     * @return array
+     */
     private function getNullBaseData(): array
     {
         return [
@@ -321,7 +326,14 @@ class PartLogService
             'description' => null,
         ];
     }
-
+    
+    /**
+     * Get base part data.
+     *
+     * @param  Part $part
+     *
+     * @return array
+     */
     private function getBaseData(Part $part): array
     {
         return [
@@ -334,6 +346,11 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get null measurable part data.
+     *
+     * @return array
+     */
     private function getNullMeasureData(): array
     {
         return [
@@ -352,6 +369,13 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get measurable part data.
+     *
+     * @param  Part $part
+     *
+     * @return array
+     */
     private function getMeasureData(Part $part): array
     {
         return [
@@ -370,6 +394,11 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get null price part data.
+     *
+     * @return array
+     */
     private function getNullPriceData(): array
     {
         return [
@@ -382,6 +411,13 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get price part data.
+     *
+     * @param  Part $part
+     *
+     * @return array
+     */
     private function getPriceData(Part $part): array
     {
         return [
@@ -394,6 +430,11 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get null quantity part data.
+     *
+     * @return array
+     */
     private function getNullQuantityData(): array
     {
         return [
@@ -408,6 +449,13 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get quantity part data.
+     *
+     * @param  Part $part
+     *
+     * @return array
+     */
     private function getQuantityData(Part $part): array
     {
         return [
@@ -422,6 +470,11 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get null flag and meta part data.
+     *
+     * @return array
+     */
     private function getNullFlagAndMetaData(): array
     {
         return [
@@ -435,6 +488,13 @@ class PartLogService
         ];
     }
 
+    /**
+     * Get flag part data.
+     *
+     * @param  Part $part
+     *
+     * @return array
+     */
     private function getFlagAndMetaData(Part $part): array
     {
         return [
