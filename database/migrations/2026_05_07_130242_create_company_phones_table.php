@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('company_phones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->string('type');
+            $table->enum('type', [
+                'main',
+                'fax',
+                'toll_free',
+                'mobile',
+            ])->default('main');
             $table->string('number');
             $table->boolean('is_primary')->default(false);
             $table->boolean('is_real')->default(true);

@@ -14,7 +14,16 @@ return new class extends Migration
         Schema::create('company_addresses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->string('type');
+            $table->enum('type', [
+                'billing',
+                'branch',
+                'factory',
+                'shipping',
+                'showroom',
+                'retail',
+                'office',
+                'warehouse'
+            ])->default('office');
             $table->string('address_line_1');
             $table->string('address_line_2')->nullable();
             $table->string('city');
