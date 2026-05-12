@@ -237,46 +237,121 @@ class PartSeeder extends Seeder
             default => 'active',
         };
 
+        $colours = [
+            'Black',
+            'White',
+            'Silver',
+            'Blue',
+            'Red',
+            'Green',
+            'Yellow',
+            'Grey',
+        ];
+
+        $categories = [
+            'Electronics',
+            'Mechanical',
+            'Electrical',
+            'Hardware',
+            'Components',
+            'Consumables',
+        ];
+
+        $subcategories = [
+            'Industrial',
+            'Assembly',
+            'Maintenance',
+            'Automation',
+            'Production',
+            'General',
+        ];
+
+        $notes = [
+            'Standard stock item.',
+            'Frequently used in production.',
+            'Handle with care.',
+            'Quality checked before dispatch.',
+            'Stored in dry conditions.',
+            'High demand item.',
+        ];
+
+        $warehouseLocations = [
+            'Warehouse A',
+            'Warehouse B',
+            'Distribution Centre',
+            'Main Store',
+        ];
+
         return [
             'sku' => $sku,
-            'part_number' => rand(0, 1) ? 'PN-' . str_pad((string) rand(10000000, 99999999), 8, '0', STR_PAD_LEFT) : null,
-            'barcode' => rand(0, 1) ? fake()->ean13() : null,
+
+            'part_number' => rand(0, 1)
+                ? 'PN-' . str_pad((string) rand(10000000, 99999999), 8, '0', STR_PAD_LEFT)
+                : null,
+
+            'barcode' => rand(0, 1)
+                ? (string) rand(1000000000000, 9999999999999)
+                : null,
+
             'name' => $name,
-            'description' => fake()->sentence(),
+            'description' => $name . ' for industrial applications.',
             'brand' => $brand,
-            'manufacturer' => $brand ? ($brand . ' Manufacturing') : null,
+
+            'manufacturer' => $brand
+                ? ($brand . ' Manufacturing')
+                : null,
+
             'type' => $type,
             'status' => $status,
             'unit_of_measure' => $unitOfMeasure,
 
-            'height' => rand(0, 1) ? fake()->randomFloat(2, 1, 200) : null,
-            'width' => rand(0, 1) ? fake()->randomFloat(2, 1, 200) : null,
-            'length' => rand(0, 1) ? fake()->randomFloat(2, 1, 200) : null,
-            'weight' => rand(0, 1) ? fake()->randomFloat(2, 0.1, 50) : null,
-            'volume' => null,
-            'colour' => rand(0, 1) ? fake()->safeColorName() : null,
-            'material' => $material,
+            'height' => rand(0, 1)
+                ? round(mt_rand(100, 20000) / 100, 2)
+                : null,
 
+            'width' => rand(0, 1)
+                ? round(mt_rand(100, 20000) / 100, 2)
+                : null,
+
+            'length' => rand(0, 1)
+                ? round(mt_rand(100, 20000) / 100, 2)
+                : null,
+
+            'weight' => rand(0, 1)
+                ? round(mt_rand(10, 5000) / 100, 2)
+                : null,
+
+            'volume' => null,
+
+            'colour' => rand(0, 1)
+                ? $colours[array_rand($colours)]
+                : null,
+
+            'material' => $material,
             'price' => $price,
             'cost_price' => $costPrice,
             'currency' => 'GBP',
             'tax_rate' => 20.00,
             'tax_code' => 'STD',
-            'discount_percentage' => rand(0, 3) ? fake()->randomFloat(2, 5, 15) : null,
 
-            'quantity' => $status === 'out_of_stock' ? 0 : $quantity,
+            'discount_percentage' => rand(0, 3)
+                ? round(mt_rand(500, 1500) / 100, 2)
+                : null,
+
+            'quantity' => $status === 'out_of_stock'
+                ? 0
+                : $quantity,
+
             'min_stock_level' => $minStock,
             'max_stock_level' => $maxStock,
             'reorder_point' => $reorderPoint,
             'reorder_quantity' => $reorderQuantity,
             'lead_time_days' => rand(1, 30),
-            'warehouse_location' => fake()->randomElement([
-                'Warehouse A',
-                'Warehouse B',
-                'Distribution Centre',
-                'Main Store',
-            ]),
-            'bin_location' => fake()->bothify('Shelf ?#-Bay ?#'),
+            'warehouse_location' => $warehouseLocations[array_rand($warehouseLocations)],
+
+            'bin_location' =>
+                'Shelf ' . chr(rand(65, 90)) . rand(1, 9)
+                . '-Bay ' . chr(rand(65, 90)) . rand(1, 9),
 
             'is_active' => $status === 'active',
             'is_purchasable' => true,
@@ -287,23 +362,34 @@ class PartSeeder extends Seeder
             'is_real' => rand(0, 9) < 8,
 
             'meta' => json_encode([
-                'supplier_code' => rand(0, 1) ? fake()->bothify('SUP-####') : null,
-                'category' => fake()->randomElement([
-                    'Electronics',
-                    'Mechanical',
-                    'Electrical',
-                    'Hardware',
-                    'Components',
-                    'Consumables',
-                ]),
-                'subcategory' => rand(0, 1) ? fake()->word() : null,
-                'notes' => rand(0, 2) ? fake()->sentence() : null,
-                'warranty_months' => $type === 'finished_good' ? rand(12, 36) : null,
-                'last_stock_check' => rand(0, 1) ? now()->subDays(rand(1, 90))->toDateTimeString() : null,
+                'supplier_code' => rand(0, 1)
+                    ? 'SUP-' . rand(1000, 9999)
+                    : null,
+
+                'category' => $categories[array_rand($categories)],
+
+                'subcategory' => rand(0, 1)
+                    ? $subcategories[array_rand($subcategories)]
+                    : null,
+
+                'notes' => rand(0, 2)
+                    ? $notes[array_rand($notes)]
+                    : null,
+
+                'warranty_months' => $type === 'finished_good'
+                    ? rand(12, 36)
+                    : null,
+
+                'last_stock_check' => rand(0, 1)
+                    ? now()->subDays(rand(1, 90))->toDateTimeString()
+                    : null,
             ]),
 
             'created_by' => $users->random()->id,
-            'updated_by' => rand(0, 3) ? $users->random()->id : null,
+
+            'updated_by' => rand(0, 3)
+                ? $users->random()->id
+                : null,
         ];
     }
 }
