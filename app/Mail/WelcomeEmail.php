@@ -10,12 +10,6 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-/**
- * Mailable for the welcome email sent to newly registered users.
- *
- * Queued via the Queueable trait to keep the registration flow responsive.
- * Model state is preserved across queue boundaries via SerializesModels.
- */
 class WelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -23,8 +17,7 @@ class WelcomeEmail extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param  User $user The newly registered user to send the welcome
-     * email to.
+     * @param  User $user
      */
     public function __construct(public User $user, public ?string $password)
     {
@@ -36,7 +29,7 @@ class WelcomeEmail extends Mailable
      *
      * Defines the email subject line.
      *
-     * @return Envelope The configured message envelope.
+     * @return Envelope
      */
     public function envelope(): Envelope
     {
@@ -50,7 +43,7 @@ class WelcomeEmail extends Mailable
      *
      * Resolves the Blade view used to render the email body.
      *
-     * @return Content The configured message content.
+     * @return Content
      */
     public function content(): Content
     {

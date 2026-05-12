@@ -65,9 +65,6 @@ use Illuminate\Support\Carbon;
 ])]
 
 /**
- * Represents a physical part/component in the
- * inventory that can be used in products
- *
  * @property int $id
  * @property string $sku
  * @property string|null $part_number

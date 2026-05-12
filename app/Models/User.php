@@ -45,10 +45,9 @@ use Spatie\Permission\Traits\HasRoles;
     'two_factor_recovery_codes',
     'remember_token',
 ])]
+
 /**
- * User model with role-based permissions and team support.
- *
- * @mixin \Spatie\Permission\Traits\HasRoles
+ *@mixin \Spatie\Permission\Traits\HasRoles
  *
  * @method bool can(string $ability, mixed $arguments = [])
  *

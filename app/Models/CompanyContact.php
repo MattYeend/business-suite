@@ -33,8 +33,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 
 /**
- * Company contact model for managing contacts associated with companies.
- *
  * @property int $id
  * @property int $company_id
  * @property string $first_name

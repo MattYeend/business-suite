@@ -9,7 +9,7 @@ use App\Services\Pipelines\PipelinePolicyAuthorisationService;
 class PipelinePolicy
 {
     public function __construct(
-        protected PipelinePolicyAuthorisationService $authorizationService
+        protected PipelinePolicyAuthorisationService $authorisationService
     ) {
     }
 
@@ -18,7 +18,7 @@ class PipelinePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -26,7 +26,7 @@ class PipelinePolicy
      */
     public function view(User $user, Pipeline $pipeline): bool
     {
-        return $this->authorizationService->canView($user, $pipeline);
+        return $this->authorisationService->canView($user, $pipeline);
     }
 
     /**
@@ -34,7 +34,7 @@ class PipelinePolicy
      */
     public function create(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -42,7 +42,7 @@ class PipelinePolicy
      */
     public function update(User $user, Pipeline $pipeline): bool
     {
-        return $this->authorizationService->canUpdate($user, $pipeline);
+        return $this->authorisationService->canUpdate($user, $pipeline);
     }
 
     /**
@@ -50,7 +50,7 @@ class PipelinePolicy
      */
     public function delete(User $user, Pipeline $pipeline): bool
     {
-        return $this->authorizationService->canDelete($user, $pipeline);
+        return $this->authorisationService->canDelete($user, $pipeline);
     }
 
     /**
@@ -58,7 +58,7 @@ class PipelinePolicy
      */
     public function restore(User $user, Pipeline $pipeline): bool
     {
-        return $this->authorizationService->canRestore($user, $pipeline);
+        return $this->authorisationService->canRestore($user, $pipeline);
     }
 
     /**
@@ -66,7 +66,7 @@ class PipelinePolicy
      */
     public function forceDelete(User $user, Pipeline $pipeline): bool
     {
-        return $this->authorizationService->canForceDelete(
+        return $this->authorisationService->canForceDelete(
             $user,
             $pipeline
         );
@@ -77,7 +77,7 @@ class PipelinePolicy
      */
     public function bulkDelete(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -85,7 +85,7 @@ class PipelinePolicy
      */
     public function bulkRestore(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -93,7 +93,7 @@ class PipelinePolicy
      */
     public function import(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -101,6 +101,6 @@ class PipelinePolicy
      */
     public function export(User $user): bool
     {
-        return $this->authorizationService->isUser($user);
+        return $this->authorisationService->isUser($user);
     }
 }

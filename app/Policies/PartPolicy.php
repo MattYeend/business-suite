@@ -9,7 +9,7 @@ use App\Services\Parts\PartPolicyAuthorisationService;
 class PartPolicy
 {
     public function __construct(
-        protected PartPolicyAuthorisationService $authorizationService
+        protected PartPolicyAuthorisationService $authorisationService
     ) {
     }
 
@@ -18,7 +18,7 @@ class PartPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -26,7 +26,7 @@ class PartPolicy
      */
     public function view(User $user, Part $part): bool
     {
-        return $this->authorizationService->canView($user, $part);
+        return $this->authorisationService->canView($user, $part);
     }
 
     /**
@@ -34,7 +34,7 @@ class PartPolicy
      */
     public function create(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -42,7 +42,7 @@ class PartPolicy
      */
     public function update(User $user, Part $part): bool
     {
-        return $this->authorizationService->canUpdate($user, $part);
+        return $this->authorisationService->canUpdate($user, $part);
     }
 
     /**
@@ -50,7 +50,7 @@ class PartPolicy
      */
     public function delete(User $user, Part $part): bool
     {
-        return $this->authorizationService->canDelete($user, $part);
+        return $this->authorisationService->canDelete($user, $part);
     }
 
     /**
@@ -58,7 +58,7 @@ class PartPolicy
      */
     public function restore(User $user, Part $part): bool
     {
-        return $this->authorizationService->canRestore($user, $part);
+        return $this->authorisationService->canRestore($user, $part);
     }
 
     /**
@@ -66,7 +66,7 @@ class PartPolicy
      */
     public function forceDelete(User $user, Part $part): bool
     {
-        return $this->authorizationService->canForceDelete(
+        return $this->authorisationService->canForceDelete(
             $user,
             $part
         );
@@ -77,7 +77,7 @@ class PartPolicy
      */
     public function bulkDelete(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -85,7 +85,7 @@ class PartPolicy
      */
     public function bulkRestore(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -93,7 +93,7 @@ class PartPolicy
      */
     public function import(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -101,6 +101,6 @@ class PartPolicy
      */
     public function export(User $user): bool
     {
-        return $this->authorizationService->isUser($user);
+        return $this->authorisationService->isUser($user);
     }
 }

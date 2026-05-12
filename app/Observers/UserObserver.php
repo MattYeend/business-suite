@@ -92,7 +92,7 @@ class UserObserver
 
     /**
      * Sync user's base Spatie role based on boolean flags.
-     * This ADDS the base role without removing specialised roles.
+     * This adds the base role without removing specialised roles.
      *
      * @param  User $user
      *

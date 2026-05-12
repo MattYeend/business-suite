@@ -29,8 +29,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 
 /**
- * Company phone model for managing multiple phone numbers per company.
- *
  * @property int $id
  * @property int $company_id
  * @property string $type

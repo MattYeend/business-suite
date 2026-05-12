@@ -8,7 +8,7 @@ use App\Services\Users\UserPolicyAuthorisationService;
 class UserPolicy
 {
     public function __construct(
-        protected UserPolicyAuthorisationService $authorizationService
+        protected UserPolicyAuthorisationService $authorisationService
     ) {
     }
 
@@ -17,7 +17,7 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -25,11 +25,11 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        if ($this->authorizationService->isSelf($user, $model)) {
+        if ($this->authorisationService->isSelf($user, $model)) {
             return true;
         }
 
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -37,7 +37,7 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -45,12 +45,12 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        if ($this->authorizationService->isSelf($user, $model)) {
+        if ($this->authorisationService->isSelf($user, $model)) {
             return true;
         }
 
-        return $this->authorizationService->isAdmin($user)
-            && ! $this->authorizationService->isRestrictedFromManaging(
+        return $this->authorisationService->isAdmin($user)
+            && ! $this->authorisationService->isRestrictedFromManaging(
                 $user,
                 $model
             );
@@ -61,7 +61,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $this->authorizationService->canManage($user, $model);
+        return $this->authorisationService->canManage($user, $model);
     }
 
     /**
@@ -69,7 +69,7 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
-        return $this->authorizationService->canRestore(
+        return $this->authorisationService->canRestore(
             $user,
             $model
         );
@@ -80,7 +80,7 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return $this->authorizationService->canForceDelete(
+        return $this->authorisationService->canForceDelete(
             $user,
             $model
         );
@@ -91,7 +91,7 @@ class UserPolicy
      */
     public function bulkDelete(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -99,7 +99,7 @@ class UserPolicy
      */
     public function bulkRestore(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -107,7 +107,7 @@ class UserPolicy
      */
     public function import(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -115,6 +115,6 @@ class UserPolicy
      */
     public function export(User $user): bool
     {
-        return $this->authorizationService->isUser($user);
+        return $this->authorisationService->isUser($user);
     }
 }

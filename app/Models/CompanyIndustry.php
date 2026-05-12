@@ -25,8 +25,6 @@ use Illuminate\Support\Carbon;
 ])]
 
 /**
- * CompanyIndustry model for categorizing companies by industry.
- *
  * @property int $id
  * @property string $name
  * @property string $slug

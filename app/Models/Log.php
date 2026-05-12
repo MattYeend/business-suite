@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Auth;
     'created_at',
     'updated_at',
 ])]
+
 /**
- * Log model for tracking system actions.
- *
  * @property int $id
  * @property int $action_id
  * @property array|null $data

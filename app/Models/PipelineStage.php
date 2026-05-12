@@ -34,8 +34,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 
 /**
- * Pipeline stage model representing individual stages within a pipeline.
- *
  * @property int $id
  * @property int $pipeline_id
  * @property string $name

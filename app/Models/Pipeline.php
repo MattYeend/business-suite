@@ -32,8 +32,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 
 /**
- * Pipeline model for managing sales/workflow pipelines with stages.
- *
  * @property int $id
  * @property string $name
  * @property string|null $description

@@ -9,7 +9,7 @@ use App\Services\PipelineStages\PipelineStagePolicyAuthorisationService;
 class PipelineStagePolicy
 {
     public function __construct(
-        protected PipelineStagePolicyAuthorisationService $authorizationService
+        protected PipelineStagePolicyAuthorisationService $authorisationService
     ) {
     }
 
@@ -18,7 +18,7 @@ class PipelineStagePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -26,7 +26,7 @@ class PipelineStagePolicy
      */
     public function view(User $user, PipelineStage $pipelineStage): bool
     {
-        return $this->authorizationService->canView($user, $pipelineStage);
+        return $this->authorisationService->canView($user, $pipelineStage);
     }
 
     /**
@@ -34,7 +34,7 @@ class PipelineStagePolicy
      */
     public function create(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -42,7 +42,7 @@ class PipelineStagePolicy
      */
     public function update(User $user, PipelineStage $pipelineStage): bool
     {
-        return $this->authorizationService->canUpdate($user, $pipelineStage);
+        return $this->authorisationService->canUpdate($user, $pipelineStage);
     }
 
     /**
@@ -50,7 +50,7 @@ class PipelineStagePolicy
      */
     public function delete(User $user, PipelineStage $pipelineStage): bool
     {
-        return $this->authorizationService->canDelete($user, $pipelineStage);
+        return $this->authorisationService->canDelete($user, $pipelineStage);
     }
 
     /**
@@ -58,7 +58,7 @@ class PipelineStagePolicy
      */
     public function restore(User $user, PipelineStage $pipelineStage): bool
     {
-        return $this->authorizationService->canRestore($user, $pipelineStage);
+        return $this->authorisationService->canRestore($user, $pipelineStage);
     }
 
     /**
@@ -66,7 +66,7 @@ class PipelineStagePolicy
      */
     public function forceDelete(User $user, PipelineStage $pipelineStage): bool
     {
-        return $this->authorizationService->canForceDelete(
+        return $this->authorisationService->canForceDelete(
             $user,
             $pipelineStage
         );
@@ -77,7 +77,7 @@ class PipelineStagePolicy
      */
     public function bulkDelete(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -85,7 +85,7 @@ class PipelineStagePolicy
      */
     public function bulkRestore(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -93,7 +93,7 @@ class PipelineStagePolicy
      */
     public function import(User $user): bool
     {
-        return $this->authorizationService->isAdmin($user);
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
@@ -101,6 +101,6 @@ class PipelineStagePolicy
      */
     public function export(User $user): bool
     {
-        return $this->authorizationService->isUser($user);
+        return $this->authorisationService->isUser($user);
     }
 }

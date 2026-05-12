@@ -34,8 +34,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 ])]
 
 /**
- * Company address model for managing multiple addresses per company.
- *
  * @property int $id
  * @property int $company_id
  * @property string $type
