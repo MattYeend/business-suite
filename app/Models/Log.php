@@ -170,6 +170,17 @@ class Log extends Model
     public const ACTION_EXPORT_PART = 110;
     public const ACTION_PART_UPDATED_BY_CRON = 111;
 
+    // Product Management
+    public const ACTION_CREATE_PRODUCT = 112;
+    public const ACTION_UPDATE_PRODUCT = 113;
+    public const ACTION_DELETE_PRODUCT = 114;
+    public const ACTION_SHOW_PRODUCT = 115;
+    public const ACTION_FORCE_DELETE_PRODUCT = 116;
+    public const ACTION_RESTORE_PRODUCT = 117;
+    public const ACTION_IMPORT_PRODUCT = 118;
+    public const ACTION_EXPORT_PRODUCT = 119;
+    public const ACTION_PRODUCT_UPDATED_BY_CRON = 120;
+
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
     // Ensure to update the documentation accordingly.

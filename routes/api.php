@@ -8,6 +8,7 @@ use App\Http\Controllers\CompanyPhoneController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\PipelineStageController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -466,6 +467,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [PartController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Product management routes
+    Route::prefix('products')->name(
+        'products.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [ProductController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [ProductController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [ProductController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [ProductController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{product}',
+            [ProductController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{product}',
+            [ProductController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{product}',
+            [ProductController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{product}',
+            [ProductController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [ProductController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [ProductController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
