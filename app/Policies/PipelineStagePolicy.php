@@ -8,6 +8,11 @@ use App\Services\PipelineStages\PipelineStagePolicyAuthorisationService;
 
 class PipelineStagePolicy
 {
+    /**
+     * Inject the required service into the policy.
+     *
+     * @param  PipelineStagePolicyAuthorisationService $authorisationService
+     */
     public function __construct(
         protected PipelineStagePolicyAuthorisationService $authorisationService
     ) {
@@ -15,6 +20,12 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can view any models.
+     *
+     * Only admins can view the list of pipeline stages.
+     *
+     * @param  User $user
+     *
+     * @return bool
      */
     public function viewAny(User $user): bool
     {
@@ -23,6 +34,11 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @param  User $user
+     * @param  PipelineStage $pipelineStage
+     *
+     * @return bool
      */
     public function view(User $user, PipelineStage $pipelineStage): bool
     {
@@ -31,6 +47,10 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can create models.
+     *
+     * @param  User $user
+     *
+     * @return bool
      */
     public function create(User $user): bool
     {
@@ -39,6 +59,11 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can update the model.
+     *
+     * @param  User $user
+     * @param  PipelineStage $pipelineStage
+     *
+     * @return bool
      */
     public function update(User $user, PipelineStage $pipelineStage): bool
     {
@@ -47,6 +72,11 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can delete the model.
+     *
+     * @param  User $user
+     * @param  PipelineStage $pipelineStage
+     *
+     * @return bool
      */
     public function delete(User $user, PipelineStage $pipelineStage): bool
     {
@@ -55,6 +85,11 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can restore the model.
+     *
+     * @param  User $user
+     * @param  PipelineStage $pipelineStage
+     *
+     * @return bool
      */
     public function restore(User $user, PipelineStage $pipelineStage): bool
     {
@@ -63,6 +98,11 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @param  User $user
+     * @param  PipelineStage $pipelineStage
+     *
+     * @return bool
      */
     public function forceDelete(User $user, PipelineStage $pipelineStage): bool
     {
@@ -74,6 +114,10 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can bulk delete models.
+     *
+     * @param  User
+     *
+     * @return bool
      */
     public function bulkDelete(User $user): bool
     {
@@ -82,6 +126,10 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can bulk restore models.
+     *
+     * @param  User $user
+     *
+     * @return bool
      */
     public function bulkRestore(User $user): bool
     {
@@ -90,6 +138,10 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can import models.
+     *
+     * @param  User $user
+     *
+     * @return bool
      */
     public function import(User $user): bool
     {
@@ -98,6 +150,10 @@ class PipelineStagePolicy
 
     /**
      * Determine whether the user can export models.
+     *
+     * @param  User $user
+     *
+     * @return bool
      */
     public function export(User $user): bool
     {
