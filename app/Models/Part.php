@@ -127,7 +127,7 @@ class Part extends Model
     public const TYPE_FINISHED_GOOD = 'finished_good';
     public const TYPE_CONSUMABLE = 'consumable';
     public const TYPE_SPARE_PART = 'spare_part';
-    public const TYPE_SUB_ASSEMBLY = 'sub_assebly';
+    public const TYPE_SUB_ASSEMBLY = 'sub_assembly';
 
     public const STATUS_ACTIVE = 'active';
     public const STATUS_DISCONTINUED = 'discontinued';

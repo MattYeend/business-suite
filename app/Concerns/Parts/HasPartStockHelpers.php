@@ -2,6 +2,8 @@
 
 namespace App\Concerns\Parts;
 
+use App\Models\Part;
+
 /**
  * Part stock helper methods.
  *
@@ -50,7 +52,7 @@ trait HasPartStockHelpers
      */
     public function isOutOfStock(): bool
     {
-        return $this->quantity <= 0;
+        return $this->quantity === Part::STATUS_OUT_OF_STOCK;
     }
 
     /**
@@ -60,7 +62,7 @@ trait HasPartStockHelpers
      */
     public function isInStock(): bool
     {
-        return $this->quantity > 0;
+        return $this->quantity > Part::STATUS_OUT_OF_STOCK;
     }
 
     /**

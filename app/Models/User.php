@@ -39,6 +39,7 @@ use Spatie\Permission\Traits\HasRoles;
     'restored_at',
     'restored_by',
 ])]
+
 #[Hidden([
     'password',
     'two_factor_secret',

@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             PipelineSeeder::class,
             PipelineStageSeeder::class,
             PartSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }

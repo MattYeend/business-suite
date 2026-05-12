@@ -18,20 +18,23 @@ class PartFactory extends Factory
      */
     public function definition(): array
     {
-        $type = fake()->randomElement([
-            'raw_material',
-            'finished_good',
-            'consumable',
-            'spare_part',
-            'sub_assembly',
-        ]);
+        $types = [
+            Part::TYPE_RAW_MATERIAL,
+            Part::TYPE_FINISHED_GOOD,
+            Part::TYPE_CONSUMABLE,
+            Part::TYPE_SPARE_PART,
+            Part::TYPE_SUB_ASSEMBLY,
+        ];
+        $statuses = [
+            Part::STATUS_ACTIVE,
+            Part::STATUS_DISCONTINUED,
+            Part::STATUS_PENDING,
+            Part::STATUS_OUT_OF_STOCK,
+        ];
 
-        $status = fake()->randomElement([
-            'active',
-            'discontinued',
-            'pending',
-            'out_of_stock',
-        ]);
+        $type = fake()->randomElement($types);
+
+        $status = fake()->randomElement($statuses);
 
         $costPrice = fake()->randomFloat(2, 5, 500);
         $sellPrice = $costPrice * fake()->randomFloat(2, 1.2, 2.5); // 20-150% markup
