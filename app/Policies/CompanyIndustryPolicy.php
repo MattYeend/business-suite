@@ -107,7 +107,7 @@ class CompanyIndustryPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  User $user 
+     * @param  User $user
      * @param  CompanyIndustry $companyIndustry
      *
      * @return bool

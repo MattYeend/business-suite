@@ -102,7 +102,7 @@ class PipelinePolicy
      * @param  User $user
      * @param  Pipeline $pipeline
      *
-     * @return bool True if the user has permission to force delete this pipeline
+     * @return bool
      */
     public function forceDelete(User $user, Pipeline $pipeline): bool
     {

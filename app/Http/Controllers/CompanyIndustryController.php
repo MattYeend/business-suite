@@ -63,7 +63,7 @@ class CompanyIndustryController extends Controller
      *
      * @param  StoreCompanyIndustryRequest $request
      *
-     * @return JsonResponse 
+     * @return JsonResponse
      */
     public function store(StoreCompanyIndustryRequest $request): JsonResponse
     {

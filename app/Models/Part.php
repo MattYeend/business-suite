@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Concerns\Parts\HasPartAccessors;
 use App\Concerns\Parts\HasPartHelpers;
 use App\Concerns\Parts\HasPartScopes;
 use Database\Factories\PartFactory;
