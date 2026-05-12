@@ -27,10 +27,10 @@ class AppServiceProvider extends ServiceProvider
      * testing and development purposes.
      */
     private const DESTRUCTIVE_COMMANDS = [
-        'migrate:fresh',    // Drops all tables
-        'migrate:reset',    // Rolls back all migrations
+        'migrate:fresh', // Drops all tables
+        'migrate:reset', // Rolls back all migrations
         'migrate:rollback', // Rolls back a batch of migrations
-        'db:wipe',         // Drops all databases
+        'db:wipe', // Drops all databases
     ];
 
     /**
