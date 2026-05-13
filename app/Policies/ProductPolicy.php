@@ -4,62 +4,159 @@ namespace App\Policies;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Services\Products\ProductPolicyAuthorisationService;
 
 class ProductPolicy
 {
     /**
+     * Inject the required service into the policy.
+     *
+     * @param  ProductPolicyAuthorisationService $authorisationService
+     */
+    public function __construct(
+        protected ProductPolicyAuthorisationService $authorisationService
+    ) {
+    }
+
+    /**
      * Determine whether the user can view any models.
+     *
+     * Only admins can view the list of parts.
+     *
+     * @param  User $user The user attempting the action
+     *
+     * @return bool True if the user is an admin
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
      * Determine whether the user can view the model.
+     *
+     * @param  User $user
+     * @param  Product $product
+     *
+     * @return bool
      */
     public function view(User $user, Product $product): bool
     {
-        return false;
+        return $this->authorisationService->canView($user, $product);
     }
 
     /**
      * Determine whether the user can create models.
+     *
+     * @param  User $user
+     *
+     * @return bool
      */
     public function create(User $user): bool
     {
-        return false;
+        return $this->authorisationService->isAdmin($user);
     }
 
     /**
      * Determine whether the user can update the model.
+     *
+     * @param  User $user
+     * @param  Product $product
+     *
+     * @return bool
      */
     public function update(User $user, Product $product): bool
     {
-        return false;
+        return $this->authorisationService->canUpdate($user, $product);
     }
 
     /**
      * Determine whether the user can delete the model.
+     *
+     * @param  User $user
+     * @param  Product $product
+     *
+     * @return bool
      */
     public function delete(User $user, Product $product): bool
     {
-        return false;
+        return $this->authorisationService->canDelete($user, $product);
     }
 
     /**
      * Determine whether the user can restore the model.
+     *
+     * @param  User $user
+     * @param  Product $product
+     *
+     * @return bool
      */
     public function restore(User $user, Product $product): bool
     {
-        return false;
+        return $this->authorisationService->canRestore($user, $product);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
+     *
+     * @param  User $user
+     * @param  Product $product
+     *
+     * @return bool
      */
     public function forceDelete(User $user, Product $product): bool
     {
-        return false;
+        return $this->authorisationService->canForceDelete(
+            $user,
+            $product
+        );
+    }
+
+    /**
+     * Determine whether the user can bulk delete models.
+     *
+     * @param  User $user
+     *
+     * @return bool
+     */
+    public function bulkDelete(User $user): bool
+    {
+        return $this->authorisationService->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can bulk restore models.
+     *
+     * @param  User $user
+     *
+     * @return bool
+     */
+    public function bulkRestore(User $user): bool
+    {
+        return $this->authorisationService->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can import models.
+     *
+     * @param  User $user
+     *
+     * @return bool
+     */
+    public function import(User $user): bool
+    {
+        return $this->authorisationService->isAdmin($user);
+    }
+
+    /**
+     * Determine whether the user can export models.
+     *
+     * @param  User $user
+     *
+     * @return bool
+     */
+    public function export(User $user): bool
+    {
+        return $this->authorisationService->isUser($user);
     }
 }

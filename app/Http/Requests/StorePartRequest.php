@@ -172,13 +172,7 @@ class StorePartRequest extends FormRequest
         return [
             'required',
             'string',
-            Rule::in([
-                'raw_material',
-                'finished_good',
-                'consumable',
-                'spare_part',
-                'sub_assembly',
-            ]),
+            Rule::in(Part::getPartTypes()),
         ];
     }
 
@@ -192,12 +186,7 @@ class StorePartRequest extends FormRequest
         return [
             'sometimes',
             'string',
-            Rule::in([
-                'active',
-                'discontinued',
-                'pending',
-                'out_of_stock',
-            ]),
+            Rule::in(Part::getPartStatus()),
         ];
     }
 

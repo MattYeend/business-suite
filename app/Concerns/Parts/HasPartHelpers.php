@@ -230,7 +230,7 @@ trait HasPartHelpers
      *
      * @return array<int,string>
      */
-    public static function getPartStatuses(): array
+    public static function getPartStatus(): array
     {
         return [
             Part::STATUS_ACTIVE,

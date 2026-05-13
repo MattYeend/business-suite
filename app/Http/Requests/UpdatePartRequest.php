@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Part;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -175,13 +176,7 @@ class UpdatePartRequest extends FormRequest
             'sometimes',
             'required',
             'string',
-            Rule::in([
-                'raw_material',
-                'finished_good',
-                'consumable',
-                'spare_part',
-                'sub_assembly',
-            ]),
+            Rule::in(Part::getPartTypes()),
         ];
     }
 
@@ -195,12 +190,7 @@ class UpdatePartRequest extends FormRequest
         return [
             'sometimes',
             'string',
-            Rule::in([
-                'active',
-                'discontinued',
-                'pending',
-                'out_of_stock',
-            ]),
+            Rule::in(Part::getPartStatus()),
         ];
     }
 

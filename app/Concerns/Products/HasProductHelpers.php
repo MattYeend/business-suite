@@ -230,4 +230,37 @@ trait HasProductHelpers
 
         return $symbol . number_format($amount, 2);
     }
+
+    /**
+     * Get all available statuses.
+     *
+     * @return array<int,string>
+     */
+    public static function getProductStatus(): array
+    {
+        return [
+            Product::STATUS_ACTIVE,
+            Product::STATUS_DISCONTINUED,
+            Product::STATUS_PENDING,
+            Product::STATUS_OUT_OF_STOCK,
+        ];
+    }
+
+    /**
+     * Get a human-readable status label.
+     *
+     * @return string|null
+     */
+    public function getStatusLabel(): ?string
+    {
+        return match ($this->status) {
+            Product::STATUS_ACTIVE => 'Active',
+            Product::STATUS_DISCONTINUED => 'Discontinued',
+            Product::STATUS_PENDING => 'Pending',
+            Product::STATUS_OUT_OF_STOCK => 'Out of stock',
+            default => $this->status ? ucfirst(
+                str_replace('_', ' ', $this->status)
+            ) : null,
+        };
+    }
 }

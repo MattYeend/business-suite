@@ -166,11 +166,11 @@ trait HasProductAccessors
     }
 
     /**
-     * Get all available part statuses.
+     * Get all available product statuses.
      *
      * @return array<int,string>
      */
-    public static function getPartStatuses(): array
+    public static function getProductStatuses(): array
     {
         return [
             Product::STATUS_ACTIVE,
