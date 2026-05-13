@@ -15,8 +15,6 @@ class PartQueryService
      * @param  PartTrashFilterService $trashFilterService
      * @param  PartFilterService $filterService
      * @param  PartFormatterService $formatterService
-     *
-     * @return void
      */
     public function __construct(
         protected PartSortingService $sortingService,

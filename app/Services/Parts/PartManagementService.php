@@ -16,8 +16,6 @@ class PartManagementService
      * @param  PartUpdaterService $updater
      * @param  PartDeleterService $destructor
      * @param  PartRestorerService $restorer
-     *
-     * @return void
      */
     public function __construct(
         protected PartCreatorService $creator,

@@ -13,8 +13,6 @@ class PartUpdaterService
      *
      * @param  PartDataPreparationService $dataPreparation
      * @param  PartLogService $logService
-     *
-     * @return void
      */
     public function __construct(
         protected PartDataPreparationService $dataPreparation,

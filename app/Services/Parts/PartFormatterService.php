@@ -199,7 +199,6 @@ class PartFormatterService
             'updated_at' => $part->updated_at,
             'deleted_at' => $part->deleted_at,
             'restored_at' => $part->restored_at,
-
             'created_by' => $part->created_by,
             'updated_by' => $part->updated_by,
             'deleted_by' => $part->deleted_by,

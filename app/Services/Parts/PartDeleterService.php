@@ -12,8 +12,6 @@ class PartDeleterService
      * Inject the required services into the deleter service.
      *
      * @param  PartLogService $logService
-     *
-     * @return void
      */
     public function __construct(
         protected PartLogService $logService

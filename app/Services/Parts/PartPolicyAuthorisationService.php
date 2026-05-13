@@ -13,8 +13,6 @@ class PartPolicyAuthorisationService
      *
      * @param  PartActiveCheckerService $activeChecker
      * @param  UserRoleCheckerService $roleChecker
-     *
-     * @return void
      */
     public function __construct(
         protected PartActiveCheckerService $activeChecker,
