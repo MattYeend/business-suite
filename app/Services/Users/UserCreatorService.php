@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Mail;
 
 class UserCreatorService
 {
+    /**
+     * Inject the required services into the creator service.
+     *
+     * @param  UserPasswordService $passwordService
+     * @param  UserAvatarHandlerService $avatarHandler
+     * @param  UserRoleAssignmentService $roleAssignment
+     * @param  UserDataPreparationService $dataPreparation
+     * @param  UserLogService $logService
+     */
     public function __construct(
         protected UserPasswordService $passwordService,
         protected UserAvatarHandlerService $avatarHandler,

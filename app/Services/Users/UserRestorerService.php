@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class UserRestorerService
 {
+    /**
+     * Inject the required services into the restorer service.
+     *
+     * @param  UserLogService $logService
+     */
     public function __construct(
         protected UserLogService $logService
     ) {

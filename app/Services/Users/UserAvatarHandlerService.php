@@ -9,6 +9,12 @@ use App\Models\User;
  */
 class UserAvatarHandlerService
 {
+    /**
+     * Inject the required services into the avatar helper service.
+     *
+     * @param  UserAvatarService $avatarService
+     * @param  UserAvatarValidatorService $validator
+     */
     public function __construct(
         protected UserAvatarService $avatarService,
         protected UserAvatarValidatorService $validator

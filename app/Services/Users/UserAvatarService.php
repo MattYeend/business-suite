@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class UserAvatarService
 {
+    /**
+     * Inject the required services into the avatar helper service.
+     *
+     * @param  UserAvatarValidationService $validationService
+     */
     public function __construct(
         protected UserAvatarValidationService $validationService
     ) {
@@ -19,7 +24,7 @@ class UserAvatarService
      * @param  UploadedFile $file
      * @param  User|null $user
      *
-     * @return string The stored file path
+     * @return string
      */
     public function upload(UploadedFile $file, ?User $user = null): string
     {
@@ -60,7 +65,7 @@ class UserAvatarService
      * @param  UploadedFile $file
      * @param  User $user
      *
-     * @return string The new file path
+     * @return string
      */
     public function replace(UploadedFile $file, User $user): string
     {

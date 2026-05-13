@@ -7,6 +7,11 @@ use App\Services\UserRoleCheckerService;
 
 class UserActiveCheckerService
 {
+    /**
+     * Inject the required services into the active checker service.
+     *
+     * @param  UserRoleCheckerService $roleChecker
+     */
     public function __construct(
         protected UserRoleCheckerService $roleChecker
     ) {
@@ -66,9 +71,9 @@ class UserActiveCheckerService
      * Determine whether an acting user can perform a given action on
      * a target user.
      *
-     * @param  User $actor The user performing the action.
-     * @param  string $action One of: "modify", "restoreOrForceDelete".
-     * @param  User $model The target user being acted upon.
+     * @param  User $actor
+     * @param  string $action
+     * @param  User $model
      *
      * @return bool
      *

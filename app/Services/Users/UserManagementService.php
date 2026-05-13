@@ -6,26 +6,15 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 
-/**
- * Orchestrates user lifecycle operations by delegating to focused
- * sub-services.
- *
- * Acts as the single entry point for user create, update, delete, and
- * restore operations, keeping controllers decoupled from the underlying
- * service implementations.
- */
 class UserManagementService
 {
     /**
      * Inject the required services into the management service.
      *
-     * @param  UserCreatorService $creator Handles user creation.
-     * @param  UserUpdaterService $updater Handles user updates.
-     * @param  UserDeleterService $destructor Handles user deletion
-     * and restoration.
-     * @param  UserRestorerService $restorer Handles user restoration.
-     *
-     * @return void
+     * @param  UserCreatorService $creator
+     * @param  UserUpdaterService $updater
+     * @param  UserDeleterService $destructor
+     * @param  UserRestorerService $restorer
      */
     public function __construct(
         protected UserCreatorService $creator,
@@ -38,9 +27,9 @@ class UserManagementService
     /**
      * Create a new user.
      *
-     * @param StoreUserRequest $request Validated request containing user data.
+     * @param StoreUserRequest $request
      *
-     * @return User The newly created user.
+     * @return User
      */
     public function store(StoreUserRequest $request): User
     {
@@ -55,11 +44,10 @@ class UserManagementService
     /**
      * Update an existing user.
      *
-     * @param  UpdateUserRequest $request Validated request containing
-     * updated user data.
-     * @param  User $user The user instance to update.
+     * @param  UpdateUserRequest $request
+     * @param  User $user
      *
-     * @return User The updated user.
+     * @return User
      */
     public function update(UpdateUserRequest $request, User $user): User
     {
@@ -75,9 +63,7 @@ class UserManagementService
     /**
      * Soft-delete a user.
      *
-     * Delegates to the destructor service to perform a soft-delete.
-     *
-     * @param  User $user The user to delete.
+     * @param  User $user
      *
      * @return void
      */
@@ -89,9 +75,9 @@ class UserManagementService
     /**
      * Restore a soft-deleted user.
      *
-     * @param  int $id The primary key of the soft-deleted user.
+     * @param  int $id
      *
-     * @return User The restored user.
+     * @return User
      */
     public function restore(int $id): User
     {
@@ -102,7 +88,7 @@ class UserManagementService
     /**
      * Force delete a user, permanently removing it from the database.
      *
-     * @param  int $id The primary key of the user to force delete.
+     * @param  int $id
      *
      * @return void
      */
@@ -115,24 +101,22 @@ class UserManagementService
     /**
      * Bulk restore users.
      *
-     * @param  array $ids The IDs of the users to restore.
-     * @param  User $actor The user performing the restoration, used for
-     * logging.
-     * @param  callable $authorizeCallback The callback to authorize each
-     * user.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the users that were restored.
+     * @return array
      */
     public function bulkRestore(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $restored = [];
 
         foreach ($ids as $id) {
             $user = User::withTrashed()->findOrFail($id);
-            $authorizeCallback($user);
+            $authoriseCallback($user);
 
             if ($user->trashed()) {
                 $this->restorer->restore($user, $actor->id);
@@ -146,22 +130,22 @@ class UserManagementService
     /**
      * Bulk delete users.
      *
-     * @param  array $ids The IDs of the users to delete.
-     * @param  User $actor The user performing the deletion, used for logging.
-     * @param  callable $authorizeCallback The callback to authorize each user.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the users that were deleted.
+     * @return array
      */
     public function bulkDelete(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $deleted = [];
 
         foreach ($ids as $id) {
             $user = User::findOrFail($id);
-            $authorizeCallback($user);
+            $authoriseCallback($user);
 
             $this->destructor->delete($user, $actor->id);
             $deleted[] = $id;

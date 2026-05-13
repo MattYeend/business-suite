@@ -5,11 +5,15 @@ namespace App\Services\Users;
 use App\Models\User;
 use App\Services\UserRoleCheckerService;
 
-/**
- * Handles user authorization checks for policies.
- */
+
 class UserPolicyAuthorisationService
 {
+    /**
+     * Inject the required services into the policy authorisation service.
+     *
+     * @param  UserActiveCheckerService $activeChecker
+     * @param  UserRoleCheckerService $roleChecker
+     */
     public function __construct(
         protected UserActiveCheckerService $activeChecker,
         protected UserRoleCheckerService $roleChecker

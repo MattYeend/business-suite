@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\DB;
 
 class UserUpdaterService
 {
+    /**
+     * Inject the required services into the updater service.
+     *
+     * @param  UserAvatarHandlerService $avatarHandler
+     * @param  UserRoleAssignmentService $roleAssignment
+     * @param  UserDataPreparationService $dataPreparation
+     * @param  UserLogService $logService
+     */
     public function __construct(
         protected UserAvatarHandlerService $avatarHandler,
         protected UserRoleAssignmentService $roleAssignment,

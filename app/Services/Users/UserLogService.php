@@ -10,9 +10,9 @@ class UserLogService
     /**
      * Log user creation.
      *
-     * @param  User $user The user that was created.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  User $actor
+     * @param  int $actorId
      *
      * @return array
      */
@@ -38,11 +38,11 @@ class UserLogService
     /**
      * Log a user update event.
      *
-     * @param  User $user The user that was updated.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logUpdate(
         User $user,
@@ -66,11 +66,11 @@ class UserLogService
     /**
      * Log a user deletion event.
      *
-     * @param  User $user The user that was deleted.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logDeletion(
         User $user,
@@ -94,11 +94,11 @@ class UserLogService
     /**
      * Log user force deletion (permanent).
      *
-     * @param  User $user The user that was force deleted.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logForceDeletion(
         User $user,
@@ -122,11 +122,11 @@ class UserLogService
     /**
      * Log a user email verification event.
      *
-     * @param  User $user The user that was verified.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function userVerified(
         User $user,
@@ -150,11 +150,11 @@ class UserLogService
     /**
      * Log a user restoration event.
      *
-     * @param  User $user The user that was restored.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logRestoration(
         User $user,
@@ -178,11 +178,11 @@ class UserLogService
     /**
      * Log password change.
      *
-     * @param  User $user The user whose password was changed.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logPasswordChange(
         User $user,
@@ -206,12 +206,12 @@ class UserLogService
     /**
      * Log role assignment.
      *
-     * @param  User $user The user whose roles were assigned.
-     * @param  array $roles The roles that were assigned.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  User $user
+     * @param  array $roles
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logRoleAssignment(
         User $user,
@@ -237,11 +237,11 @@ class UserLogService
     /**
      * Log a user import event.
      *
-     * @param  array $importData The data of the users imported.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  array $importData
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logImport(
         array $importData,
@@ -266,11 +266,11 @@ class UserLogService
     /**
      * Log a user export event.
      *
-     * @param  array $exportData The data of the users exported.
-     * @param  User $actor The user who performed the action.
-     * @param  int $actorId The ID of the user who performed the action.
+     * @param  array $exportData
+     * @param  User $actor
+     * @param  int $actorId
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logExport(
         array $exportData,
@@ -296,9 +296,9 @@ class UserLogService
     /**
      * Log a user update performed by a scheduled task (cron).
      *
-     * @param  User $user The user that was updated.
+     * @param  User $user
      *
-     * @return array The structured data written to the log entry.
+     * @return array
      */
     public function logUpdateByCron(User $user): array
     {
