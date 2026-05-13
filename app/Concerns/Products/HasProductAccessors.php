@@ -57,15 +57,15 @@ trait HasProductAccessors
     //         ?? $this->images()->first();
     // }
 
-    // /**
-    //  * Check if product has a Bill of Material.
-    //  *
-    //  * @return bool
-    //  */
-    // public function getHasBomAttribute(): bool
-    // {
-    //     return $this->billOfMaterial()->exists();
-    // }
+    /**
+     * Check if product has a Bill of Material.
+     *
+     * @return bool
+     */
+    public function getHasBomAttribute(): bool
+    {
+        return $this->billOfMaterial()->exists();
+    }
 
     // /**
     //  * Get calculated cost price from BOM.

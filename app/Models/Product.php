@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 // use Illuminate\Database\Eloquent\Relations\HasMany;
-// use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 // use Illuminate\Database\Eloquent\Relations\MorphMany;
 // use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -152,15 +152,15 @@ class Product extends Model
     //         ->orderByPivot('sort_order');
     // }
 
-    // /**
-    //  * Get the Bill of Material for this product.
-    //  *
-    //  * @return HasOne
-    //  */
-    // public function billOfMaterial(): HasOne
-    // {
-    //     return $this->hasOne(BillOfMaterial::class);
-    // }
+    /**
+     * Get the Bill of Material for this product.
+     *
+     * @return HasOne
+     */
+    public function billOfMaterial(): HasOne
+    {
+        return $this->hasOne(BillOfMaterial::class);
+    }
 
     // /**
     //  * Get all BOM items for this product.

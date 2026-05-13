@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillOfMaterialController;
 use App\Http\Controllers\CompanyAddressController;
 use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
@@ -23,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    // User management routes
+    // User Management routes
     Route::prefix('users')->name('users.')->group(function () {
         Route::post(
             '/bulk/delete',
@@ -70,7 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Company Industry management routes
+    // Company Industry Management routes
     Route::prefix('company-industries')->name(
         'company-industries.'
     )->group(function () {
@@ -120,7 +121,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Company management routes
+    // Company Management routes
     Route::prefix('companies')->name(
         'companies.'
     )->group(function () {
@@ -170,7 +171,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Company Contact management routes
+    // Company Contact Management routes
     Route::prefix('company-contacts')->name(
         'company-contacts.'
     )->group(function () {
@@ -220,7 +221,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Company Phone management routes
+    // Company Phone Management routes
     Route::prefix('company-phones')->name(
         'company-phones.'
     )->group(function () {
@@ -270,7 +271,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Company Address management routes
+    // Company Address Management routes
     Route::prefix('company-addresses')->name(
         'company-addresses.'
     )->group(function () {
@@ -320,7 +321,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Pipeline management routes
+    // Pipeline Management routes
     Route::prefix('pipelines')->name(
         'pipelines.'
     )->group(function () {
@@ -370,7 +371,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Pipeline Stage management routes
+    // Pipeline Stage Management routes
     Route::prefix('pipeline-stages')->name(
         'pipeline-stages.'
     )->group(function () {
@@ -420,7 +421,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Part management routes
+    // Part Management routes
     Route::prefix('parts')->name(
         'parts.'
     )->group(function () {
@@ -470,7 +471,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // Product management routes
+    // Product Management routes
     Route::prefix('products')->name(
         'products.'
     )->group(function () {
@@ -517,6 +518,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [ProductController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // BIll Of Material Management routes
+    Route::prefix('BillOfMaterials')->name(
+        'BillOfMaterials.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [BillOfMaterialController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [BillOfMaterialController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [BillOfMaterialController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [BillOfMaterialController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{billOfMaterial}',
+            [BillOfMaterialController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{billOfMaterial}',
+            [BillOfMaterialController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{billOfMaterial}',
+            [BillOfMaterialController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{billOfMaterial}',
+            [BillOfMaterialController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [BillOfMaterialController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [BillOfMaterialController::class, 'forceDelete']
         )->name('force-delete');
     });
 });

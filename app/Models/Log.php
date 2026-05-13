@@ -181,6 +181,17 @@ class Log extends Model
     public const ACTION_EXPORT_PRODUCT = 119;
     public const ACTION_PRODUCT_UPDATED_BY_CRON = 120;
 
+    // Bill Of Material (BOM) Management
+    public const ACTION_CREATE_BILL_OF_MATERIAL = 121;
+    public const ACTION_UPDATE_BILL_OF_MATERIAL = 122;
+    public const ACTION_DELETE_BILL_OF_MATERIAL = 123;
+    public const ACTION_SHOW_BILL_OF_MATERIAL = 124;
+    public const ACTION_FORCE_DELETE_BILL_OF_MATERIAL = 125;
+    public const ACTION_RESTORE_BILL_OF_MATERIAL = 126;
+    public const ACTION_IMPORT_BILL_OF_MATERIAL = 127;
+    public const ACTION_EXPORT_BILL_OF_MATERIAL = 128;
+    public const ACTION_BILL_OF_MATERIAL_UPDATED_BY_CRON = 129;
+
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
     // Ensure to update the documentation accordingly.
