@@ -47,9 +47,12 @@ class UpdateProductRequest extends FormRequest
             'status.in' => 'The selected status is invalid.',
             'currency.size' => 'The currency must be exactly 3 characters.',
             'quantity.integer' => 'The quantity must be a whole number.',
-            'min_stock_level.integer' => 'The minimum stock level must be a whole number.',
-            'max_stock_level.gte' => 'The maximum stock level must be greater than or equal to the minimum stock level.',
-            'reorder_quantity.min' => 'The reorder quantity must be at least 1.',
+            'min_stock_level.integer' => 'The minimum stock level must be a
+                whole number.',
+            'max_stock_level.gte' => 'The maximum stock level must be greater
+                than or equal to the minimum stock level.',
+            'reorder_quantity.min' => 'The reorder quantity must be at
+                least 1.',
         ];
     }
 

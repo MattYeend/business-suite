@@ -2,14 +2,75 @@
 
 namespace App\Concerns\Products;
 
+use App\Models\Product;
+
+/**
+ * @property string $status
+ *
+ * @property-read bool $is_low_stock
+ * @property-read bool $needs_reorder
+ * @property-read bool $is_out_of_stock
+ */
 trait ProductStockAttributes
 {
+    /**
+     * Determine whether the product is of a given status.
+     *
+     * @param  string $status
+     *
+     * @return bool
+     */
+    public function isStatus(string $status): bool
+    {
+        return $this->status === $status;
+    }
+
+    /**
+     * Determine whether the status is active.
+     *
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->status === Product::STATUS_ACTIVE;
+    }
+
+    /**
+     * Determine whether the status is discontinued.
+     *
+     * @return bool
+     */
+    public function isDiscontinued(): bool
+    {
+        return $this->status === Product::STATUS_DISCONTINUED;
+    }
+
+    /**
+     * Determine whether the status is pending.
+     *
+     * @return bool
+     */
+    public function isPending(): bool
+    {
+        return $this->status === Product::STATUS_PENDING;
+    }
+
+    /**
+     * Check if part has reorder point set.
+     *
+     * @return bool
+     */
+    public function hasReorderPoint(): bool
+    {
+        return $this->reorder_point !== null;
+    }
+
     /**
      * Check if product is low on stock.
      *
      * @return bool
      */
-    public function getIsLowStockAttribute(): bool
+    public function isLowStock(): bool
     {
         return $this->quantity <= $this->min_stock_level;
     }
@@ -19,13 +80,10 @@ trait ProductStockAttributes
      *
      * @return bool
      */
-    public function getNeedsReorderAttribute(): bool
+    public function needsReorder(): bool
     {
-        if ($this->reorder_point === null) {
-            return false;
-        }
-
-        return $this->quantity <= $this->reorder_point;
+        return $this->hasReorderPoint()
+            && $this->quantity <= $this->reorder_point;
     }
 
     /**
@@ -33,8 +91,38 @@ trait ProductStockAttributes
      *
      * @return bool
      */
+    public function isOutOfStock(): bool
+    {
+        return $this->quantity === Product::STATUS_OUT_OF_STOCK;
+    }
+
+    /**
+     * Check if product is low on stock.
+     *
+     * @return bool
+     */
+    public function getIsLowStockAttribute(): bool
+    {
+        return $this->isLowStock();
+    }
+
+    /**
+     * Get needs reorder status as attribute.
+     *
+     * @return bool
+     */
+    public function getNeedsReorderAttribute(): bool
+    {
+        return $this->needsReorder();
+    }
+
+    /**
+     * Get out of stock status as attribute.
+     *
+     * @return bool
+     */
     public function getIsOutOfStockAttribute(): bool
     {
-        return $this->quantity <= 0;
+        return $this->isOutOfStock();
     }
 }

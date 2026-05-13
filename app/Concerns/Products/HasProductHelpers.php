@@ -20,6 +20,11 @@ use App\Models\Product;
  */
 trait HasProductHelpers
 {
+    /**
+     * HasProductStockHelpers<HasProductStockHelpers>
+     */
+    use HasProductStockHelpers;
+
     // /**
     //  * Calculate total BOM cost for this product.
     //  *
@@ -91,144 +96,29 @@ trait HasProductHelpers
     // }
 
     /**
+     * Check if part has no max stock percentage
+     * level.
+     *
+     * @return bool
+     */
+    public function hasNoMaxStockLevel(): bool
+    {
+        return $this->max_stock_level === null || $this->max_stock_level === 0;
+    }
+
+    /**
      * Adjust stock quantity.
      *
      * @param  int $quantity
-     * @param  string|null $reason
      *
      * @return bool
      */
-    public function adjustStock(int $quantity, ?string $reason = null): bool
+    public function adjustStock(int $quantity): bool
     {
         $this->quantity += $quantity;
-
-        // Update status based on new quantity
-        if ($this->quantity <= 0) {
-            $this->status = Product::STATUS_OUT_OF_STOCK;
-        } elseif (
-            $this->status === Product::STATUS_OUT_OF_STOCK
-            &&
-            $this->quantity > 0
-        ) {
-            $this->status = 'active';
-        }
+        $this->status = $this->determineStockStatus();
 
         return $this->save();
-    }
-
-    /**
-     * Check if product has sufficient stock.
-     *
-     * @param  int $requiredQuantity
-     *
-     * @return bool
-     */
-    public function hasSufficientStock(int $requiredQuantity): bool
-    {
-        return $this->quantity >= $requiredQuantity;
-    }
-
-    /**
-     * Determine whether the product is of a given status.
-     *
-     * @param  string $status
-     *
-     * @return bool
-     */
-    public function isStatus(string $status): bool
-    {
-        return $this->status === $status;
-    }
-
-    /**
-     * Determine whether the status is active.
-     *
-     * @return bool
-     */
-    public function isActive(): bool
-    {
-        return $this->status === Product::STATUS_ACTIVE;
-    }
-
-    /**
-     * Determine whether the status is discontinued.
-     *
-     * @return bool
-     */
-    public function isDiscontinued(): bool
-    {
-        return $this->status === Product::STATUS_DISCONTINUED;
-    }
-
-    /**
-     * Determine whether the status is pending.
-     *
-     * @return bool
-     */
-    public function isPending(): bool
-    {
-        return $this->status === Product::STATUS_PENDING;
-    }
-
-    /**
-     * Determine whether the status is out of stock.
-     *
-     * @return bool
-     */
-    public function isOutOfStock(): bool
-    {
-        return $this->status === Product::STATUS_OUT_OF_STOCK;
-    }
-
-    /**
-     * Check if part is low on stock.
-     *
-     * @return bool
-     */
-    public function isLowStock(): bool
-    {
-        return $this->quantity <= $this->min_stock_level;
-    }
-
-    /**
-     * Check if part has reorder point set.
-     *
-     * @return bool
-     */
-    public function hasReorderPoint(): bool
-    {
-        return $this->reorder_point !== null;
-    }
-
-    /**
-     * Check if part needs reordering.
-     *
-     * @return bool
-     */
-    public function needsReorder(): bool
-    {
-        return $this->hasReorderPoint()
-            && $this->quantity <= $this->reorder_point;
-    }
-
-    /**
-     * Format money with currency symbol.
-     *
-     * @param  float $amount
-     *
-     * @return string
-     */
-    protected function formatMoney(float $amount): string
-    {
-        $symbols = [
-            'GBP' => '£',
-            'USD' => '$',
-            'EUR' => '€',
-        ];
-
-        $symbol = $symbols[$this->currency] ?? $this->currency . ' ';
-
-        return $symbol . number_format($amount, 2);
     }
 
     /**
@@ -262,5 +152,43 @@ trait HasProductHelpers
                 str_replace('_', ' ', $this->status)
             ) : null,
         };
+    }
+
+    /**
+     * Determine the appropriate status based on current quantity.
+     *
+     * @return string
+     */
+    protected function determineStockStatus(): string
+    {
+        if ($this->quantity <= 0) {
+            return Product::STATUS_OUT_OF_STOCK;
+        }
+
+        if ($this->status === Product::STATUS_OUT_OF_STOCK) {
+            return 'active';
+        }
+
+        return $this->status;
+    }
+
+    /**
+     * Format money with currency symbol.
+     *
+     * @param  float $amount
+     *
+     * @return string
+     */
+    protected function formatMoney(float $amount): string
+    {
+        $symbols = [
+            'GBP' => '£',
+            'USD' => '$',
+            'EUR' => '€',
+        ];
+
+        $symbol = $symbols[$this->currency] ?? $this->currency . ' ';
+
+        return $symbol . number_format($amount, 2);
     }
 }

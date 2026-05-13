@@ -96,4 +96,3 @@ class ProductDeleterService
         return $count;
     }
 }
-

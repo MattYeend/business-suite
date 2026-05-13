@@ -5,7 +5,6 @@ namespace App\Services\Users;
 use App\Models\User;
 use App\Services\UserRoleCheckerService;
 
-
 class UserPolicyAuthorisationService
 {
     /**

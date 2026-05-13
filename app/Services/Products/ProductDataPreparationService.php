@@ -31,7 +31,8 @@ class ProductDataPreparationService
      * Prepare fillable data for update.
      *
      * Merges all product data groups, filtering out null values to prevent
-     * overwriting existing data with nulls. Only non-null values will be updated.
+     * overwriting existing data with nulls. Only non-null values will be
+     * updated.
      *
      * @param  array $data Raw input data containing fields to update
      * @param  int|null $updatedBy User ID of the updater
@@ -215,4 +216,3 @@ class ProductDataPreparationService
         ];
     }
 }
-
