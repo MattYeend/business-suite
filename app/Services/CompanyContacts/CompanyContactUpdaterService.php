@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyContactUpdaterService
 {
+    /**
+     * Inject the required services into the updater service.
+     *
+     * @param CompanyContactDataPreparationService $dataPreparation
+     * @param CompanyContactLogService $logService
+     */
     public function __construct(
         protected CompanyContactDataPreparationService $dataPreparation,
         protected CompanyContactLogService $logService

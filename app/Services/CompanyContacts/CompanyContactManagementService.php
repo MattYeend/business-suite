@@ -7,29 +7,15 @@ use App\Http\Requests\UpdateCompanyContactRequest;
 use App\Models\CompanyContact;
 use App\Models\User;
 
-/**
- * Orchestrates company contact lifecycle operations by delegating to focused
- * sub-services.
- *
- * Acts as the single entry point for company contact create, update, delete,
- * and restore operations, keeping controllers decoupled from the underlying
- * service implementations.
- */
 class CompanyContactManagementService
 {
     /**
      * Inject the required services into the management service.
      *
-     * @param  CompanyContactCreatorService $creator Handles company contact
-     * creation.
-     * @param  CompanyContactUpdaterService $updater Handles company contact
-     * updates.
-     * @param  CompanyContactDeleterService $destructor Handles company
-     * contact deletion.
-     * @param  CompanyContactRestorerService $restorer Handles company contact
-     * restoration.
-     *
-     * @return void
+     * @param CompanyContactCreatorService $creator
+     * @param CompanyContactUpdaterService $updater
+     * @param CompanyContactDeleterService $destructor
+     * @param CompanyContactRestorerService $restorer
      */
     public function __construct(
         protected CompanyContactCreatorService $creator,
@@ -42,10 +28,9 @@ class CompanyContactManagementService
     /**
      * Create a new company contact.
      *
-     * @param StoreCompanyContactRequest $request Validated request
-     * containing company contact data.
+     * @param StoreCompanyContactRequest $request
      *
-     * @return CompanyContact The newly created company contact.
+     * @return CompanyContact
      */
     public function store(
         StoreCompanyContactRequest $request
@@ -59,12 +44,10 @@ class CompanyContactManagementService
     /**
      * Update an existing company contact.
      *
-     * @param  UpdateCompanyContactRequest $request Validated
-     * request containing updated company contact data.
-     * @param  CompanyContact $companyContact The company contact
-     * instance to update.
+     * @param  UpdateCompanyContactRequest $request
+     * @param  CompanyContact $companyContact
      *
-     * @return CompanyContact The updated company contact.
+     * @return CompanyContact
      */
     public function update(
         UpdateCompanyContactRequest $request,
@@ -80,7 +63,7 @@ class CompanyContactManagementService
     /**
      * Soft delete a company contact.
      *
-     * @param  CompanyContact $companyContact The company contact to delete.
+     * @param  CompanyContact $companyContact
      *
      * @return void
      */
@@ -92,9 +75,9 @@ class CompanyContactManagementService
     /**
      * Restore a soft-deleted company contact.
      *
-     * @param  int $id The ID of the company contact to restore.
+     * @param  int $id
      *
-     * @return CompanyContact The restored company contact.
+     * @return CompanyContact
      */
     public function restore(int $id): CompanyContact
     {
@@ -106,7 +89,7 @@ class CompanyContactManagementService
      * Force delete a company contact, permanently removing it from the
      * database.
      *
-     * @param  int $id The ID of the company contact to force delete.
+     * @param  int $id
      *
      * @return void
      */
@@ -119,24 +102,22 @@ class CompanyContactManagementService
     /**
      * Bulk restore company contacts.
      *
-     * @param  array $ids The IDs of the company contacts to restore.
-     * @param  User $actor The user performing the restoration, used for
-     * logging.
-     * @param  callable $authorizeCallback The callback to authorize
-     * each company contact.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the company contacts that were restored.
+     * @return array
      */
     public function bulkRestore(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $restored = [];
 
         foreach ($ids as $id) {
             $contact = CompanyContact::withTrashed()->findOrFail($id);
-            $authorizeCallback($contact);
+            $authoriseCallback($contact);
 
             if ($contact->trashed()) {
                 $this->restorer->restore($contact, $actor->id);
@@ -150,23 +131,22 @@ class CompanyContactManagementService
     /**
      * Bulk soft delete company contacts.
      *
-     * @param  array $ids The IDs of the company contacts to delete.
-     * @param  User $actor The user performing the deletion, used for logging.
-     * @param  callable $authorizeCallback The callback to authorize each
-     * company contact.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the company contacts that were deleted.
+     * @return array
      */
     public function bulkDelete(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $deleted = [];
 
         foreach ($ids as $id) {
             $contact = CompanyContact::findOrFail($id);
-            $authorizeCallback($contact);
+            $authoriseCallback($contact);
 
             $this->destructor->delete($contact, $actor->id);
             $deleted[] = $id;
