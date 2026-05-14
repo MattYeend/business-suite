@@ -2,11 +2,12 @@
 
 namespace App\Concerns\BillOfMaterials;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
+
 /**
  * BOM helper methods.
  *
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property bool $is_active
  * @property Carbon|null $effective_from
  * @property Carbon|null $effective_to
+ *
  * @property-read Collection|\App\Models\BillOfMaterialItem $items
  *
  * @method HasMany items()
