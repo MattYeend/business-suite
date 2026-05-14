@@ -30,7 +30,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part base data.
+     * Get the base data.
      *
      * @param  Part $part
      *
@@ -46,7 +46,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part identification information.
+     * Get the identification information.
      *
      * @param  Part $part
      *
@@ -64,7 +64,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part classification information.
+     * Get the classification information.
      *
      * @param  Part $part
      *
@@ -82,7 +82,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part dimensions.
+     * Get the dimensions.
      *
      * @param  Part $part
      *
@@ -100,7 +100,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part pricing information.
+     * Get the pricing information.
      *
      * @param  Part $part
      *
@@ -153,7 +153,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part boolean flags.
+     * Get the boolean flags.
      *
      * @param  Part $part
      *
@@ -172,7 +172,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part meta information.
+     * Get the meta information.
      *
      * @param  Part $part
      *
@@ -186,7 +186,7 @@ class PartFormatterService
     }
 
     /**
-     * Get the part date/audit data.
+     * Get the date/audit data.
      *
      * @param  Part $part
      *

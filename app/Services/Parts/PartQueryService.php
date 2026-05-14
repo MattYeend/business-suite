@@ -138,7 +138,7 @@ class PartQueryService
     }
 
     /**
-     * Find a part part by ID with optional trashed records.
+     * Find a part by ID with optional trashed records.
      *
      * @param  int $id
      * @param  bool $withTrashed
