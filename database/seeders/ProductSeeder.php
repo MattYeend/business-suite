@@ -13,8 +13,8 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::truncate();
-
+        // Remove truncate() - causes FK constraint error with bill_of_materials
+        
         $users = User::all();
 
         if ($users->isEmpty()) {

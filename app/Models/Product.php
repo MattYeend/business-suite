@@ -63,7 +63,7 @@ use Illuminate\Support\Carbon;
  *
  * @property-read Collection|\App\Models\Image $images
  * @property-read Collection|\App\Models\Category $categories
- * @property-read \App\Models\BillOfMaterial|null $billOfMaterial
+ * @property-read BillOfMaterial|null $billOfMaterial
  * @property-read Collection|\App\Models\BillOfMaterialItem $billOfMaterialItems
  * @property-read Collection|\App\Models\Part $parts
  */
