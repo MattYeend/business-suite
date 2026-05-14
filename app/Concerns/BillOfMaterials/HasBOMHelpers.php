@@ -2,6 +2,28 @@
 
 namespace App\Concerns\BillOfMaterials;
 
+use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+/**
+ * BOM helper methods.
+ *
+ * @property int $id
+ * @property int $product_id
+ * @property string $version
+ * @property string $bom_number
+ * @property bool $is_active
+ * @property Carbon|null $effective_from
+ * @property Carbon|null $effective_to
+ * @property-read Collection|\App\Models\BillOfMaterialItem $items
+ *
+ * @method HasMany items()
+ * @method static Builder newQuery()
+ * @method Model replicate(array $except = null)
+ * @method bool save(array $options = [])
+ */
 trait HasBOMHelpers
 {
     // /**
