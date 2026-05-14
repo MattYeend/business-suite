@@ -2,10 +2,18 @@
 
 namespace App\Concerns\BillOfMaterials;
 
+use App\Models\Product;
+use Illuminate\Support\Carbon;
+
 /**
  * BOM entity helper methods.
  *
+ * @property bool $is_active
+ * @property Carbon|null $effective_from
+ * @property Carbon|null $effective_to
  * @property int|null $total_cost
+ *
+ * @property-read Product $product
  */
 
 trait HasBOMAccessors
