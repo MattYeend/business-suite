@@ -25,7 +25,7 @@ test('example', function () {
 });
 
 describe('index', function () {
-    test('can list companys', function () {
+    test('can list pipeline stages', function () {
         PipelineStage::factory()->count(3)->create();
 
         $user = adminUser();
@@ -36,7 +36,7 @@ describe('index', function () {
         $response->assertOk();
     });
 
-    test('unauthorized user cannot list pipelines', function () {
+    test('unauthorized user cannot list pipeline stages', function () {
         $unauthorizedUser = User::factory()->create();
         
         $response = $this->actingAs($unauthorizedUser, 'sanctum')
@@ -45,7 +45,7 @@ describe('index', function () {
         $response->assertForbidden();
     });
 
-    test('guest cannot list pipelines', function () {
+    test('guest cannot list pipeline stages', function () {
         auth()->logout();
         
         $response = $this->getJson(route('pipeline-stages.index'));
@@ -182,7 +182,7 @@ describe('update', function () {
             ->assertJsonValidationErrors(['name']);
     });
 
-    test('unauthorized user cannot update pipeline', function () {
+    test('unauthorized user cannot update pipeline stages', function () {
         $unauthorizedUser = User::factory()->create();
         $pipelineStage = PipelineStage::factory()->create();
         
@@ -197,7 +197,7 @@ describe('update', function () {
 });
 
 describe('destroy', function () {
-    test('can soft delete a pipeline', function () {
+    test('can soft delete a pipeline stage', function () {
         $user = adminUser();
         $pipelineStage = PipelineStage::factory()->create();
 
@@ -211,7 +211,7 @@ describe('destroy', function () {
         ]);
     });
 
-    test('unauthorized user cannot delete pipeline', function () {
+    test('unauthorized user cannot delete pipeline stages', function () {
         $unauthorizedUser = User::factory()->create();
         $pipelineStage = PipelineStage::factory()->create();
         
@@ -223,7 +223,7 @@ describe('destroy', function () {
 });
 
 describe('restore', function () {
-    test('can restore a soft deleted pipeline', function () {
+    test('can restore a soft deleted pipeline stage', function () {
         $user = adminUser();
         $pipelineStage = PipelineStage::factory()->create();
         $pipelineStage->delete();
@@ -240,7 +240,7 @@ describe('restore', function () {
         ]);
     });
 
-    test('cannot restore a non-deleted pipeline', function () {
+    test('cannot restore a non-deleted pipeline stages', function () {
         $user = adminUser();
         $pipelineStage = PipelineStage::factory()->create();
 
@@ -250,7 +250,7 @@ describe('restore', function () {
         $response->assertNotFound();
     });
 
-    test('returns 404 for non-existent pipeline', function () {
+    test('returns 404 for non-existent pipeline stages', function () {
         $user = adminUser();
         
         $response = $this->actingAs($user, 'sanctum')
@@ -259,7 +259,7 @@ describe('restore', function () {
         $response->assertNotFound();
     });
 
-    test('unauthorized user cannot restore pipeline', function () {
+    test('unauthorized user cannot restore pipeline stages', function () {
         $unauthorizedUser = User::factory()->create();
         $pipelineStage = PipelineStage::factory()->create();
         $pipelineStage->delete();
@@ -272,7 +272,7 @@ describe('restore', function () {
 });
 
 describe('forceDelete', function () {
-    test('can permanently delete a pipeline', function () {
+    test('can permanently delete a pipeline stage', function () {
         $user = adminUser();
         $pipelineStage = PipelineStage::factory()->create();
         $pipelineStage->delete();
@@ -287,7 +287,7 @@ describe('forceDelete', function () {
         ]);
     });
 
-    test('can force delete a non-soft-deleted pipeline', function () {
+    test('can force delete a non-soft-deleted pipeline stage', function () {
         $user = adminUser();
         $pipelineStage = PipelineStage::factory()->create();
         $pipelineStage->delete();
@@ -302,7 +302,7 @@ describe('forceDelete', function () {
         ]);
     });
 
-    test('unauthorized user cannot force delete pipeline', function () {
+    test('unauthorized user cannot force delete pipeline stages', function () {
         $unauthorizedUser = User::factory()->create();
         $pipelineStage = PipelineStage::factory()->create();
         
@@ -314,7 +314,7 @@ describe('forceDelete', function () {
 });
 
 describe('bulkDelete', function () {
-    test('can bulk delete multiple pipelines', function () {
+    test('can bulk delete multiple pipeline stages', function () {
         $user = adminUser();
         $pipelines = PipelineStage::factory()->count(3)->create();
         $ids = $pipelines->pluck('id')->toArray();
@@ -372,7 +372,7 @@ describe('bulkDelete', function () {
 });
 
 describe('bulkRestore', function () {
-    test('can bulk restore multiple pipeline', function () {
+    test('can bulk restore multiple pipeline stages', function () {
         $user = adminUser();
         $pipelines = PipelineStage::factory()->count(3)->create();
         $pipelines->each->delete();

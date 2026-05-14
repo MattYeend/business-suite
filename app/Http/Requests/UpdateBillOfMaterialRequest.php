@@ -13,7 +13,7 @@ class UpdateBillOfMaterialRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('bill_of_material'));
+        return $this->user()->can('update', $this->route('billOfMaterial'));
     }
 
     /**
@@ -71,7 +71,7 @@ class UpdateBillOfMaterialRequest extends FormRequest
      */
     protected function bomNumberRules(): array
     {
-        $billOfMaterialId = $this->route('bill_of_material')->id;
+        $billOfMaterialId = $this->route('billOfMaterial')->id;
 
         return [
             'sometimes',

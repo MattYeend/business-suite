@@ -24,7 +24,7 @@ test('example', function () {
 });
 
 describe('index', function () {
-    test('can list companys', function () {
+    test('can list pipelines', function () {
         Pipeline::factory()->count(3)->create();
 
         $user = adminUser();

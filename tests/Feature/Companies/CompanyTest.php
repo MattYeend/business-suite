@@ -25,7 +25,7 @@ test('example', function () {
 });
 
 describe('index', function () {
-    test('can list companys', function () {
+    test('can list companies', function () {
         Company::factory()->count(3)->create();
 
         $user = adminUser();

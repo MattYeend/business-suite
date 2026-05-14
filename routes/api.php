@@ -522,8 +522,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     // BIll Of Material Management routes
-    Route::prefix('BillOfMaterials')->name(
-        'BillOfMaterials.'
+    Route::prefix('bill-of-materials')->name(
+        'bill-of-materials.'
     )->group(function () {
         Route::post(
             '/bulk/delete',
