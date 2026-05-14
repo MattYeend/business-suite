@@ -165,7 +165,7 @@ class PipelineController extends Controller
      * Restore the specified pipeline from soft deletion.
      *
      * Looks up the pipeline including trashed records, then
-     * checks if it exists and is trashed before authorization.
+     * checks if it exists and is trashed before authorisation.
      * Returns 404 if the pipeline is not currently soft-deleted.
      *
      * @param  int|string $id

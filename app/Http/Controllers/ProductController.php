@@ -164,7 +164,7 @@ class ProductController extends Controller
      * Restore the specified product from soft deletion.
      *
      * Looks up the product including trashed records, then
-     * checks if it exists and is trashed before authorization.
+     * checks if it exists and is trashed before authorisation.
      * Returns 404 if the product is not currently soft-deleted.
      *
      * @param  int|string $id

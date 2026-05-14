@@ -164,7 +164,7 @@ class CompanyController extends Controller
      * Restore the specified company from soft deletion.
      *
      * Looks up the company including trashed records, then
-     * checks if it exists and is trashed before authorization.
+     * checks if it exists and is trashed before authorisation.
      * Returns 404 if the company is not currently soft-deleted.
      *
      * @param  int|string $id The primary key of the soft-deleted

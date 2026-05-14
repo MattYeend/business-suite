@@ -7,7 +7,7 @@ namespace App\Constants;
  *
  * Provides constant definitions for organizational teams/departments
  * used throughout the application, particularly for Spatie Permission
- * team-scoped permissions and authorization.
+ * team-scoped permissions and authorisation.
  */
 class Teams
 {

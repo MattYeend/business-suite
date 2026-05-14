@@ -9,7 +9,7 @@ use App\Services\Companies\CompanyPolicyAuthorisationService;
 class CompanyPolicy
 {
     /**
-     * The authorization service handling permission checks.
+     * The authorisation service handling permission checks.
      *
      * @var CompanyPolicyAuthorisationService
      */

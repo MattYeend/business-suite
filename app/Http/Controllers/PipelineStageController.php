@@ -165,7 +165,7 @@ class PipelineStageController extends Controller
      * Restore the specified pipelineStage from soft deletion.
      *
      * Looks up the pipelineStage including trashed records, then
-     * checks if it exists and is trashed before authorization.
+     * checks if it exists and is trashed before authorisation.
      * Returns 404 if the pipelineStage is not currently soft-deleted.
      *
      * @param  int|string $id

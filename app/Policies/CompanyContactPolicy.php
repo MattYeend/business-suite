@@ -9,7 +9,7 @@ use App\Services\CompanyContacts\CompanyContactPolicyAuthorisationService;
 class CompanyContactPolicy
 {
     /**
-     * The authorization service handling permission checks.
+     * The authorisation service handling permission checks.
      *
      * @var CompanyContactPolicyAuthorisationService
      */

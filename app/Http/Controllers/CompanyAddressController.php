@@ -164,7 +164,7 @@ class CompanyAddressController extends Controller
      * Restore the specified company address from soft deletion.
      *
      * Looks up the company address including trashed records, then
-     * checks if it exists and is trashed before authorization.
+     * checks if it exists and is trashed before authorisation.
      * Returns 404 if the company address is not currently soft-deleted.
      *
      * @param  int|string $id
@@ -207,7 +207,6 @@ class CompanyAddressController extends Controller
      * logging.
      *
      * @param  int|string $id
-     * permanently delete.
      *
      * @return JsonResponse
      */

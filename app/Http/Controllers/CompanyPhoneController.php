@@ -164,7 +164,7 @@ class CompanyPhoneController extends Controller
      * Restore the specified company phone from soft deletion.
      *
      * Looks up the company phone including trashed records, then
-     * checks if it exists and is trashed before authorization.
+     * checks if it exists and is trashed before authorisation.
      * Returns 404 if the company phone is not currently soft-deleted.
      *
      * @param  int|string $id

@@ -164,7 +164,7 @@ class CompanyIndustryController extends Controller
      * Restore the specified company industry from soft deletion.
      *
      * Looks up the company industry including trashed records, then
-     * checks if it exists and is trashed before authorization.
+     * checks if it exists and is trashed before authorisation.
      * Returns 404 if the company industry is not currently soft-deleted.
      *
      * @param  int|string $id
