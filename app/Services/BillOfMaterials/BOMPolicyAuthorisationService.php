@@ -136,8 +136,10 @@ class BOMPolicyAuthorisationService
      *
      * @return bool
      */
-    public function canForceDelete(User $user, BillOfMaterial $billOfMaterial): bool
-    {
+    public function canForceDelete(
+        User $user,
+        BillOfMaterial $billOfMaterial
+    ): bool {
         return $this->activeChecker->canUserPerformAction(
             $billOfMaterial,
             'restoreOrForceDelete',

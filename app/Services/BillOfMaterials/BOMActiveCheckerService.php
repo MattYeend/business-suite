@@ -68,7 +68,8 @@ class BOMActiveCheckerService
     }
 
     /**
-     * Check if user can modify BOM (update/delete) or restore/force-delete BOM based on its active status.
+     * Check if user can modify BOM (update/delete) or
+     * restore/force-delete BOM based on its active status.
      *
      * @param  BillOfMaterial $billOfMaterial
      * @param  string $action

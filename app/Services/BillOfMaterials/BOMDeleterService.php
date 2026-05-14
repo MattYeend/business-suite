@@ -61,7 +61,11 @@ class BOMDeleterService
     ): bool {
         return DB::transaction(function () use ($billOfMaterial, $deletedBy) {
             $actor = User::findOrFail($deletedBy);
-            $this->logService->logForceDeletion($billOfMaterial, $actor, $deletedBy);
+            $this->logService->logForceDeletion(
+                $billOfMaterial,
+                $actor,
+                $deletedBy
+            );
 
             return $billOfMaterial->forceDelete();
         });
@@ -83,7 +87,11 @@ class BOMDeleterService
     ): int {
         $count = 0;
 
-        DB::transaction(function () use ($billOfMaterialIds, $deletedBy, &$count) {
+        DB::transaction(function () use (
+            $billOfMaterialIds,
+            $deletedBy,
+            &$count
+        ) {
             $BOMs = BillOfMaterial::whereIn('id', $billOfMaterialIds)->get();
 
             foreach ($BOMs as $billOfMaterial) {

@@ -6,11 +6,11 @@ use App\Concerns\BillOfMaterials\HasBOMAccessors;
 use App\Concerns\BillOfMaterials\HasBOMHelpers;
 use App\Concerns\BillOfMaterials\HasBOMScopes;
 use Database\Factories\BillOfMaterialFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+// use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -26,7 +26,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
- * 
+ *
  * @property-read Product $product
  * @property-read Collection|\App\Models\BillOfMaterialItem $items
  */
@@ -102,7 +102,9 @@ class BillOfMaterial extends Model
     //  */
     // public function items(): HasMany
     // {
-    //     return $this->hasMany(BillOfMaterialItem::class)->orderBy('sequence');
+    //     return $this->hasMany(
+    //         BillOfMaterialItem::class
+    //     )->orderBy('sequence');
     // }
 
     /**

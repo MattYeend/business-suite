@@ -17,21 +17,8 @@ trait HasBOMAccessors
      */
     public function getIsEffectiveAttribute(): bool
     {
-        if (!$this->is_active) {
-            return false;
-        }
-
-        $now = now();
-
-        if ($this->effective_from && $this->effective_from->gt($now)) {
-            return false;
-        }
-
-        if ($this->effective_to && $this->effective_to->lt($now)) {
-            return false;
-        }
-
-        return true;
+        return $this->is_active
+            && $this->isWithinEffectiveDateRange();
     }
 
     // /**
@@ -57,7 +44,7 @@ trait HasBOMAccessors
     /**
      * Get formatted total cost.
      *
-     * @param string
+     * @return string
      */
     public function getFormattedTotalCostAttribute(): string
     {
@@ -67,9 +54,26 @@ trait HasBOMAccessors
             'USD' => '$',
             'EUR' => '€',
         ];
-        
+
         $symbol = $symbols[$currency] ?? $currency . ' ';
-        
+
         return $symbol . number_format($this->total_cost, 2);
-    }   
+    }
+
+    /**
+     * Check if BOM is within effective date range.
+     *
+     * @return bool
+     */
+    protected function isWithinEffectiveDateRange(): bool
+    {
+        $now = now();
+
+        $afterStartDate = ! $this->effective_from ||
+            $this->effective_from->lte($now);
+        $beforeEndDate = ! $this->effective_to ||
+            $this->effective_to->gte($now);
+
+        return $afterStartDate && $beforeEndDate;
+    }
 }

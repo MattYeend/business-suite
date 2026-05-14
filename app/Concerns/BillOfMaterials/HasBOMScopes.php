@@ -28,7 +28,7 @@ trait HasBOMScopes
     public function scopeEffective(Builder $query): Builder
     {
         $now = now();
-        
+
         return $query->where('is_active', true)
             ->where(function ($q) use ($now) {
                 $q->whereNull('effective_from')

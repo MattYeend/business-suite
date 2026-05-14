@@ -26,8 +26,9 @@ trait HasBOMHelpers
     //  *
     //  * @return array
     //  */
-    // public function checkPartAvailability(int $manufacturingQuantity = 1): array
-    // {
+    // public function checkPartAvailability(
+    //     int $manufacturingQuantity = 1
+    // ): array {
     //     $availability = [
     //         'can_manufacture' => true,
     //         'parts' => [],
@@ -102,7 +103,7 @@ trait HasBOMHelpers
         // Activate this BOM
         $this->is_active = true;
         $this->effective_from = now();
-        
+
         return $this->save();
     }
 
@@ -118,7 +119,7 @@ trait HasBOMHelpers
         $count = $this->newQuery()
             ->whereDate('created_at', today())
             ->count() + 1;
-        
+
         return sprintf('%s-%s-%04d', $prefix, $date, $count);
     }
 }

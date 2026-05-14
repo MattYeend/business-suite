@@ -43,7 +43,11 @@ class BOMRestorerService
             // restore() returns boolean, so we don't assign it
             $billOfMaterial->restore();
 
-            $this->logService->logRestoration($billOfMaterial, $actor, $restoredBy);
+            $this->logService->logRestoration(
+                $billOfMaterial,
+                $actor,
+                $restoredBy
+            );
 
             // Return the fresh model instance
             return $billOfMaterial->fresh();
@@ -66,7 +70,11 @@ class BOMRestorerService
     ): int {
         $count = 0;
 
-        DB::transaction(function () use ($billOfMaterialIds, $restoredBy, &$count) {
+        DB::transaction(function () use (
+            $billOfMaterialIds,
+            $restoredBy,
+            &$count
+        ) {
             /** @var Collection<int,BillOfMaterial> $billOfMaterials */
             $billOfMaterials = BillOfMaterial::withTrashed()
                 ->whereIn('id', $billOfMaterialIds)

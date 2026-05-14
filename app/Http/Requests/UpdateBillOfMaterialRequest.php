@@ -78,7 +78,10 @@ class UpdateBillOfMaterialRequest extends FormRequest
             'required',
             'string',
             'max:255',
-            Rule::unique('bill_of_materials', 'bom_number')->ignore($billOfMaterialId),
+            Rule::unique(
+                'bill_of_materials',
+                'bom_number'
+            )->ignore($billOfMaterialId),
         ];
     }
 

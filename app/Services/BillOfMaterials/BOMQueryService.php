@@ -56,7 +56,11 @@ class BOMQueryService
         $billOfMaterial = $this->findCompany($id, $withTrashed);
 
         return array_merge(
-            ['billOfMaterial' => $this->formatterService->format($billOfMaterial)],
+            [
+                'billOfMaterial' => $this->formatterService->format(
+                    $billOfMaterial
+                ),
+            ],
             $this->getPermissions(),
             $this->baseData(),
         );

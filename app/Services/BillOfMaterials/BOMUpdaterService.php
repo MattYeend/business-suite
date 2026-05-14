@@ -36,7 +36,11 @@ class BOMUpdaterService
         array $data,
         ?int $updatedBy = null
     ): BillOfMaterial {
-        return DB::transaction(function () use ($billOfMaterial, $data, $updatedBy) {
+        return DB::transaction(function () use (
+            $billOfMaterial,
+            $data,
+            $updatedBy
+        ) {
             $actor = User::findOrFail($updatedBy);
 
             $this->updateCompanyData($billOfMaterial, $data, $updatedBy);

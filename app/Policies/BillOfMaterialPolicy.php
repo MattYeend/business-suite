@@ -33,7 +33,6 @@ class BillOfMaterialPolicy
         return $this->authorisationService->isAdmin($user);
     }
 
-    
     /**
      * Determine whether the user can view the model.
      *
