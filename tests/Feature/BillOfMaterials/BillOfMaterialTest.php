@@ -84,7 +84,7 @@ describe('store', function () {
             ->postJson(route('bill-of-materials.store'), []);
 
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors(['name']);
+            ->assertJsonValidationErrors(['product_id', 'bom_number']);
     });
 
     test('unauthorized user cannot createpipeline stage', function () {
@@ -92,7 +92,7 @@ describe('store', function () {
         
         $response = $this->actingAs($unauthorizedUser, 'sanctum')
             ->postJson(route('bill-of-materials.store'), [
-                'name' => 'Technology',
+                'description' => 'Technology',
             ]);
 
         $response->assertForbidden();
@@ -110,7 +110,7 @@ describe('show', function () {
         $response->assertOk()
             ->assertJsonFragment([
                 'id' => $billOfMaterial->id,
-                'name' => $billOfMaterial->name,
+                'bom_number' => $billOfMaterial->bom_number,
             ]);
     });
 
@@ -137,7 +137,10 @@ describe('show', function () {
 describe('update', function () {
     test('can update a bill of material', function () {
         $user = adminUser();
-        $billOfMaterial = BillOfMaterial::factory()->create(['description' => 'Old Description']);
+
+        $billOfMaterial = BillOfMaterial::factory()->create([
+            'description' => 'Old Description',
+        ]);
 
         $response = $this->actingAs($user, 'sanctum')
             ->putJson(
@@ -146,17 +149,22 @@ describe('update', function () {
             );
 
         $response->assertOk()
-            ->assertJsonFragment(['name' => 'New Name']);
+            ->assertJsonFragment([
+                'description' => 'New Description',
+            ]);
 
         $this->assertDatabaseHas('bill_of_materials', [
             'id' => $billOfMaterial->id,
-            'name' => 'New Name',
-        ]);
+            'description' => 'New Description',
+        ]);;
     });
 
-    test('can update a pipeline stage via patch', function () {
+    test('can update a bill of material via patch', function () {
         $user = adminUser();
-        $billOfMaterial = BillOfMaterial::factory()->create(['description' => 'Old Description']);
+
+        $billOfMaterial = BillOfMaterial::factory()->create([
+            'description' => 'Old Description',
+        ]);
 
         $response = $this->actingAs($user, 'sanctum')
             ->patchJson(
@@ -165,31 +173,37 @@ describe('update', function () {
             );
 
         $response->assertOk()
-            ->assertJsonFragment(['name' => 'Patched Name']);
+            ->assertJsonFragment([
+                'description' => 'New Description',
+            ]);
     });
 
     test('validation fails with invalid data', function () {
         $user = adminUser();
+
         $billOfMaterial = BillOfMaterial::factory()->create();
 
         $response = $this->actingAs($user, 'sanctum')
             ->putJson(
                 route('bill-of-materials.update', $billOfMaterial),
-                ['name' => '']
+                [
+                    'bom_number' => '',
+                ]
             );
 
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors(['name']);
+            ->assertJsonValidationErrors(['bom_number']);
     });
 
     test('unauthorized user cannot update bill of material', function () {
         $unauthorizedUser = User::factory()->create();
+
         $billOfMaterial = BillOfMaterial::factory()->create();
-        
+
         $response = $this->actingAs($unauthorizedUser, 'sanctum')
             ->putJson(
                 route('bill-of-materials.update', $billOfMaterial),
-                ['name' => 'Updated']
+                ['description' => 'Updated']
             );
 
         $response->assertForbidden();

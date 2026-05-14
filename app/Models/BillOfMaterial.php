@@ -6,6 +6,7 @@ use App\Concerns\BillOfMaterials\HasBOMAccessors;
 use App\Concerns\BillOfMaterials\HasBOMHelpers;
 use App\Concerns\BillOfMaterials\HasBOMScopes;
 use Database\Factories\BillOfMaterialFactory;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,27 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 // use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+
+#[Fillable([
+    'name',
+    'product_id',
+    'bom_number',
+    'version',
+    'description',
+    'is_active',
+    'effective_from',
+    'effective_to',
+    'is_real',
+    'meta',
+    'created_at',
+    'created_by',
+    'updated_at',
+    'updated_by',
+    'deleted_at',
+    'deleted_by',
+    'restored_at',
+    'restored_by',
+])]
 
 /**
  * @property int $id
