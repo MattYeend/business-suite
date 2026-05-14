@@ -11,10 +11,10 @@ class BOMQueryService
     /**
      * Inject the required services into the query service.
      *
-     * @param  BOMSortingService $sortingService
-     * @param  BOMTrashFilterService $trashFilterService
-     * @param  BOMFilterService $filterService
-     * @param  BOMFormatterService $formatterService
+     * @param BOMSortingService $sortingService
+     * @param BOMTrashFilterService $trashFilterService
+     * @param BOMFilterService $filterService
+     * @param BOMFormatterService $formatterService
      */
     public function __construct(
         protected BOMSortingService $sortingService,

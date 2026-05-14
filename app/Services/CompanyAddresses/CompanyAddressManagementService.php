@@ -12,12 +12,10 @@ class CompanyAddressManagementService
     /**
      * Inject the required services into the management service.
      *
-     * @param  CompanyAddressCreatorService $creator
-     * @param  CompanyAddressUpdaterService $updater
-     * @param  CompanyAddressDeleterService $destructor
-     * @param  CompanyAddressRestorerService $restorer
-     *
-     * @return void
+     * @param CompanyAddressCreatorService $creator
+     * @param CompanyAddressUpdaterService $updater
+     * @param CompanyAddressDeleterService $destructor
+     * @param CompanyAddressRestorerService $restorer
      */
     public function __construct(
         protected CompanyAddressCreatorService $creator,

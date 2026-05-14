@@ -11,12 +11,10 @@ class CompanyQueryService
     /**
      * Inject the required services into the query service.
      *
-     * @param  CompanySortingService $sortingService
-     * @param  CompanyTrashFilterService $trashFilterService
-     * @param  CompanyFilterService $filterService
-     * @param  CompanyFormatterService $formatterService
-     *
-     * @return void
+     * @param CompanySortingService $sortingService
+     * @param CompanyTrashFilterService $trashFilterService
+     * @param CompanyFilterService $filterService
+     * @param CompanyFormatterService $formatterService
      */
     public function __construct(
         protected CompanySortingService $sortingService,

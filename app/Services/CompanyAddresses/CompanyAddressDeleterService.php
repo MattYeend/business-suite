@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyAddressDeleterService
 {
+    /**
+     * Inject the required services into the deleter service.
+     *
+     * @param CompanyAddressLogService $logService
+     */
     public function __construct(
         protected CompanyAddressLogService $logService
     ) {

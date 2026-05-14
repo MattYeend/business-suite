@@ -12,12 +12,10 @@ class CompanyManagementService
     /**
      * Inject the required services into the management service.
      *
-     * @param  CompanyCreatorService $creator
-     * @param  CompanyUpdaterService $updater
-     * @param  CompanyDeleterService $destructor
-     * @param  CompanyRestorerService $restorer
-     *
-     * @return void
+     * @param CompanyCreatorService $creator
+     * @param CompanyUpdaterService $updater
+     * @param CompanyDeleterService $destructor
+     * @param CompanyRestorerService $restorer
      */
     public function __construct(
         protected CompanyCreatorService $creator,

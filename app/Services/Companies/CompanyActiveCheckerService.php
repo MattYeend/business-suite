@@ -11,9 +11,7 @@ class CompanyActiveCheckerService
     /**
      * Inject the required services into the active checker service.
      *
-     * @param  UserRoleCheckerService $roleChecker
-     *
-     * @return void
+     * @param UserRoleCheckerService $roleChecker
      */
     public function __construct(
         protected UserRoleCheckerService $roleChecker

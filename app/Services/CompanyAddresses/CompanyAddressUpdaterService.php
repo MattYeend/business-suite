@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyAddressUpdaterService
 {
+    /**
+     * Inject the required services into the updater service.
+     *
+     * @param CompanyAddressDataPreparationService $dataPreparation
+     * @param CompanyAddressLogService $logService
+     */
     public function __construct(
         protected CompanyAddressDataPreparationService $dataPreparation,
         protected CompanyAddressLogService $logService

@@ -11,7 +11,7 @@ class BOMDeleterService
     /**
      * Inject the required services into the deleter service.
      *
-     * @param  BOMLogService $logService
+     * @param BOMLogService $logService
      */
     public function __construct(
         protected BOMLogService $logService

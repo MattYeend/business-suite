@@ -11,8 +11,8 @@ class BOMUpdaterService
     /**
      * Inject the required services into the updater service.
      *
-     * @param  BOMDataPreparationService $dataPreparation
-     * @param  BOMLogService $logService
+     * @param BOMDataPreparationService $dataPreparation
+     * @param BOMLogService $logService
      */
     public function __construct(
         protected BOMDataPreparationService $dataPreparation,

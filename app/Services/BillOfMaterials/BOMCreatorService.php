@@ -12,10 +12,8 @@ class BOMCreatorService
     /**
      * Inject the required services into the creator service.
      *
-     * @param  BOMDataPreparationService $dataPreparation
-     * @param  BOMLogService $logService
-     *
-     * @return void
+     * @param BOMDataPreparationService $dataPreparation
+     * @param BOMLogService $logService
      */
     public function __construct(
         protected BOMDataPreparationService $dataPreparation,

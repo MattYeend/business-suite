@@ -11,8 +11,8 @@ class BOMPolicyAuthorisationService
     /**
      * Inject the required services into the policy authorisation service.
      *
-     * @param  BOMActiveCheckerService $activeChecker
-     * @param  UserRoleCheckerService $roleChecker
+     * @param BOMActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
      */
     public function __construct(
         protected BOMActiveCheckerService $activeChecker,

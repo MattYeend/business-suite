@@ -12,10 +12,10 @@ class BOMManagementService
     /**
      * Inject the required services into the management service.
      *
-     * @param  BOMCreatorService $creator
-     * @param  BOMUpdaterService $updater
-     * @param  BOMDeleterService $destructor
-     * @param  BOMRestorerService $restorer
+     * @param BOMCreatorService $creator
+     * @param BOMUpdaterService $updater
+     * @param BOMDeleterService $destructor
+     * @param BOMRestorerService $restorer
      */
     public function __construct(
         protected BOMCreatorService $creator,
@@ -28,7 +28,7 @@ class BOMManagementService
     /**
      * Create a new BOM.
      *
-     * @param StoreBillOfMaterialRequest $request
+     * @param  StoreBillOfMaterialRequest $request
      *
      * @return BillOfMaterial
      */

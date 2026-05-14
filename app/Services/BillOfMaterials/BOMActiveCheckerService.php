@@ -11,7 +11,7 @@ class BOMActiveCheckerService
     /**
      * Inject the required services into the active checker service.
      *
-     * @param  UserRoleCheckerService $roleChecker
+     * @param UserRoleCheckerService $roleChecker
      */
     public function __construct(
         protected UserRoleCheckerService $roleChecker

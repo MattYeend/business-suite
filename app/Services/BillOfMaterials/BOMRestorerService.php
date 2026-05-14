@@ -12,7 +12,7 @@ class BOMRestorerService
     /**
      * Inject the required services into the resorer service.
      *
-     * @param  BOMLogService $logService
+     * @param BOMLogService $logService
      */
     public function __construct(
         protected BOMLogService $logService

@@ -11,10 +11,8 @@ class CompanyPolicyAuthorisationService
     /**
      * Inject the required services into the policy authorisation service.
      *
-     * @param  CompanyActiveCheckerService $activeChecker
-     * @param  UserRoleCheckerService $roleChecker
-     *
-     * @return void
+     * @param CompanyActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
      */
     public function __construct(
         protected CompanyActiveCheckerService $activeChecker,

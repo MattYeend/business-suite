@@ -12,9 +12,7 @@ class CompanyRestorerService
     /**
      * Inject the required services into the resorer service.
      *
-     * @param  CompanyLogService $logService
-     *
-     * @return void
+     * @param CompanyLogService $logService
      */
     public function __construct(
         protected CompanyLogService $logService
