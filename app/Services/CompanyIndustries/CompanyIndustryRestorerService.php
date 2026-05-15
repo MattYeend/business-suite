@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyIndustryRestorerService
 {
+    /**
+     * Inject the required services into the resorer service.
+     *
+     * @param CompanyIndustryLogService $logService
+     */
     public function __construct(
         protected CompanyIndustryLogService $logService
     ) {

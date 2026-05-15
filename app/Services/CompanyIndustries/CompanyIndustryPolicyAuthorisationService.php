@@ -8,6 +8,12 @@ use App\Services\UserRoleCheckerService;
 
 class CompanyIndustryPolicyAuthorisationService
 {
+    /**
+     * Inject the required services into the policy authorisation service.
+     *
+     * @param CompanyIndustryActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
+     */
     public function __construct(
         protected CompanyIndustryActiveCheckerService $activeChecker,
         protected UserRoleCheckerService $roleChecker
