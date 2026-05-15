@@ -89,7 +89,7 @@ class PipelineStageManagementService
      * Force delete a pipeline stage, permanently removing it from the
      * database.
      *
-     * @param  int $id 
+     * @param  int $id
      *
      * @return void
      */

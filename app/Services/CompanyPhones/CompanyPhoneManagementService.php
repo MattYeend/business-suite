@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateCompanyPhoneRequest;
 use App\Models\CompanyPhone;
 use App\Models\User;
 
-
 class CompanyPhoneManagementService
 {
     /**
