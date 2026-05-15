@@ -12,7 +12,7 @@ class PartRestorerService
     /**
      * Inject the required services into the resorer service.
      *
-     * @param  PartLogService $logService
+     * @param PartLogService $logService
      */
     public function __construct(
         protected PartLogService $logService

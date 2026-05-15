@@ -11,8 +11,8 @@ class PartUpdaterService
     /**
      * Inject the required services into the updater service.
      *
-     * @param  PartDataPreparationService $dataPreparation
-     * @param  PartLogService $logService
+     * @param PartDataPreparationService $dataPreparation
+     * @param PartLogService $logService
      */
     public function __construct(
         protected PartDataPreparationService $dataPreparation,

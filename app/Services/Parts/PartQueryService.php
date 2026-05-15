@@ -11,10 +11,10 @@ class PartQueryService
     /**
      * Inject the required services into the query service.
      *
-     * @param  PartSortingService $sortingService
-     * @param  PartTrashFilterService $trashFilterService
-     * @param  PartFilterService $filterService
-     * @param  PartFormatterService $formatterService
+     * @param PartSortingService $sortingService
+     * @param PartTrashFilterService $trashFilterService
+     * @param PartFilterService $filterService
+     * @param PartFormatterService $formatterService
      */
     public function __construct(
         protected PartSortingService $sortingService,

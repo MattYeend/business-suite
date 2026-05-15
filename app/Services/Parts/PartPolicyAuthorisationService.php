@@ -11,8 +11,8 @@ class PartPolicyAuthorisationService
     /**
      * Inject the required services into the policy authorisation service.
      *
-     * @param  PartActiveCheckerService $activeChecker
-     * @param  UserRoleCheckerService $roleChecker
+     * @param PartActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
      */
     public function __construct(
         protected PartActiveCheckerService $activeChecker,

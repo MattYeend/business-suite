@@ -12,10 +12,10 @@ class PartManagementService
     /**
      * Inject the required services into the management service.
      *
-     * @param  PartCreatorService $creator
-     * @param  PartUpdaterService $updater
-     * @param  PartDeleterService $destructor
-     * @param  PartRestorerService $restorer
+     * @param PartCreatorService $creator
+     * @param PartUpdaterService $updater
+     * @param PartDeleterService $destructor
+     * @param PartRestorerService $restorer
      */
     public function __construct(
         protected PartCreatorService $creator,

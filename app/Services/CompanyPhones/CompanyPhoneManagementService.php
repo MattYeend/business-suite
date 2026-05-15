@@ -7,29 +7,16 @@ use App\Http\Requests\UpdateCompanyPhoneRequest;
 use App\Models\CompanyPhone;
 use App\Models\User;
 
-/**
- * Orchestrates company lifecycle operations by delegating to focused
- * sub-services.
- *
- * Acts as the single entry point for company phone create, update, delete,
- * and restore operations, keeping controllers decoupled from the underlying
- * service implementations.
- */
+
 class CompanyPhoneManagementService
 {
     /**
      * Inject the required services into the management service.
      *
-     * @param  CompanyPhoneCreatorService $creator Handles company phone
-     * creation.
-     * @param  CompanyPhoneUpdaterService $updater Handles company phone
-     * updates.
-     * @param  CompanyPhoneDeleterService $destructor Handles company
-     * phone deletion.
-     * @param  CompanyPhoneRestorerService $restorer Handles company phone
-     * restoration.
-     *
-     * @return void
+     * @param CompanyPhoneCreatorService $creator
+     * @param CompanyPhoneUpdaterService $updater
+     * @param CompanyPhoneDeleterService $destructor
+     * @param CompanyPhoneRestorerService $restorer
      */
     public function __construct(
         protected CompanyPhoneCreatorService $creator,
@@ -42,10 +29,9 @@ class CompanyPhoneManagementService
     /**
      * Create a new company phone.
      *
-     * @param StoreCompanyPhoneRequest $request Validated request
-     * containing company phone data.
+     * @param StoreCompanyPhoneRequest $request
      *
-     * @return CompanyPhone The newly created company phone.
+     * @return CompanyPhone
      */
     public function store(
         StoreCompanyPhoneRequest $request
@@ -59,12 +45,10 @@ class CompanyPhoneManagementService
     /**
      * Update an existing company phone.
      *
-     * @param  UpdateCompanyPhoneRequest $request Validated
-     * request containing updated company phone data.
-     * @param  CompanyPhone $company The company phone
-     * instance to update.
+     * @param  UpdateCompanyPhoneRequest $request
+     * @param  CompanyPhone $company
      *
-     * @return CompanyPhone The updated company phone.
+     * @return CompanyPhone
      */
     public function update(
         UpdateCompanyPhoneRequest $request,
@@ -80,7 +64,7 @@ class CompanyPhoneManagementService
     /**
      * Soft delete a company phone.
      *
-     * @param  CompanyPhone $company The company phone to delete.
+     * @param  CompanyPhone $company
      *
      * @return void
      */
@@ -92,9 +76,9 @@ class CompanyPhoneManagementService
     /**
      * Restore a soft-deleted company phone.
      *
-     * @param  int $id The ID of the company phone to restore.
+     * @param  int $id
      *
-     * @return CompanyPhone The restored company phone.
+     * @return CompanyPhone
      */
     public function restore(int $id): CompanyPhone
     {
@@ -106,7 +90,7 @@ class CompanyPhoneManagementService
      * Force delete a company phone, permanently removing it from the
      * database.
      *
-     * @param  int $id The ID of the company phone to force delete.
+     * @param  int $id
      *
      * @return void
      */
@@ -119,24 +103,22 @@ class CompanyPhoneManagementService
     /**
      * Bulk restore company phones.
      *
-     * @param  array $ids The IDs of the company phones to restore.
-     * @param  User $actor The user performing the restoration, used for
-     * logging.
-     * @param  callable $authorizeCallback The callback to authorize
-     * each company phone.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the company phones that were restored.
+     * @return array
      */
     public function bulkRestore(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $restored = [];
 
         foreach ($ids as $id) {
             $phone = CompanyPhone::withTrashed()->findOrFail($id);
-            $authorizeCallback($phone);
+            $authoriseCallback($phone);
 
             if ($phone->trashed()) {
                 $this->restorer->restore($phone, $actor->id);
@@ -150,23 +132,22 @@ class CompanyPhoneManagementService
     /**
      * Bulk soft delete company phones.
      *
-     * @param  array $ids The IDs of the company phones to delete.
-     * @param  User $actor The user performing the deletion, used for logging.
-     * @param  callable $authorizeCallback The callback to authorize each
-     * company phone.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the company phones that were deleted.
+     * @return array
      */
     public function bulkDelete(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $deleted = [];
 
         foreach ($ids as $id) {
             $phone = CompanyPhone::findOrFail($id);
-            $authorizeCallback($phone);
+            $authoriseCallback($phone);
 
             $this->destructor->delete($phone, $actor->id);
             $deleted[] = $id;

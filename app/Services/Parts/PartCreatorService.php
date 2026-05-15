@@ -12,10 +12,8 @@ class PartCreatorService
     /**
      * Inject the required services into the creator service.
      *
-     * @param  PartDataPreparationService $dataPreparation
-     * @param  PartLogService $logService
-     *
-     * @return void
+     * @param PartDataPreparationService $dataPreparation
+     * @param PartLogService $logService
      */
     public function __construct(
         protected PartDataPreparationService $dataPreparation,

@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class CompanyPhoneCreatorService
 {
+    /**
+     * Inject the required services into the creator service.
+     *
+     * @param CompanyPhoneDataPreparationService $dataPreparation
+     * @param CompanyPhoneLogService $logService
+     */
     public function __construct(
         protected CompanyPhoneDataPreparationService $dataPreparation,
         protected CompanyPhoneLogService $logService
