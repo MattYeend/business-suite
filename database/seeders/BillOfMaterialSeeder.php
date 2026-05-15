@@ -254,8 +254,10 @@ class BillOfMaterialSeeder extends Seeder
             return $product->billOfMaterial()->count() === 0;
         })->take(5);
 
+        $bomCounter = 20000;
         foreach ($productsWithoutBom as $product) {
-            $bomNumber = 'BOM-' . fake()->unique()->numberBetween(20000, 29999);
+            $bomNumber = 'BOM-' . str_pad($bomCounter, 5, '0', STR_PAD_LEFT);
+            $bomCounter++;
             
             BillOfMaterial::create([
                 'product_id' => $product->id,
