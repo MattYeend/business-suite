@@ -8,6 +8,12 @@ use App\Services\UserRoleCheckerService;
 
 class PipelinePolicyAuthorisationService
 {
+    /**
+     * Inject the required services into the policy authorisation service.
+     *
+     * @param PipelineActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
+     */
     public function __construct(
         protected PipelineActiveCheckerService $activeChecker,
         protected UserRoleCheckerService $roleChecker
