@@ -12,7 +12,7 @@ class ProductRestorerService
     /**
      * Inject the required services into the resorer service.
      *
-     * @param  ProductLogService $logService
+     * @param ProductLogService $logService
      */
     public function __construct(
         protected ProductLogService $logService

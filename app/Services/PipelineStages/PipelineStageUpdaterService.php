@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class PipelineStageUpdaterService
 {
+    /**
+     * Inject the required services into the updater service.
+     *
+     * @param PipelineStageDataPreparationService $dataPreparation
+     * @param PipelineStageLogService $logService
+     */
     public function __construct(
         protected PipelineStageDataPreparationService $dataPreparation,
         protected PipelineStageLogService $logService

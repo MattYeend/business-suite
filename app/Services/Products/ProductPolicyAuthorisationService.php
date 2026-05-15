@@ -11,8 +11,8 @@ class ProductPolicyAuthorisationService
     /**
      * Inject the required services into the policy authorisation service.
      *
-     * @param  ProductActiveCheckerService $activeChecker
-     * @param  UserRoleCheckerService $roleChecker
+     * @param ProductActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
      */
     public function __construct(
         protected ProductActiveCheckerService $activeChecker,
@@ -70,7 +70,7 @@ class ProductPolicyAuthorisationService
 
     /**
      * Determine whether the user can view the model.
-     * Only admins can view companies.
+     * Only admins can view products.
      *
      * @param  User $user
      * @param  Product $product

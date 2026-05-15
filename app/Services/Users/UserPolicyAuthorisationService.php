@@ -10,8 +10,8 @@ class UserPolicyAuthorisationService
     /**
      * Inject the required services into the policy authorisation service.
      *
-     * @param  UserActiveCheckerService $activeChecker
-     * @param  UserRoleCheckerService $roleChecker
+     * @param UserActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
      */
     public function __construct(
         protected UserActiveCheckerService $activeChecker,

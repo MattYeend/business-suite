@@ -70,7 +70,7 @@ class PipelinePolicyAuthorisationService
 
     /**
      * Determine whether the user can view the model.
-     * Only admins can view company addresses.
+     * Only admins can view pipelines.
      *
      * @param  User $user
      * @param  Pipeline $pipeline

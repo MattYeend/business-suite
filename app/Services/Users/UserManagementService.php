@@ -11,10 +11,10 @@ class UserManagementService
     /**
      * Inject the required services into the management service.
      *
-     * @param  UserCreatorService $creator
-     * @param  UserUpdaterService $updater
-     * @param  UserDeleterService $destructor
-     * @param  UserRestorerService $restorer
+     * @param UserCreatorService $creator
+     * @param UserUpdaterService $updater
+     * @param UserDeleterService $destructor
+     * @param UserRestorerService $restorer
      */
     public function __construct(
         protected UserCreatorService $creator,

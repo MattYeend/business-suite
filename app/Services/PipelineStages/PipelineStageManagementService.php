@@ -7,29 +7,15 @@ use App\Http\Requests\UpdatePipelineStageRequest;
 use App\Models\PipelineStage;
 use App\Models\User;
 
-/**
- * Orchestrates pipeline stage lifecycle operations by delegating to focused
- * sub-services.
- *
- * Acts as the single entry point for pipeline stage create, update, delete,
- * and restore operations, keeping controllers decoupled from the underlying
- * service implementations.
- */
 class PipelineStageManagementService
 {
     /**
      * Inject the required services into the management service.
      *
-     * @param  PipelineStageCreatorService $creator Handles pipeline stage
-     * creation.
-     * @param  PipelineStageUpdaterService $updater Handles pipeline stage
-     * updates.
-     * @param  PipelineStageDeleterService $destructor Handles pipeline
-     * stage deletion.
-     * @param  PipelineStageRestorerService $restorer Handles pipeline stage
-     * restoration.
-     *
-     * @return void
+     * @param PipelineStageCreatorService $creator
+     * @param PipelineStageUpdaterService $updater
+     * @param PipelineStageDeleterService $destructor
+     * @param PipelineStageRestorerService $restorer
      */
     public function __construct(
         protected PipelineStageCreatorService $creator,
@@ -42,10 +28,9 @@ class PipelineStageManagementService
     /**
      * Create a new pipeline stage.
      *
-     * @param StorePipelineStageRequest $request Validated request
-     * containing pipeline stage data.
+     * @param StorePipelineStageRequest $request
      *
-     * @return PipelineStage The newly created pipeline stage.
+     * @return PipelineStage
      */
     public function store(
         StorePipelineStageRequest $request
@@ -59,19 +44,17 @@ class PipelineStageManagementService
     /**
      * Update an existing pipeline stage.
      *
-     * @param  UpdatePipelineStageRequest $request Validated
-     * request containing updated pipeline stage data.
-     * @param  PipelineStage $companyAddress The pipeline stage
-     * instance to update.
+     * @param  UpdatePipelineStageRequest $request
+     * @param  PipelineStage $stage
      *
-     * @return PipelineStage The updated pipeline stage.
+     * @return PipelineStage
      */
     public function update(
         UpdatePipelineStageRequest $request,
-        PipelineStage $companyAddress
+        PipelineStage $stage
     ): PipelineStage {
         return $this->updater->update(
-            $companyAddress,
+            $stage,
             $request->validated(),
             $request->user()->id
         );
@@ -80,63 +63,61 @@ class PipelineStageManagementService
     /**
      * Soft delete a pipeline stage.
      *
-     * @param  PipelineStage $companyAddress The pipeline stage to delete.
+     * @param  PipelineStage $stage
      *
      * @return void
      */
-    public function destroy(PipelineStage $companyAddress): void
+    public function destroy(PipelineStage $stage): void
     {
-        $this->destructor->delete($companyAddress, auth()->id());
+        $this->destructor->delete($stage, auth()->id());
     }
 
     /**
      * Restore a soft-deleted pipeline stage.
      *
-     * @param  int $id The ID of the pipeline stage to restore.
+     * @param  int $id
      *
-     * @return PipelineStage The restored pipeline stage.
+     * @return PipelineStage
      */
     public function restore(int $id): PipelineStage
     {
-        $companyAddress = PipelineStage::withTrashed()->findOrFail($id);
-        return $this->restorer->restore($companyAddress, auth()->id());
+        $stage = PipelineStage::withTrashed()->findOrFail($id);
+        return $this->restorer->restore($stage, auth()->id());
     }
 
     /**
      * Force delete a pipeline stage, permanently removing it from the
      * database.
      *
-     * @param  int $id The ID of the pipeline stage to force delete.
+     * @param  int $id 
      *
      * @return void
      */
     public function forceDelete(int $id): void
     {
-        $companyAddress = PipelineStage::withTrashed()->findOrFail($id);
-        $this->destructor->forceDelete($companyAddress, auth()->id());
+        $stage = PipelineStage::withTrashed()->findOrFail($id);
+        $this->destructor->forceDelete($stage, auth()->id());
     }
 
     /**
      * Bulk restore pipeline stages.
      *
-     * @param  array $ids The IDs of the pipeline stages to restore.
-     * @param  User $actor The user performing the restoration, used for
-     * logging.
-     * @param  callable $authorizeCallback The callback to authorize
-     * each pipeline stage.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the pipeline stages that were restored.
+     * @return array
      */
     public function bulkRestore(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $restored = [];
 
         foreach ($ids as $id) {
             $stage = PipelineStage::withTrashed()->findOrFail($id);
-            $authorizeCallback($stage);
+            $authoriseCallback($stage);
 
             if ($stage->trashed()) {
                 $this->restorer->restore($stage, $actor->id);
@@ -150,23 +131,22 @@ class PipelineStageManagementService
     /**
      * Bulk soft delete pipeline stages.
      *
-     * @param  array $ids The IDs of the pipeline stages to delete.
-     * @param  User $actor The user performing the deletion, used for logging.
-     * @param  callable $authorizeCallback The callback to authorize each
-     * pipeline stage.
+     * @param  array $ids
+     * @param  User $actor
+     * @param  callable $authoriseCallback
      *
-     * @return array The IDs of the pipeline stages that were deleted.
+     * @return array
      */
     public function bulkDelete(
         array $ids,
         User $actor,
-        callable $authorizeCallback
+        callable $authoriseCallback
     ): array {
         $deleted = [];
 
         foreach ($ids as $id) {
             $stage = PipelineStage::findOrFail($id);
-            $authorizeCallback($stage);
+            $authoriseCallback($stage);
 
             $this->destructor->delete($stage, $actor->id);
             $deleted[] = $id;

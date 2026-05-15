@@ -11,7 +11,7 @@ class UserAvatarService
     /**
      * Inject the required services into the avatar helper service.
      *
-     * @param  UserAvatarValidationService $validationService
+     * @param UserAvatarValidationService $validationService
      */
     public function __construct(
         protected UserAvatarValidationService $validationService

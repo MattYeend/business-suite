@@ -12,10 +12,8 @@ class ProductCreatorService
     /**
      * Inject the required services into the creator service.
      *
-     * @param  ProductDataPreparationService $dataPreparation
-     * @param  ProductLogService $logService
-     *
-     * @return void
+     * @param ProductDataPreparationService $dataPreparation
+     * @param ProductLogService $logService
      */
     public function __construct(
         protected ProductDataPreparationService $dataPreparation,

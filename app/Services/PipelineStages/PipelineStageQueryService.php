@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PipelineStageQueryService
 {
+    /**
+     * Inject the required services into the query service.
+     *
+     * @param PipelineStageSortingService $sortingService
+     * @param PipelineStageTrashFilterService $trashFilterService
+     * @param PipelineStageFilterService $filterService
+     * @param PipelineStageFormatterService $formatterService
+     */
     public function __construct(
         protected PipelineStageSortingService $sortingService,
         protected PipelineStageTrashFilterService $trashFilterService,

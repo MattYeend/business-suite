@@ -11,7 +11,7 @@ class ProductDeleterService
     /**
      * Inject the required services into the deleter service.
      *
-     * @param  ProductLogService $logService
+     * @param ProductLogService $logService
      */
     public function __construct(
         protected ProductLogService $logService

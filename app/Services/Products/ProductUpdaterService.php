@@ -11,8 +11,8 @@ class ProductUpdaterService
     /**
      * Inject the required services into the updater service.
      *
-     * @param  ProductDataPreparationService $dataPreparation
-     * @param  ProductLogService $logService
+     * @param ProductDataPreparationService $dataPreparation
+     * @param ProductLogService $logService
      */
     public function __construct(
         protected ProductDataPreparationService $dataPreparation,

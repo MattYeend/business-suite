@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class PipelineStageCreatorService
 {
+    /**
+     * Inject the required services into the creator service.
+     *
+     * @param PipelineStageDataPreparationService $dataPreparation
+     * @param PipelineStageLogService $logService
+     */
     public function __construct(
         protected PipelineStageDataPreparationService $dataPreparation,
         protected PipelineStageLogService $logService

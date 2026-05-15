@@ -10,7 +10,7 @@ class UserDeleterService
     /**
      * Inject the required services into the deleter preparation service.
      *
-     * @param  UserLogService $logService
+     * @param UserLogService $logService
      */
     public function __construct(
         protected UserLogService $logService

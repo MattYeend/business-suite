@@ -10,7 +10,7 @@ class UserDataPreparationService
     /**
      * Inject the required services into the data preparation service.
      *
-     * @param  UserPasswordService $passwordService
+     * @param UserPasswordService $passwordService
      */
     public function __construct(
         protected UserPasswordService $passwordService

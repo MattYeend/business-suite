@@ -11,7 +11,7 @@ class UserRestorerService
     /**
      * Inject the required services into the restorer service.
      *
-     * @param  UserLogService $logService
+     * @param UserLogService $logService
      */
     public function __construct(
         protected UserLogService $logService

@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class PipelineStageRestorerService
 {
+    /**
+     * Inject the required services into the resorer service.
+     *
+     * @param PipelineStageLogService $logService
+     */
     public function __construct(
         protected PipelineStageLogService $logService
     ) {

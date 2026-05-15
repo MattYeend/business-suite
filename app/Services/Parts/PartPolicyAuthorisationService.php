@@ -70,7 +70,7 @@ class PartPolicyAuthorisationService
 
     /**
      * Determine whether the user can view the model.
-     * Only admins can view companies.
+     * Only admins can view parts.
      *
      * @param  User $user
      * @param  Part $part

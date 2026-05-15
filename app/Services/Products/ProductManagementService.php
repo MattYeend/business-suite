@@ -12,10 +12,10 @@ class ProductManagementService
     /**
      * Inject the required services into the management service.
      *
-     * @param  ProductCreatorService $creator
-     * @param  ProductUpdaterService $updater
-     * @param  ProductDeleterService $destructor
-     * @param  ProductRestorerService $restorer
+     * @param ProductCreatorService $creator
+     * @param ProductUpdaterService $updater
+     * @param ProductDeleterService $destructor
+     * @param ProductRestorerService $restorer
      */
     public function __construct(
         protected ProductCreatorService $creator,

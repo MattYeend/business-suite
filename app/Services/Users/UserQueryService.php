@@ -10,10 +10,10 @@ class UserQueryService
     /**
      * Inject the required services into the query service.
      *
-     * @param  UserSortingService $sortingService
-     * @param  UserTrashFilterService $trashFilterService
-     * @param  UserFilterService $filterService
-     * @param  UserFormatterService $formatterService
+     * @param UserSortingService $sortingService
+     * @param UserTrashFilterService $trashFilterService
+     * @param UserFilterService $filterService
+     * @param UserFormatterService $formatterService
      */
     public function __construct(
         protected UserSortingService $sortingService,

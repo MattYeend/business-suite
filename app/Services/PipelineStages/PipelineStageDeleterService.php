@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class PipelineStageDeleterService
 {
+    /**
+     * Inject the required services into the deleter service.
+     *
+     * @param PipelineStageLogService $logService
+     */
     public function __construct(
         protected PipelineStageLogService $logService
     ) {

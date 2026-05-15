@@ -11,10 +11,10 @@ class ProductQueryService
     /**
      * Inject the required services into the query service.
      *
-     * @param  ProductSortingService $sortingService
-     * @param  ProductTrashFilterService $trashFilterService
-     * @param  ProductFilterService $filterService
-     * @param  ProductFormatterService $formatterService
+     * @param ProductSortingService $sortingService
+     * @param ProductTrashFilterService $trashFilterService
+     * @param ProductFilterService $filterService
+     * @param ProductFormatterService $formatterService
      */
     public function __construct(
         protected ProductSortingService $sortingService,

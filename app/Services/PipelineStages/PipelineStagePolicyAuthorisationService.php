@@ -8,6 +8,12 @@ use App\Services\UserRoleCheckerService;
 
 class PipelineStagePolicyAuthorisationService
 {
+    /**
+     * Inject the required services into the policy authorisation service.
+     *
+     * @param PipelineStageActiveCheckerService $activeChecker
+     * @param UserRoleCheckerService $roleChecker
+     */
     public function __construct(
         protected PipelineStageActiveCheckerService $activeChecker,
         protected UserRoleCheckerService $roleChecker
@@ -64,7 +70,7 @@ class PipelineStagePolicyAuthorisationService
 
     /**
      * Determine whether the user can view the model.
-     * Only admins can view company addresses.
+     * Only admins can view pipeline stages.
      *
      * @param  User $user
      * @param  PipelineStage $stage
