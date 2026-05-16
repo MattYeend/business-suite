@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('company_addresses', function (Blueprint $table) {
-            //
+            $table->index('type');
+            $table->index('city');
+            $table->index('country');
+            $table->index('is_primary');
         });
     }
 
@@ -22,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('company_addresses', function (Blueprint $table) {
-            //
+            $table->dropIndex(['company_addresses_type_index']);
+            $table->dropIndex(['company_addresses_city_index']);
+            $table->dropIndex(['company_addresses_country_index']);
+            $table->dropIndex(['company_addresses_is_primary_index']);
         });
     }
 };

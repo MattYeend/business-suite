@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('company_phones', function (Blueprint $table) {
-            //
+            $table->index('type');
+            $table->index('is_primary');
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('company_phones', function (Blueprint $table) {
-            //
+            $table->dropIndex(['company_phones_type_index']);
+            $table->dropIndex(['company_phones_is_primary_index']);
         });
     }
 };
