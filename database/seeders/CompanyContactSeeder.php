@@ -14,11 +14,21 @@ class CompanyContactSeeder extends Seeder
      */
     public function run(): void
     {
+        if (CompanyContact::exists()) {
+            $this->command->info('Company Contacts already seeded, skipping...');
+            return;
+        }
+
         $companies = Company::all();
         $users = User::all();
         
-        if ($companies->isEmpty() || $users->isEmpty()) {
-            $this->command->warn('No companies or users found. Please run CompanySeeder and UserSeeder first.');
+        if ($companies->isEmpty()) {
+            $this->command->warn('No companies found. Please run CompanySeeder first.');
+            return;
+        }
+
+        if ($users->isEmpty()) {
+            $this->command->warn('No users found. Please run UserSeeder first.');
             return;
         }
 

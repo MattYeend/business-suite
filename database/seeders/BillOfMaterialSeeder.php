@@ -14,7 +14,7 @@ class BillOfMaterialSeeder extends Seeder
      */
     public function run(): void
     {
-         if (BillOfMaterial::exists()) {
+        if (BillOfMaterial::exists()) {
             $this->command->info('BOMs already seeded, skipping...');
             return;
         }

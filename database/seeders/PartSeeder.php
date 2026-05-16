@@ -13,7 +13,10 @@ class PartSeeder extends Seeder
      */
     public function run(): void
     {
-        Part::truncate();
+        if (Part::exists()) {
+            $this->command->info('Parts already seeded, skipping...');
+            return;
+        }
 
         $users = User::all();
 

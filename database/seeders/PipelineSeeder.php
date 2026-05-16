@@ -13,6 +13,11 @@ class PipelineSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Pipeline::exists()) {
+            $this->command->info('Pipelines already seeded, skipping...');
+            return;
+        }
+
         $users = User::all();
         
         if ($users->isEmpty()) {

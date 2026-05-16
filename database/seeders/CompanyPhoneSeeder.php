@@ -14,7 +14,10 @@ class CompanyPhoneSeeder extends Seeder
      */
     public function run(): void
     {
-        CompanyPhone::truncate();
+        if (CompanyPhone::exists()) {
+            $this->command->info('Company Phones already seeded, skipping...');
+            return;
+        }
 
         $companies = Company::all();
         $users = User::all();

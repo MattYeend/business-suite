@@ -62,14 +62,22 @@ class CompanyIndustrySeeder extends Seeder
             'Other',
         ];
 
+        $created = 0;
+
         foreach ($industries as $name) {
-            CompanyIndustry::firstOrCreate(
+             $industry = CompanyIndustry::firstOrCreate(
                 ['slug' => Str::slug($name)],
                 [
                     'name' => $name,
                     'meta' => ['slug' => Str::slug($name), 'name' => $name],
                 ],
             );
+
+            if ($industry->wasRecentlyCreated) {
+                $created++;
+            }
         }
+
+        $this->command->info("Created {$created} industries.");
     }
 }

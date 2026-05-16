@@ -14,11 +14,21 @@ class PipelineStageSeeder extends Seeder
      */
     public function run(): void
     {
+        if (PipelineStage::exists()) {
+            $this->command->info('Pipeline Stages already seeded, skipping...');
+            return;
+        }
+
         $users = User::all();
         $pipelines = Pipeline::all();
         
-        if ($users->isEmpty() || $pipelines->isEmpty()) {
-            $this->command->warn('No users or pipelines found. Please run UserSeeder and PipelineSeeder first.');
+        if ($pipelines->isEmpty()) {
+            $this->command->warn('No pipelines found. Please run PipelineSeeder first.');
+            return;
+        }
+
+        if ($users->isEmpty()) {
+            $this->command->warn('No users found. Please run UserSeeder first.');
             return;
         }
 

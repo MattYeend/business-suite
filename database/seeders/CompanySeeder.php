@@ -13,6 +13,11 @@ class CompanySeeder extends Seeder
      */
     public function run(): void
     {
+        if (Company::exists()) {
+            $this->command->info('Companies already seeded, skipping...');
+            return;
+        }
+
         // Get industry IDs
         $technologyId = CompanyIndustry::where('slug', 'technology')->first()?->id;
         $automotiveId = CompanyIndustry::where('slug', 'automotive')->first()?->id;
