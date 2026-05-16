@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pipeline_stages', function (Blueprint $table) {
-            //
+            $table->index('is_terminal');
+            $table->index('terminal_type');
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('pipeline_stages', function (Blueprint $table) {
-            //
+            $table->dropIndex(['pipeline_stages_is_terminal_index']);
+            $table->dropIndex(['pipeline_stages_terminal_type_index']);
         });
     }
 };
