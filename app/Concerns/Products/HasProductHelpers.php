@@ -25,75 +25,75 @@ trait HasProductHelpers
      */
     use HasProductStockHelpers;
 
-    // /**
-    //  * Calculate total BOM cost for this product.
-    //  *
-    //  * @return float
-    //  */
-    // public function calculateBomCost(): float
-    // {
-    //     return $this->billOfMaterialItems()
-    //         ->with('part')
-    //         ->get()
-    //         ->sum(function ($item) {
-    //             return $item->quantity * ($item->part->cost_price ?? 0);
-    //         });
-    // }
+    /**
+     * Calculate total BOM cost for this product.
+     *
+     * @return float
+     */
+    public function calculateBomCost(): float
+    {
+        return $this->billOfMaterialItems()
+            ->with('part')
+            ->get()
+            ->sum(function ($item) {
+                return $item->quantity * ($item->part->cost_price ?? 0);
+            });
+    }
 
-    // /**
-    //  * Check if product can be manufactured with current stock.
-    //  *
-    //  * @return bool
-    //  */
-    // public function canManufacture(int $quantity = 1): bool
-    // {
-    //     if (!$this->has_bom) {
-    //         return false;
-    //     }
+    /**
+     * Check if product can be manufactured with current stock.
+     *
+     * @return bool
+     */
+    public function canManufacture(int $quantity = 1): bool
+    {
+        if (!$this->has_bom) {
+            return false;
+        }
 
-    //     $items = $this->billOfMaterialItems()->with('part')->get();
+        $items = $this->billOfMaterialItems()->with('part')->get();
 
-    //     foreach ($items as $item) {
-    //         $requiredQuantity = $item->quantity * $quantity;
-    //         if (!$item->part->hasSufficientStock($requiredQuantity)) {
-    //             return false;
-    //         }
-    //     }
+        foreach ($items as $item) {
+            $requiredQuantity = $item->quantity * $quantity;
+            if (!$item->part->hasSufficientStock($requiredQuantity)) {
+                return false;
+            }
+        }
 
-    //     return true;
-    // }
+        return true;
+    }
 
-    // /**
-    //  * Get missing parts for manufacturing.
-    //  *
-    //  * @param  int $quantity
-    //  *
-    //  * @return array
-    //  */
-    // public function getMissingParts(int $quantity = 1): array
-    // {
-    //     if (!$this->has_bom) {
-    //         return [];
-    //     }
+    /**
+     * Get missing parts for manufacturing.
+     *
+     * @param  int $quantity
+     *
+     * @return array
+     */
+    public function getMissingParts(int $quantity = 1): array
+    {
+        if (!$this->has_bom) {
+            return [];
+        }
 
-    //     $missing = [];
-    //     $items = $this->billOfMaterialItems()->with('part')->get();
+        $missing = [];
+        $items = $this->billOfMaterialItems()->with('part')->get();
 
-    //     foreach ($items as $item) {
-    //         $requiredQuantity = $item->quantity * $quantity;
-    //         $shortage = $requiredQuantity - $item->part->quantity;
-    //         if ($shortage > 0) {
-    //             $missing[] = [
-    //                 'part' => $item->part,
-    //                 'required' => $requiredQuantity,
-    //                 'available' => $item->part->quantity,
-    //                 'shortage' => $shortage,
-    //             ];
-    //         }
-    //     }
+        foreach ($items as $item) {
+            $requiredQuantity = $item->quantity * $quantity;
+            $shortage = $requiredQuantity - $item->part->quantity;
+            if ($shortage > 0) {
+                $missing[] = [
+                    'part' => $item->part,
+                    'required' => $requiredQuantity,
+                    'available' => $item->part->quantity,
+                    'shortage' => $shortage,
+                ];
+            }
+        }
 
-    //     return $missing;
-    // }
+        return $missing;
+    }
 
     /**
      * Check if part has no max stock percentage

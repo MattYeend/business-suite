@@ -56,16 +56,6 @@ trait ProductStockAttributes
     }
 
     /**
-     * Check if part has reorder point set.
-     *
-     * @return bool
-     */
-    public function hasReorderPoint(): bool
-    {
-        return $this->reorder_point !== null;
-    }
-
-    /**
      * Check if product is low on stock.
      *
      * @return bool
@@ -82,7 +72,7 @@ trait ProductStockAttributes
      */
     public function needsReorder(): bool
     {
-        return $this->hasReorderPoint()
+        return $this->reorder_point !== null
             && $this->quantity <= $this->reorder_point;
     }
 

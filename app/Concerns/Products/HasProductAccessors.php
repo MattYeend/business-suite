@@ -67,19 +67,19 @@ trait HasProductAccessors
         return $this->billOfMaterial()->exists();
     }
 
-    // /**
-    //  * Get calculated cost price from BOM.
-    //  *
-    //  * @return float|null
-    //  */
-    // public function getCalculatedCostPriceAttribute(): ?float
-    // {
-    //     if (!$this->has_bom) {
-    //         return null;
-    //     }
+    /**
+     * Get calculated cost price from BOM.
+     *
+     * @return float|null
+     */
+    public function getCalculatedCostPriceAttribute(): ?float
+    {
+        if (!$this->has_bom) {
+            return null;
+        }
 
-    //     return $this->calculateBomCost();
-    // }
+        return $this->calculateBomCost();
+    }
 
     /**
      * Get formatted calculated cost price.

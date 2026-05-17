@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 // use Illuminate\Database\Eloquent\Relations\MorphMany;
 // use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -64,8 +64,8 @@ use Illuminate\Support\Carbon;
  * @property-read Collection|\App\Models\Image $images
  * @property-read Collection|\App\Models\Category $categories
  * @property-read BillOfMaterial|null $billOfMaterial
- * @property-read Collection|\App\Models\BillOfMaterialItem $billOfMaterialItems
- * @property-read Collection|\App\Models\Part $parts
+ * @property-read Collection|BillOfMaterialItem $billOfMaterialItems
+ * @property-read Collection|Part $parts
  */
 class Product extends Model
 {
@@ -162,30 +162,30 @@ class Product extends Model
         return $this->hasOne(BillOfMaterial::class);
     }
 
-    // /**
-    //  * Get all BOM items for this product.
-    //  *
-    //  * @return HasMany
-    //  */
-    // public function billOfMaterialItems(): HasMany
-    // {
-    //     return $this->hasMany(BillOfMaterialItem::class);
-    // }
+    /**
+     * Get all BOM items for this product.
+     *
+     * @return HasMany
+     */
+    public function billOfMaterialItems(): HasMany
+    {
+        return $this->hasMany(BillOfMaterialItem::class);
+    }
 
-    // /**
-    //  * Get all parts used in this product through BOM items.
-    //  */
-    // public function parts()
-    // {
-    //     return $this->hasManyThrough(
-    //         Part::class,
-    //         BillOfMaterialItem::class,
-    //         'product_id',   // Foreign key on BillOfMaterialItem table
-    //         'id',           // Foreign key on Part table
-    //         'id',           // Local key on Product table
-    //         'part_id'       // Local key on BillOfMaterialItem table
-    //     )->distinct();
-    // }
+    /**
+     * Get all parts used in this product through BOM items.
+     */
+    public function parts()
+    {
+        return $this->hasManyThrough(
+            Part::class,
+            BillOfMaterialItem::class,
+            'product_id',   // Foreign key on BillOfMaterialItem table
+            'id',           // Foreign key on Part table
+            'id',           // Local key on Product table
+            'part_id'       // Local key on BillOfMaterialItem table
+        )->distinct();
+    }
 
     /**
      * Get the attributes that should be cast.
