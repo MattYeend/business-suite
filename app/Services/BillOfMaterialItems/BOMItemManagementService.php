@@ -81,7 +81,9 @@ class BOMItemManagementService
      */
     public function restore(int $id): BillOfMaterialItem
     {
-        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail($id);
+        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail(
+            $id
+        );
         return $this->restorer->restore($billOfMaterialItem, auth()->id());
     }
 
@@ -95,7 +97,9 @@ class BOMItemManagementService
      */
     public function forceDelete(int $id): void
     {
-        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail($id);
+        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail(
+            $id
+        );
         $this->destructor->forceDelete($billOfMaterialItem, auth()->id());
     }
 
@@ -116,7 +120,9 @@ class BOMItemManagementService
         $restored = [];
 
         foreach ($ids as $id) {
-            $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail($id);
+            $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail(
+                $id
+            );
             $authoriseCallback($billOfMaterialItem);
 
             if ($billOfMaterialItem->trashed()) {

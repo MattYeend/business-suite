@@ -144,8 +144,9 @@ class BillOfMaterialItemController extends Controller
      *
      * @return JsonResponse
      */
-    public function destroy(BillOfMaterialItem $billOfMaterialItem): JsonResponse
-    {
+    public function destroy(
+        BillOfMaterialItem $billOfMaterialItem
+    ): JsonResponse {
         $this->authorize('delete', $billOfMaterialItem);
         $auth = auth()->user();
 
@@ -175,7 +176,9 @@ class BillOfMaterialItemController extends Controller
      */
     public function restore($id): JsonResponse
     {
-        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail($id);
+        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail(
+            $id
+        );
 
         if (! $billOfMaterialItem->trashed()) {
             abort(404);
@@ -212,7 +215,9 @@ class BillOfMaterialItemController extends Controller
      */
     public function forceDelete($id): JsonResponse
     {
-        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail($id);
+        $billOfMaterialItem = BillOfMaterialItem::withTrashed()->findOrFail(
+            $id
+        );
         $this->authorize('forceDelete', $billOfMaterialItem);
 
         $auth = auth()->user();
@@ -250,7 +255,10 @@ class BillOfMaterialItemController extends Controller
         $deleted = $this->management->bulkDelete(
             $request->input('ids'),
             $auth,
-            fn ($billOfMaterialItem) => $this->authorize('delete', $billOfMaterialItem)
+            fn ($billOfMaterialItem) => $this->authorize(
+                'delete',
+                $billOfMaterialItem
+            )
         );
 
         return response()->json([
@@ -280,7 +288,10 @@ class BillOfMaterialItemController extends Controller
         $restored = $this->management->bulkRestore(
             $validated['ids'],
             $auth,
-            fn ($billOfMaterialItem) => $this->authorize('restore', $billOfMaterialItem)
+            fn ($billOfMaterialItem) => $this->authorize(
+                'restore',
+                $billOfMaterialItem
+            )
         );
 
         return response()->json([

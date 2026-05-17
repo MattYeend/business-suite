@@ -37,7 +37,11 @@ class BOMItemCreatorService
 
         return DB::transaction(function () use ($data, $createdBy, $actor) {
             $billOfMaterialItem = $this->createCompany($data, $createdBy);
-            $this->logService->logCreation($billOfMaterialItem, $actor, $createdBy);
+            $this->logService->logCreation(
+                $billOfMaterialItem,
+                $actor,
+                $createdBy
+            );
 
             return $billOfMaterialItem;
         });

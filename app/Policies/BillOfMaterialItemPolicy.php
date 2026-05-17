@@ -41,9 +41,14 @@ class BillOfMaterialItemPolicy
      *
      * @return bool
      */
-    public function view(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
-        return $this->authorisationService->canView($user, $billOfMaterialItem);
+    public function view(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
+        return $this->authorisationService->canView(
+            $user,
+            $billOfMaterialItem
+        );
     }
 
     /**
@@ -66,9 +71,14 @@ class BillOfMaterialItemPolicy
      *
      * @return bool
      */
-    public function update(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
-        return $this->authorisationService->canUpdate($user, $billOfMaterialItem);
+    public function update(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
+        return $this->authorisationService->canUpdate(
+            $user,
+            $billOfMaterialItem
+        );
     }
 
     /**
@@ -79,9 +89,14 @@ class BillOfMaterialItemPolicy
      *
      * @return bool
      */
-    public function delete(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
-        return $this->authorisationService->canDelete($user, $billOfMaterialItem);
+    public function delete(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
+        return $this->authorisationService->canDelete(
+            $user,
+            $billOfMaterialItem
+        );
     }
 
     /**
@@ -92,9 +107,14 @@ class BillOfMaterialItemPolicy
      *
      * @return bool
      */
-    public function restore(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
-        return $this->authorisationService->canRestore($user, $billOfMaterialItem);
+    public function restore(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
+        return $this->authorisationService->canRestore(
+            $user,
+            $billOfMaterialItem
+        );
     }
 
     /**

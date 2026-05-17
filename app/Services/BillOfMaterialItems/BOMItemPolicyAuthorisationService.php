@@ -51,8 +51,9 @@ class BOMItemPolicyAuthorisationService
      *
      * @return bool
      */
-    public function isActive(BillOfMaterialItem $billOfMaterialItem): bool
-    {
+    public function isActive(
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
         return $this->activeChecker->isActive($billOfMaterialItem);
     }
 
@@ -63,8 +64,9 @@ class BOMItemPolicyAuthorisationService
      *
      * @return bool
      */
-    public function isTrashed(BillOfMaterialItem $billOfMaterialItem): bool
-    {
+    public function isTrashed(
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
         return $this->activeChecker->isTrashed($billOfMaterialItem);
     }
 
@@ -77,8 +79,10 @@ class BOMItemPolicyAuthorisationService
      *
      * @return bool
      */
-    public function canView(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
+    public function canView(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
         return $this->isAdmin($user) && $this->activeChecker->isActive(
             $billOfMaterialItem
         );
@@ -92,8 +96,10 @@ class BOMItemPolicyAuthorisationService
      *
      * @return bool
      */
-    public function canUpdate(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
+    public function canUpdate(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
         return $this->isAdmin($user) && $this->activeChecker->isActive(
             $billOfMaterialItem
         );
@@ -107,8 +113,10 @@ class BOMItemPolicyAuthorisationService
      *
      * @return bool
      */
-    public function canDelete(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
+    public function canDelete(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
         return $this->isAdmin($user) && $this->activeChecker->canBeModified(
             $billOfMaterialItem
         );
@@ -122,10 +130,14 @@ class BOMItemPolicyAuthorisationService
      *
      * @return bool
      */
-    public function canRestore(User $user, BillOfMaterialItem $billOfMaterialItem): bool
-    {
+    public function canRestore(
+        User $user,
+        BillOfMaterialItem $billOfMaterialItem
+    ): bool {
         return $this->isAdmin($user) &&
-            $this->activeChecker->canBeRestoredOrForceDeleted($billOfMaterialItem);
+            $this->activeChecker->canBeRestoredOrForceDeleted(
+                $billOfMaterialItem
+            );
     }
 
     /**

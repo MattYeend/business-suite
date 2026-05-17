@@ -32,14 +32,21 @@ class BOMItemDeleterService
         BillOfMaterialItem $billOfMaterialItem,
         ?int $deletedBy = null
     ): bool {
-        return DB::transaction(function () use ($billOfMaterialItem, $deletedBy) {
+        return DB::transaction(function () use (
+            $billOfMaterialItem,
+            $deletedBy
+        ) {
             $actor = User::findOrFail($deletedBy);
             $billOfMaterialItem->deleted_by = $deletedBy;
             $billOfMaterialItem->save();
 
             $result = $billOfMaterialItem->delete();
 
-            $this->logService->logDeletion($billOfMaterialItem, $actor, $deletedBy);
+            $this->logService->logDeletion(
+                $billOfMaterialItem,
+                $actor,
+                $deletedBy
+            );
 
             return $result;
         });
@@ -59,7 +66,10 @@ class BOMItemDeleterService
         BillOfMaterialItem $billOfMaterialItem,
         ?int $deletedBy = null
     ): bool {
-        return DB::transaction(function () use ($billOfMaterialItem, $deletedBy) {
+        return DB::transaction(function () use (
+            $billOfMaterialItem,
+            $deletedBy
+        ) {
             $actor = User::findOrFail($deletedBy);
             $this->logService->logForceDeletion(
                 $billOfMaterialItem,
@@ -92,7 +102,10 @@ class BOMItemDeleterService
             $deletedBy,
             &$count
         ) {
-            $BOMItems = BillOfMaterialItem::whereIn('id', $billOfMaterialItemIds)->get();
+            $BOMItems = BillOfMaterialItem::whereIn(
+                'id',
+                $billOfMaterialItemIds
+            )->get();
 
             foreach ($BOMItems as $billOfMaterialItem) {
                 if ($this->delete($billOfMaterialItem, $deletedBy)) {

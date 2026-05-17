@@ -15,8 +15,10 @@ class ProductManufacturingService
      *
      * @return bool
      */
-    public static function canManufacture(Product $product, int $quantity = 1): bool
-    {
+    public static function canManufacture(
+        Product $product,
+        int $quantity = 1
+    ): bool {
         if (! $product->has_bom) {
             return false;
         }
@@ -34,8 +36,10 @@ class ProductManufacturingService
      *
      * @return array
      */
-    public static function getMissingParts(Product $product, int $quantity = 1): array
-    {
+    public static function getMissingParts(
+        Product $product,
+        int $quantity = 1
+    ): array {
         if (! $product->has_bom) {
             return [];
         }

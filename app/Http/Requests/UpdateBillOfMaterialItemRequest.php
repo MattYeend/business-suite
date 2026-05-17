@@ -43,7 +43,8 @@ class UpdateBillOfMaterialItemRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'bill_of_material_id.exists' => 'The selected bill of material does not exist.',
+            'bill_of_material_id.exists' => 'The selected bill of material
+                does not exist.',
             'product_id.exists' => 'The selected product does not exist.',
             'part_id.exists' => 'The selected part does not exist.',
             'quantity.numeric' => 'The quantity must be a number.',

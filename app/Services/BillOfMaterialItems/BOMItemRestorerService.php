@@ -33,7 +33,10 @@ class BOMItemRestorerService
         BillOfMaterialItem $billOfMaterialItem,
         ?int $restoredBy = null
     ): BillOfMaterialItem {
-        return DB::transaction(function () use ($billOfMaterialItem, $restoredBy) {
+        return DB::transaction(function () use (
+            $billOfMaterialItem,
+            $restoredBy
+        ) {
             $actor = User::findOrFail($restoredBy);
 
             $billOfMaterialItem->restored_by = $restoredBy;

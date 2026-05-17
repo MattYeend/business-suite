@@ -267,8 +267,9 @@ class BOMItemLogService
      *
      * @return array
      */
-    protected function basePartData(?BillOfMaterialItem $billOfMaterialItem): array
-    {
+    protected function basePartData(
+        ?BillOfMaterialItem $billOfMaterialItem
+    ): array {
         if (! $billOfMaterialItem) {
             return $this->getNullData();
         }
@@ -296,8 +297,9 @@ class BOMItemLogService
      *
      * @return array
      */
-    private function getPartData(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getPartData(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return array_merge(
             $this->getBaseData($billOfMaterialItem),
             $this->getFlagAndMetaData($billOfMaterialItem),
@@ -329,8 +331,9 @@ class BOMItemLogService
      *
      * @return array
      */
-    private function getBaseData(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getBaseData(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return [
             'id' => $billOfMaterialItem->id,
             'bill_of_material_id' => $billOfMaterialItem->bill_of_material_id,
@@ -362,8 +365,9 @@ class BOMItemLogService
      *
      * @return array
      */
-    private function getFlagAndMetaData(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getFlagAndMetaData(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return [
             'is_optional' => $billOfMaterialItem->is_optional,
             'meta' => $billOfMaterialItem->meta,

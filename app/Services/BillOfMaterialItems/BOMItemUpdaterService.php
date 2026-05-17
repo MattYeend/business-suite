@@ -44,7 +44,11 @@ class BOMItemUpdaterService
             $actor = User::findOrFail($updatedBy);
 
             $this->updateCompanyData($billOfMaterialItem, $data, $updatedBy);
-            $this->logService->logUpdate($billOfMaterialItem, $actor, $updatedBy);
+            $this->logService->logUpdate(
+                $billOfMaterialItem,
+                $actor,
+                $updatedBy
+            );
 
             return $billOfMaterialItem->fresh();
         });

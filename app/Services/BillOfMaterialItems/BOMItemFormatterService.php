@@ -13,8 +13,9 @@ class BOMItemFormatterService
      *
      * @return array
      */
-    public function format(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    public function format(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return array_merge(
             $this->getBaseData($billOfMaterialItem),
             $this->getRelationshipData($billOfMaterialItem),
@@ -32,8 +33,9 @@ class BOMItemFormatterService
      *
      * @return array
      */
-    private function getBaseData(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getBaseData(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return [
             'id' => $billOfMaterialItem->id,
         ];
@@ -46,8 +48,9 @@ class BOMItemFormatterService
      *
      * @return array
      */
-    private function getRelationshipData(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getRelationshipData(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return [
             'bill_of_material_id' => $billOfMaterialItem->bill_of_material_id,
             'product_id' => $billOfMaterialItem->product_id,
@@ -62,8 +65,9 @@ class BOMItemFormatterService
      *
      * @return array
      */
-    private function getQuantityData(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getQuantityData(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return [
             'quantity' => $billOfMaterialItem->quantity,
             'sequence' => $billOfMaterialItem->sequence,
@@ -78,8 +82,9 @@ class BOMItemFormatterService
      *
      * @return array
      */
-    private function getBooleanFlags(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getBooleanFlags(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return [
             'is_optional' => $billOfMaterialItem->is_optional,
             'is_real' => $billOfMaterialItem->is_real,
@@ -93,8 +98,9 @@ class BOMItemFormatterService
      *
      * @return array
      */
-    private function getMetaInformation(BillOfMaterialItem $billOfMaterialItem): array
-    {
+    private function getMetaInformation(
+        BillOfMaterialItem $billOfMaterialItem
+    ): array {
         return [
             'meta' => $billOfMaterialItem->meta,
         ];

@@ -122,8 +122,14 @@ class BOMItemQueryService
 
         return [
             'permissions_meta' => [
-                'can_create' => $user->can('create', BillOfMaterialItem::class),
-                'can_view_any' => $user->can('viewAny', BillOfMaterialItem::class),
+                'can_create' => $user->can(
+                    'create',
+                    BillOfMaterialItem::class
+                ),
+                'can_view_any' => $user->can(
+                    'viewAny',
+                    BillOfMaterialItem::class
+                ),
             ],
         ];
     }

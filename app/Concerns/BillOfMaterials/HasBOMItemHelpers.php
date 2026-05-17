@@ -50,7 +50,9 @@ trait HasBOMItemHelpers
      */
     public function checkStockAvailability(int $productQuantity = 1): array
     {
-        $requiredQuantity = $this->calculateQuantityForProducts($productQuantity);
+        $requiredQuantity = $this->calculateQuantityForProducts(
+            $productQuantity
+        );
         $availableQuantity = $this->part->quantity;
         $sufficient = $availableQuantity >= $requiredQuantity;
 
