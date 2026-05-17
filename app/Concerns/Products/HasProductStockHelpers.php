@@ -125,7 +125,7 @@ trait HasProductStockHelpers
             return null;
         }
 
-        return max(0, $this->max_stock_level -  $this->quantity);
+        return max(0, $this->max_stock_level - $this->quantity);
     }
 
     /**
