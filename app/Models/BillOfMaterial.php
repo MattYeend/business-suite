@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-// use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -117,17 +117,17 @@ class BillOfMaterial extends Model
         return $this->belongsTo(Product::class);
     }
 
-    // /**
-    //  * Get all items in this Bill of Material.
-    //  *
-    //  * @return HasMany
-    //  */
-    // public function items(): HasMany
-    // {
-    //     return $this->hasMany(
-    //         BillOfMaterialItem::class
-    //     )->orderBy('sequence');
-    // }
+    /**
+     * Get all items in this Bill of Material.
+     *
+     * @return HasMany
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(
+            BillOfMaterialItem::class
+        )->orderBy('sequence');
+    }
 
     /**
      * Get the attributes that should be cast.

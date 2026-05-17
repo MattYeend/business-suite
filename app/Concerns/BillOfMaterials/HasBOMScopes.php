@@ -7,6 +7,18 @@ use Illuminate\Database\Eloquent\Builder;
 trait HasBOMScopes
 {
     /**
+     * Scope a query to only include real BOM.
+     *
+     * @param  Builder $query
+     *
+     * @return Builder
+     */
+    public function scopeReal(Builder $query): Builder
+    {
+        return $query->where('is_real', true);
+    }
+
+    /**
      * Scope: Active BOMs only.
      *
      * @param  Builder $query
