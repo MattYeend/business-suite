@@ -3,6 +3,8 @@
 namespace App\Concerns\Products;
 
 use App\Models\Product;
+use App\Services\Product\ProductManufacturingService;
+use App\Services\Product\ProductStatusResolver;
 
 /**
  * Product entity helper methods.
@@ -43,24 +45,13 @@ trait HasProductHelpers
     /**
      * Check if product can be manufactured with current stock.
      *
+     * @param  int $quantity
+     *
      * @return bool
      */
     public function canManufacture(int $quantity = 1): bool
     {
-        if (!$this->has_bom) {
-            return false;
-        }
-
-        $items = $this->billOfMaterialItems()->with('part')->get();
-
-        foreach ($items as $item) {
-            $requiredQuantity = $item->quantity * $quantity;
-            if (!$item->part->hasSufficientStock($requiredQuantity)) {
-                return false;
-            }
-        }
-
-        return true;
+        return ProductManufacturingService::canManufacture($this, $quantity);
     }
 
     /**
@@ -72,27 +63,7 @@ trait HasProductHelpers
      */
     public function getMissingParts(int $quantity = 1): array
     {
-        if (!$this->has_bom) {
-            return [];
-        }
-
-        $missing = [];
-        $items = $this->billOfMaterialItems()->with('part')->get();
-
-        foreach ($items as $item) {
-            $requiredQuantity = $item->quantity * $quantity;
-            $shortage = $requiredQuantity - $item->part->quantity;
-            if ($shortage > 0) {
-                $missing[] = [
-                    'part' => $item->part,
-                    'required' => $requiredQuantity,
-                    'available' => $item->part->quantity,
-                    'shortage' => $shortage,
-                ];
-            }
-        }
-
-        return $missing;
+        return ProductManufacturingService::getMissingParts($this, $quantity);
     }
 
     /**
@@ -143,15 +114,7 @@ trait HasProductHelpers
      */
     public function getStatusLabel(): ?string
     {
-        return match ($this->status) {
-            Product::STATUS_ACTIVE => 'Active',
-            Product::STATUS_DISCONTINUED => 'Discontinued',
-            Product::STATUS_PENDING => 'Pending',
-            Product::STATUS_OUT_OF_STOCK => 'Out of stock',
-            default => $this->status ? ucfirst(
-                str_replace('_', ' ', $this->status)
-            ) : null,
-        };
+        return ProductStatusResolver::resolveStatusLabel($this->status);
     }
 
     /**
@@ -161,15 +124,7 @@ trait HasProductHelpers
      */
     protected function determineStockStatus(): string
     {
-        if ($this->quantity <= 0) {
-            return Product::STATUS_OUT_OF_STOCK;
-        }
-
-        if ($this->status === Product::STATUS_OUT_OF_STOCK) {
-            return 'active';
-        }
-
-        return $this->status;
+        return ProductStatusResolver::determineStockStatus($this);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Concerns\Products;
 
 use App\Models\Product;
+use App\Services\Product\ProductStatusResolver;
 
 /**
  * Product accessor methods.
@@ -46,17 +47,6 @@ trait HasProductAccessors
         return $this->formatMoney($this->price);
     }
 
-    // /**
-    //  * Get the primary image for this product.
-    //  *
-    //  * @return mixed
-    //  */
-    // public function getPrimaryImageAttribute()
-    // {
-    //     return $this->images()->where('is_primary', true)->first()
-    //         ?? $this->images()->first();
-    // }
-
     /**
      * Check if product has a Bill of Material.
      *
@@ -74,7 +64,7 @@ trait HasProductAccessors
      */
     public function getCalculatedCostPriceAttribute(): ?float
     {
-        if (!$this->has_bom) {
+        if (! $this->has_bom) {
             return null;
         }
 
@@ -157,12 +147,7 @@ trait HasProductAccessors
      */
     public function getStockStatusAttribute(): string
     {
-        return match (true) {
-            $this->isOutOfStock() => 'Out of Stock',
-            $this->needsReorder() => 'Needs Reorder',
-            $this->isLowStock() => 'Low Stock',
-            default => 'In Stock',
-        };
+        return ProductStatusResolver::resolveStockStatus($this);
     }
 
     /**
@@ -187,12 +172,6 @@ trait HasProductAccessors
      */
     public function getStatusLabelAttribute(): string
     {
-        return match ($this->status) {
-            Product::STATUS_ACTIVE => 'Active',
-            Product::STATUS_DISCONTINUED => 'Discontinued',
-            Product::STATUS_PENDING => 'Pending',
-            Product::STATUS_OUT_OF_STOCK => 'Out of Stock',
-            default => ucfirst(str_replace('_', ' ', $this->status)),
-        };
+        return ProductStatusResolver::resolveStatusLabel($this->status);
     }
 }
