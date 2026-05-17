@@ -43,7 +43,7 @@ class UpdateCompanyPhoneRequest extends FormRequest
         return [
             'company_id.exists' => 'The selected company does not exist.',
             'type.in' => 'The phone type must be one of: main, fax,
-                toll_free, mobile.',
+                 toll free, mobile.',
             'number.required' => 'The phone number is required.',
         ];
     }

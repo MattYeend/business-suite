@@ -44,7 +44,7 @@ class UpdateBillOfMaterialItemRequest extends FormRequest
     {
         return [
             'bill_of_material_id.exists' => 'The selected bill of material
-                does not exist.',
+                 does not exist.',
             'product_id.exists' => 'The selected product does not exist.',
             'part_id.exists' => 'The selected part does not exist.',
             'quantity.numeric' => 'The quantity must be a number.',

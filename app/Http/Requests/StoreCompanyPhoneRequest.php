@@ -45,7 +45,7 @@ class StoreCompanyPhoneRequest extends FormRequest
             'company_id.exists' => 'The selected company does not exist.',
             'type.required' => 'The phone type is required.',
             'type.in' => 'The phone type must be one of: main, fax,
-                toll_free, mobile.',
+                 toll free, mobile.',
             'number.required' => 'The phone number is required.',
         ];
     }

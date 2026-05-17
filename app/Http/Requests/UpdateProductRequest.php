@@ -48,11 +48,11 @@ class UpdateProductRequest extends FormRequest
             'currency.size' => 'The currency must be exactly 3 characters.',
             'quantity.integer' => 'The quantity must be a whole number.',
             'min_stock_level.integer' => 'The minimum stock level must be a
-                whole number.',
+                 whole number.',
             'max_stock_level.gte' => 'The maximum stock level must be greater
-                than or equal to the minimum stock level.',
+                 than or equal to the minimum stock level.',
             'reorder_quantity.min' => 'The reorder quantity must be at
-                least 1.',
+                 least 1.',
         ];
     }
 

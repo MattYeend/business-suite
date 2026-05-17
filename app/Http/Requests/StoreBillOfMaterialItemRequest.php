@@ -45,9 +45,9 @@ class StoreBillOfMaterialItemRequest extends FormRequest
     {
         return [
             'bill_of_material_id.required' => 'The bill of material is
-                required.',
+                 required.',
             'bill_of_material_id.exists' => 'The selected bill of material
-                does not exist.',
+                 does not exist.',
             'product_id.required' => 'The product is required.',
             'product_id.exists' => 'The selected product does not exist.',
             'part_id.required' => 'The part is required.',
