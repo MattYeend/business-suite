@@ -13,7 +13,7 @@ class UpdateCompanyContactRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('company_contact'));
+        return $this->user()->can('update', $this->route('companyContact'));
     }
 
     /**

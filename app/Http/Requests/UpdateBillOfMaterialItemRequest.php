@@ -13,7 +13,7 @@ class UpdateBillOfMaterialItemRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('bill_of_material_item'));
+        return $this->user()->can('update', $this->route('billOfMaterialItem'));
     }
 
     /**

@@ -13,7 +13,7 @@ class UpdateCompanyIndustryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('company_industry'));
+        return $this->user()->can('update', $this->route('companyIndustry'));
     }
 
     /**

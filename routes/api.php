@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BillOfMaterialController;
+use App\Http\Controllers\BillOfMaterialItemController;
 use App\Http\Controllers\CompanyAddressController;
 use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
@@ -94,19 +95,19 @@ Route::middleware('auth:sanctum')->group(function () {
             [CompanyIndustryController::class, 'store']
         )->name('store');
         Route::get(
-            '/{company_industry}',
+            '/{companyIndustry}',
             [CompanyIndustryController::class, 'show']
         )->name('show');
         Route::put(
-            '/{company_industry}',
+            '/{companyIndustry}',
             [CompanyIndustryController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{company_industry}',
+            '/{companyIndustry}',
             [CompanyIndustryController::class, 'update']
         )->name('patch');
         Route::delete(
-            '/{company_industry}',
+            '/{companyIndustry}',
             [CompanyIndustryController::class, 'destroy']
         )->name('destroy');
 
@@ -194,19 +195,19 @@ Route::middleware('auth:sanctum')->group(function () {
             [CompanyContactController::class, 'store']
         )->name('store');
         Route::get(
-            '/{company_contact}',
+            '/{companyContact}',
             [CompanyContactController::class, 'show']
         )->name('show');
         Route::put(
-            '/{company_contact}',
+            '/{companyContact}',
             [CompanyContactController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{company_contact}',
+            '/{companyContact}',
             [CompanyContactController::class, 'update']
         )->name('patch');
         Route::delete(
-            '/{company_contact}',
+            '/{companyContact}',
             [CompanyContactController::class, 'destroy']
         )->name('destroy');
 
@@ -244,19 +245,19 @@ Route::middleware('auth:sanctum')->group(function () {
             [CompanyPhoneController::class, 'store']
         )->name('store');
         Route::get(
-            '/{company_phone}',
+            '/{companyPhone}',
             [CompanyPhoneController::class, 'show']
         )->name('show');
         Route::put(
-            '/{company_phone}',
+            '/{companyPhone}',
             [CompanyPhoneController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{company_phone}',
+            '/{companyPhone}',
             [CompanyPhoneController::class, 'update']
         )->name('patch');
         Route::delete(
-            '/{company_phone}',
+            '/{companyPhone}',
             [CompanyPhoneController::class, 'destroy']
         )->name('destroy');
 
@@ -294,19 +295,19 @@ Route::middleware('auth:sanctum')->group(function () {
             [CompanyAddressController::class, 'store']
         )->name('store');
         Route::get(
-            '/{company_address}',
+            '/{companyAddress}',
             [CompanyAddressController::class, 'show']
         )->name('show');
         Route::put(
-            '/{company_address}',
+            '/{companyAddress}',
             [CompanyAddressController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{company_address}',
+            '/{companyAddress}',
             [CompanyAddressController::class, 'update']
         )->name('patch');
         Route::delete(
-            '/{company_address}',
+            '/{companyAddress}',
             [CompanyAddressController::class, 'destroy']
         )->name('destroy');
 
@@ -394,19 +395,19 @@ Route::middleware('auth:sanctum')->group(function () {
             [PipelineStageController::class, 'store']
         )->name('store');
         Route::get(
-            '/{pipeline_stage}',
+            '/{pipelineStage}',
             [PipelineStageController::class, 'show']
         )->name('show');
         Route::put(
-            '/{pipeline_stage}',
+            '/{pipelineStage}',
             [PipelineStageController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{pipeline_stage}',
+            '/{pipelineStage}',
             [PipelineStageController::class, 'update']
         )->name('patch');
         Route::delete(
-            '/{pipeline_stage}',
+            '/{pipelineStage}',
             [PipelineStageController::class, 'destroy']
         )->name('destroy');
 
@@ -521,7 +522,7 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('force-delete');
     });
 
-    // BIll Of Material Management routes
+    // BIll Of Material (BOM) Management routes
     Route::prefix('bill-of-materials')->name(
         'bill-of-materials.'
     )->group(function () {
@@ -557,6 +558,56 @@ Route::middleware('auth:sanctum')->group(function () {
         )->name('patch');
         Route::delete(
             '/{billOfMaterial}',
+            [BillOfMaterialController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [BillOfMaterialController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [BillOfMaterialController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Bill Of Material Item (BOM Item) Management routes
+    Route::prefix('bill-of-material-items')->name(
+        'bill-of-material-items.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [BillOfMaterialItemController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [BillOfMaterialItemController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [BillOfMaterialItemController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [BillOfMaterialItemController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{BillOfMaterialItem}',
+            [BillOfMaterialItemController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{BillOfMaterialItem}',
+            [BillOfMaterialItemController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{BillOfMaterialItem}',
+            [BillOfMaterialController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{BillOfMaterialItem}',
             [BillOfMaterialController::class, 'destroy']
         )->name('destroy');
 
