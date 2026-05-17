@@ -35,7 +35,7 @@ class BillOfMaterialItemController extends Controller
      * Display a listing of the resource.
      *
      * Also includes the authenticated user's permissions for the
-     * BOM resource, so the frontend can conditionally render
+     * BOM Item resource, so the frontend can conditionally render
      * create/view controls.
      *
      * Authorises via the 'viewAny' policy before returning data.
@@ -81,7 +81,7 @@ class BillOfMaterialItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * Returns a single BOM by its model binding.
+     * Returns a single BOM Item by its model binding.
      *
      * Authorises via the 'view' policy before returning data.
      *
@@ -138,7 +138,7 @@ class BillOfMaterialItemController extends Controller
      * Authorises via the 'delete' policy before proceeding.
      *
      * The audit log entry is written before the deletion so that the
-     * BOM instance is still fully accessible during logging.
+     * BOM Item instance is still fully accessible during logging.
      *
      * @param  BillOfMaterialItem $billOfMaterialItem
      *
@@ -161,11 +161,11 @@ class BillOfMaterialItemController extends Controller
     }
 
     /**
-     * Restore the specified BOM from soft deletion.
+     * Restore the specified BOM Item from soft deletion.
      *
-     * Looks up the BOM including trashed records, then
+     * Looks up the BOM Item including trashed records, then
      * checks if it exists and is trashed before authorisation.
-     * Returns 404 if the BOM is not currently soft-deleted.
+     * Returns 404 if the BOM Item is not currently soft-deleted.
      *
      * @param  int|string $id
      *
@@ -197,13 +197,13 @@ class BillOfMaterialItemController extends Controller
     }
 
     /**
-     * Permanently delete the specified BOM from storage.
+     * Permanently delete the specified BOM Item from storage.
      *
-     * Looks up the BOM including trashed records, then
+     * Looks up the BOM Item including trashed records, then
      * authorises via the 'forceDelete' policy. This action is irreversible.
      *
      * The audit log entry is written before the permanent deletion so
-     * that the BOM instance is still fully accessible during
+     * that the BOM Item instance is still fully accessible during
      * logging.
      *
      * @param  int|string $id
@@ -229,10 +229,10 @@ class BillOfMaterialItemController extends Controller
     }
 
     /**
-     * Soft delete multiple BOM in bulk.
+     * Soft delete multiple BOM Item Item Item in bulk.
      *
-     * Expects a 'ids' array in the request containing BOM IDs
-     * to delete. Each BOM is authorised individually via the
+     * Expects a 'ids' array in the request containing BOM Item Item Item IDs
+     * to delete. Each BOM Item Item Item is authorised individually via the
      * 'delete' policy.
      *
      * @param  Request $request
@@ -254,7 +254,7 @@ class BillOfMaterialItemController extends Controller
         );
 
         return response()->json([
-            'message' => 'BOM deleted successfully',
+            'message' => 'BOM Item deleted successfully',
             'deleted_count' => count($deleted),
             'deleted_ids' => $deleted,
         ]);
@@ -284,7 +284,7 @@ class BillOfMaterialItemController extends Controller
         );
 
         return response()->json([
-            'message' => 'BOM restored successfully',
+            'message' => 'BOM Item restored successfully',
             'restored_count' => count($restored),
             'restored_ids' => $restored,
         ]);
