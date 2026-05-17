@@ -71,9 +71,39 @@ trait HasProductStockHelpers
     }
 
     /**
+     * Check if product has reorder point set.
+     *
+     * @return bool
+     */
+    public function hasReorderPoint(): bool
+    {
+        return $this->reorder_point !== null;
+    }
+
+    /**
+     * Check if product has no max stock level.
+     *
+     * @return bool
+     */
+    public function hasNoMaxStockLevel(): bool
+    {
+        return $this->max_stock_level === null || $this->max_stock_level === 0;
+    }
+
+    /**
+     * Check if product has max stock level set.
+     *
+     * @return bool
+     */
+    public function hasMaxStockLevel(): bool
+    {
+        return $this->max_stock_level !== null;
+    }
+
+    /**
      * Get stock percentage of max level.
      *
-     * @return float
+     * @return float|null
      */
     public function getStockPercentageAttribute(): ?float
     {
@@ -95,7 +125,7 @@ trait HasProductStockHelpers
             return null;
         }
 
-        return max(0, $this->max_stock_level - $this->quantity);
+        return max(0, $this->max_stock_level -  $this->quantity);
     }
 
     /**
