@@ -27,16 +27,10 @@ class ProductStatusResolver
      */
     public static function resolveStockStatus(Product $product): string
     {
-        if ($product->isOutOfStock()) {
-            return 'Out of Stock';
-        }
-
-        if ($product->needsReorder()) {
-            return 'Needs Reorder';
-        }
-
-        if ($product->isLowStock()) {
-            return 'Low Stock';
+        foreach (self::getStockStatusChecks() as $status => $check) {
+            if ($check($product)) {
+                return $status;
+            }
         }
 
         return 'In Stock';
@@ -55,11 +49,8 @@ class ProductStatusResolver
             return null;
         }
 
-        if (isset(self::$statusLabels[$status])) {
-            return self::$statusLabels[$status];
-        }
-
-        return ucfirst(str_replace('_', ' ', $status));
+        return self::$statusLabels[$status]
+            ?? ucfirst(str_replace('_', ' ', $status));
     }
 
     /**
@@ -71,14 +62,48 @@ class ProductStatusResolver
      */
     public static function determineStockStatus(Product $product): string
     {
-        if ($product->quantity <= 0) {
-            return Product::STATUS_OUT_OF_STOCK;
-        }
+        return match (true) {
+            self::shouldBeOutOfStock($product) => Product::STATUS_OUT_OF_STOCK,
+            self::shouldBeReactivated($product) => Product::STATUS_ACTIVE,
+            default => $product->status,
+        };
+    }
 
-        if ($product->status === Product::STATUS_OUT_OF_STOCK) {
-            return Product::STATUS_ACTIVE;
-        }
+    /**
+     * Stock status resolution priority order.
+     *
+     * @var array<string,callable>
+     */
+    private static function getStockStatusChecks(): array
+    {
+        return [
+            'Out of Stock' => fn (Product $p) => $p->isOutOfStock(),
+            'Needs Reorder' => fn (Product $p) => $p->needsReorder(),
+            'Low Stock' => fn (Product $p) => $p->isLowStock(),
+        ];
+    }
 
-        return $product->status;
+    /**
+     * Check if product should be marked as out of stock.
+     *
+     * @param  Product $product
+     *
+     * @return bool
+     */
+    private static function shouldBeOutOfStock(Product $product): bool
+    {
+        return $product->quantity <= 0;
+    }
+
+    /**
+     * Check if product should be reactivated from out of stock.
+     *
+     * @param  Product $product
+     *
+     * @return bool
+     */
+    private static function shouldBeReactivated(Product $product): bool
+    {
+        return $product->status === Product::STATUS_OUT_OF_STOCK;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Concerns\Products;
 
 use App\Models\Product;
+use App\Services\Product\ProductProfitCalculator;
 use App\Services\Product\ProductStatusResolver;
 
 /**
@@ -94,13 +95,10 @@ trait HasProductAccessors
      */
     public function getProfitMarginAttribute(): ?float
     {
-        $cost = $this->calculated_cost_price;
-
-        if ($cost === null || $this->price === 0) {
-            return null;
-        }
-
-        return ($this->price - $cost) / $this->price * 100;
+        return ProductProfitCalculator::calculateMargin(
+            $this->price,
+            $this->calculated_cost_price
+        );
     }
 
     /**
@@ -110,13 +108,7 @@ trait HasProductAccessors
      */
     public function getFormattedProfitMarginAttribute(): ?string
     {
-        $margin = $this->profit_margin;
-
-        if ($margin === null) {
-            return null;
-        }
-
-        return number_format($margin, 2) . '%';
+        return ProductProfitCalculator::formatMargin($this->profit_margin);
     }
 
     /**

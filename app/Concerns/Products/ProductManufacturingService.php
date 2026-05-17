@@ -57,16 +57,14 @@ class ProductManufacturingService
      *
      * @return bool
      */
-    private static function allPartsAvailable($items, int $quantity): bool
-    {
-        foreach ($items as $item) {
+    private static function allPartsAvailable(
+        Collection $items,
+        int $quantity
+    ): bool {
+        return $items->every(function ($item) use ($quantity) {
             $requiredQuantity = $item->quantity * $quantity;
-            if (! $item->part->hasSufficientStock($requiredQuantity)) {
-                return false;
-            }
-        }
-
-        return true;
+            return $item->part->hasSufficientStock($requiredQuantity);
+        });
     }
 
     /**
@@ -77,24 +75,39 @@ class ProductManufacturingService
      *
      * @return array
      */
-    private static function calculateShortages($items, int $quantity): array
+    private static function calculateShortages(
+        Collection $items,
+        int $quantity
+    ): array {
+        return $items
+            ->map(fn ($item) => self::calculateItemShortage($item, $quantity))
+            ->filter(fn ($result) => $result !== null)
+            ->values()
+            ->toArray();
+    }
+
+    /**
+     * Calculate shortage for a single BOM item.
+     *
+     * @param  mixed $item
+     * @param  int $quantity
+     *
+     * @return array|null
+     */
+    private static function calculateItemShortage($item, int $quantity): ?array
     {
-        $missing = [];
+        $requiredQuantity = $item->quantity * $quantity;
+        $shortage = $requiredQuantity - $item->part->quantity;
 
-        foreach ($items as $item) {
-            $requiredQuantity = $item->quantity * $quantity;
-            $shortage = $requiredQuantity - $item->part->quantity;
-
-            if ($shortage > 0) {
-                $missing[] = [
-                    'part' => $item->part,
-                    'required' => $requiredQuantity,
-                    'available' => $item->part->quantity,
-                    'shortage' => $shortage,
-                ];
-            }
+        if ($shortage <= 0) {
+            return null;
         }
 
-        return $missing;
+        return [
+            'part' => $item->part,
+            'required' => $requiredQuantity,
+            'available' => $item->part->quantity,
+            'shortage' => $shortage,
+        ];
     }
 }
