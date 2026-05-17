@@ -20,7 +20,6 @@ use Illuminate\Support\Carbon;
     'quantity',
     'sequence',
     'notes',
-    'is_active',
     'is_optional',
     'is_real',
     'meta',

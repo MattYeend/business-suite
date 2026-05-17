@@ -595,30 +595,30 @@ Route::middleware('auth:sanctum')->group(function () {
             [BillOfMaterialItemController::class, 'store']
         )->name('store');
         Route::get(
-            '/{BillOfMaterialItem}',
+            '/{billOfMaterialItem}',
             [BillOfMaterialItemController::class, 'show']
         )->name('show');
         Route::put(
-            '/{BillOfMaterialItem}',
+            '/{billOfMaterialItem}',
             [BillOfMaterialItemController::class, 'update']
         )->name('update');
         Route::patch(
-            '/{BillOfMaterialItem}',
-            [BillOfMaterialController::class, 'update']
+            '/{billOfMaterialItem}',
+            [BillOfMaterialItemController::class, 'update']
         )->name('patch');
         Route::delete(
-            '/{BillOfMaterialItem}',
-            [BillOfMaterialController::class, 'destroy']
+            '/{billOfMaterialItem}',
+            [BillOfMaterialItemController::class, 'destroy']
         )->name('destroy');
 
         Route::post(
             '/{id}/restore',
-            [BillOfMaterialController::class, 'restore']
+            [BillOfMaterialItemController::class, 'restore']
         )->name('restore');
 
         Route::delete(
             '/{id}/force',
-            [BillOfMaterialController::class, 'forceDelete']
+            [BillOfMaterialItemController::class, 'forceDelete']
         )->name('force-delete');
     });
 });

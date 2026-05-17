@@ -48,9 +48,9 @@ class BillOfMaterialItemController extends Controller
     {
         $this->authorize('viewAny', BillOfMaterialItem::class);
 
-        $billOfMateriamItem = $this->query->getPaginated($request->all());
+        $billOfMaterialItem = $this->query->getPaginated($request->all());
 
-        return response()->json($billOfMateriamItem);
+        return response()->json($billOfMaterialItem);
     }
 
     /**
@@ -67,15 +67,15 @@ class BillOfMaterialItemController extends Controller
      */
     public function store(StoreBillOfMaterialItemRequest $request): JsonResponse
     {
-        $billOfMateriamItem = $this->management->store($request);
+        $billOfMaterialItem = $this->management->store($request);
         $auth = auth()->user();
         $this->logger->logCreation(
-            $billOfMateriamItem,
+            $billOfMaterialItem,
             $auth,
             $auth->id,
         );
 
-        return response()->json($billOfMateriamItem, 201);
+        return response()->json($billOfMaterialItem, 201);
     }
 
     /**
@@ -85,17 +85,17 @@ class BillOfMaterialItemController extends Controller
      *
      * Authorises via the 'view' policy before returning data.
      *
-     * @param  BillOfMaterialItem $billOfMateriamItem
+     * @param  BillOfMaterialItem $billOfMaterialItem
      *
      * @return JsonResponse
      */
-    public function show(BillOfMaterialItem $billOfMateriamItem): JsonResponse
+    public function show(BillOfMaterialItem $billOfMaterialItem): JsonResponse
     {
-        $this->authorize('view', $billOfMateriamItem);
+        $this->authorize('view', $billOfMaterialItem);
 
-        $billOfMateriamItem = $this->query->getById($billOfMateriamItem->id);
+        $billOfMaterialItem = $this->query->getById($billOfMaterialItem->id);
 
-        return response()->json($billOfMateriamItem);
+        return response()->json($billOfMaterialItem);
     }
 
     /**

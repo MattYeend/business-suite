@@ -87,7 +87,7 @@ describe('store', function () {
             ->assertJsonValidationErrors(['name']);
     });
 
-    test('unauthorized user cannot createpipeline stage', function () {
+    test('unauthorized user cannot create pipeline stage', function () {
         $unauthorizedUser = User::factory()->create();
         
         $response = $this->actingAs($unauthorizedUser, 'sanctum')

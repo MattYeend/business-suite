@@ -36,7 +36,7 @@ describe('index', function () {
         $response->assertOk();
     });
 
-    test('unauthorized user cannot list billOfMaterials', function () {
+    test('unauthorized user cannot list bill of materials', function () {
         $unauthorizedUser = User::factory()->create();
         
         $response = $this->actingAs($unauthorizedUser, 'sanctum')
@@ -45,7 +45,7 @@ describe('index', function () {
         $response->assertForbidden();
     });
 
-    test('guest cannot list billOfMaterials', function () {
+    test('guest cannot list bill of materials', function () {
         auth()->logout();
         
         $response = $this->getJson(route('bill-of-materials.index'));
@@ -87,7 +87,7 @@ describe('store', function () {
             ->assertJsonValidationErrors(['product_id', 'bom_number']);
     });
 
-    test('unauthorized user cannot createpipeline stage', function () {
+    test('unauthorized user cannot create bill of materials', function () {
         $unauthorizedUser = User::factory()->create();
         
         $response = $this->actingAs($unauthorizedUser, 'sanctum')

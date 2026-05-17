@@ -94,7 +94,6 @@ class BOMItemDataPreparationService
         ?int $createdBy
     ): array {
         return [
-            'is_active' => $data['is_active'] ?? true,
             'is_real' => $data['is_real'] ?? true,
             'meta' => $data['meta'] ?? null,
             'created_by' => $createdBy,
@@ -114,7 +113,6 @@ class BOMItemDataPreparationService
         ?int $updatedBy
     ): array {
         return [
-            'is_active' => $data['is_active'] ?? null,
             'is_real' => $data['is_real'] ?? null,
             'meta' => $data['meta'] ?? null,
             'updated_by' => $updatedBy,
