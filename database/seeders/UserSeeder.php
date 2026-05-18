@@ -33,7 +33,6 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'is_super_admin' => true,
                 'phone' => '+44 7700 900000',
-                'avatar' => null,
                 'timezone' => 'Europe/London',
                 'locale' => 'en',
                 'team_id' => null, // Super admins don't belong to a team
@@ -57,7 +56,6 @@ class UserSeeder extends Seeder
                 'is_admin' => true,
                 'is_super_admin' => false,
                 'phone' => '+44 7700 900001',
-                'avatar' => null,
                 'timezone' => 'Europe/London',
                 'locale' => 'en',
                 'team_id' => 1, // Head Office
@@ -80,7 +78,6 @@ class UserSeeder extends Seeder
                 'is_admin' => true,
                 'is_super_admin' => false,
                 'phone' => '+44 7700 900002',
-                'avatar' => null,
                 'timezone' => 'Europe/London',
                 'locale' => 'en',
                 'team_id' => 2, // Sales Department
@@ -104,7 +101,6 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'is_super_admin' => false,
                 'phone' => '+44 7700 900003',
-                'avatar' => null,
                 'timezone' => 'Europe/London',
                 'locale' => 'en',
                 'team_id' => 2, // Sales Department
@@ -127,7 +123,6 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'is_super_admin' => false,
                 'phone' => '+44 7700 900004',
-                'avatar' => null,
                 'timezone' => 'Europe/London',
                 'locale' => 'en',
                 'team_id' => 6, // Marketing Department
@@ -150,7 +145,6 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'is_super_admin' => false,
                 'phone' => '+44 7700 900005',
-                'avatar' => null,
                 'timezone' => 'Europe/London',
                 'locale' => 'en',
                 'team_id' => 1, // Head Office
@@ -266,7 +260,6 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'is_super_admin' => false,
                 'phone' => '+44 7700 900099',
-                'avatar' => null,
                 'timezone' => 'Europe/London',
                 'locale' => 'en',
                 'team_id' => 1, // Head Office

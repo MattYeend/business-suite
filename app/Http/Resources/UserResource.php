@@ -37,10 +37,6 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'avatar' => $this->avatar,
-            'avatar_url' => $this->avatar
-                ? asset('storage/' . $this->avatar)
-                : null,
             'timezone' => $this->timezone,
             'locale' => $this->locale,
             'initials' => $this->initials,

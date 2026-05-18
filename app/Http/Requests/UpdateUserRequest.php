@@ -42,7 +42,6 @@ class UpdateUserRequest extends FormRequest
             'name' => 'user name',
             'email' => 'email address',
             'phone' => 'phone number',
-            'avatar' => 'profile picture',
             'timezone' => 'time zone',
             'team_id' => 'team',
             'is_user' => 'user status',
@@ -63,7 +62,6 @@ class UpdateUserRequest extends FormRequest
         return [
             'email.unique' => 'This email address is already registered.',
             'phone.regex' => 'The phone number format is invalid.',
-            'avatar.max' => 'The profile picture must not exceed 2MB.',
             'roles.*.exists' => 'One or more selected roles do not exist.',
         ];
     }
@@ -125,12 +123,6 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 'max:20',
                 'regex:/^[0-9\s\-\+\(\)]+$/',
-            ],
-            'avatar' => [
-                'nullable',
-                'image',
-                'mimes:jpeg,png,jpg,gif,webp',
-                'max:2048',
             ],
             'timezone' => ['nullable', 'string', 'timezone:all'],
             'locale' => [

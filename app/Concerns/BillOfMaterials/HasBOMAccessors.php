@@ -29,25 +29,25 @@ trait HasBOMAccessors
             && $this->isWithinEffectiveDateRange();
     }
 
-    // /**
-    //  * Get the total number of parts in this BOM.
-    //  *
-    //  * @return int
-    //  */
-    // public function getTotalPartsAttribute(): int
-    // {
-    //     return $this->items()->count();
-    // }
+    /**
+     * Get the total number of parts in this BOM.
+     *
+     * @return int
+     */
+    public function getTotalPartsAttribute(): int
+    {
+        return $this->items()->count();
+    }
 
-    // /**
-    //  * Get the total cost of all items in this BOM.
-    //  *
-    //  * @return float
-    //  */
-    // public function getTotalCostAttribute(): float
-    // {
-    //     return $this->calculateTotalCost();
-    // }
+    /**
+     * Get the total cost of all items in this BOM.
+     *
+     * @return float
+     */
+    public function getTotalCostAttribute(): float
+    {
+        return $this->calculateTotalCost();
+    }
 
     /**
      * Get formatted total cost.

@@ -13,14 +13,12 @@ class UserCreatorService
      * Inject the required services into the creator service.
      *
      * @param UserPasswordService $passwordService
-     * @param UserAvatarHandlerService $avatarHandler
      * @param UserRoleAssignmentService $roleAssignment
      * @param UserDataPreparationService $dataPreparation
      * @param UserLogService $logService
      */
     public function __construct(
         protected UserPasswordService $passwordService,
-        protected UserAvatarHandlerService $avatarHandler,
         protected UserRoleAssignmentService $roleAssignment,
         protected UserDataPreparationService $dataPreparation,
         protected UserLogService $logService
@@ -44,7 +42,6 @@ class UserCreatorService
 
             $user = $this->createUser($data, $createdBy);
 
-            $this->avatarHandler->handleUpload($user, $data['avatar'] ?? null);
             $this->roleAssignment->assign($user, $data['roles'] ?? null);
             $this->sendWelcomeEmail($user, $data['password']);
             $this->logService->logCreation($user, $actor, $createdBy);

@@ -332,7 +332,6 @@ class UserLogService
                 'email' => null,
                 'role' => null,
                 'phone' => null,
-                'avatar' => null,
             ];
         }
 
@@ -342,7 +341,6 @@ class UserLogService
             'email' => $user->email,
             'role' => $user->primaryRole,
             'phone' => $user->phone,
-            'avatar' => $user->avatar,
         ];
     }
 }

@@ -68,7 +68,7 @@ class BillOfMaterial extends Model
         HasBOMScopes;
 
     /**
-     * Get the user who created the pipeline.
+     * Get the user who created the BOM.
      *
      * @return BelongsTo
      */
@@ -78,7 +78,7 @@ class BillOfMaterial extends Model
     }
 
     /**
-     * Get the user who last updated the pipeline.
+     * Get the user who last updated the BOM.
      *
      * @return BelongsTo
      */
@@ -88,7 +88,7 @@ class BillOfMaterial extends Model
     }
 
     /**
-     * Get the user who deleted the pipeline.
+     * Get the user who deleted the BOM.
      *
      * @return BelongsTo
      */
@@ -98,7 +98,7 @@ class BillOfMaterial extends Model
     }
 
     /**
-     * Get the user who restored the pipeline.
+     * Get the user who restored the BOM.
      *
      * @return BelongsTo
      */

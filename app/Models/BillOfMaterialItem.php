@@ -67,7 +67,7 @@ class BillOfMaterialItem extends Model
         HasBOMItemScopes;
 
     /**
-     * Get the user who created the pipeline.
+     * Get the user who created the BOMItem.
      *
      * @return BelongsTo
      */
@@ -77,7 +77,7 @@ class BillOfMaterialItem extends Model
     }
 
     /**
-     * Get the user who last updated the pipeline.
+     * Get the user who last updated the BOMItem.
      *
      * @return BelongsTo
      */
@@ -87,7 +87,7 @@ class BillOfMaterialItem extends Model
     }
 
     /**
-     * Get the user who deleted the pipeline.
+     * Get the user who deleted the BOMItem.
      *
      * @return BelongsTo
      */
@@ -97,7 +97,7 @@ class BillOfMaterialItem extends Model
     }
 
     /**
-     * Get the user who restored the pipeline.
+     * Get the user who restored the BOMItem.
      *
      * @return BelongsTo
      */

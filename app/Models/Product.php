@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-// use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 // use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
@@ -88,7 +88,7 @@ class Product extends Model
     public const STATUS_OUT_OF_STOCK = 'out_of_stock';
 
     /**
-     * Get the user who created the pipeline.
+     * Get the user who created the product.
      *
      * @return BelongsTo
      */
@@ -98,7 +98,7 @@ class Product extends Model
     }
 
     /**
-     * Get the user who last updated the pipeline.
+     * Get the user who last updated the product.
      *
      * @return BelongsTo
      */
@@ -108,7 +108,7 @@ class Product extends Model
     }
 
     /**
-     * Get the user who deleted the pipeline.
+     * Get the user who deleted the product.
      *
      * @return BelongsTo
      */
@@ -118,7 +118,7 @@ class Product extends Model
     }
 
     /**
-     * Get the user who restored the pipeline.
+     * Get the user who restored the product.
      *
      * @return BelongsTo
      */
@@ -127,17 +127,18 @@ class Product extends Model
         return $this->belongsTo(User::class, 'restored_by');
     }
 
-    // /**
-    //  * Get all images for this product (polymorphic).
-    //  *
-    //  * @return MorphMany
-    //  */
-    // public function images(): MorphMany
-    // {
-    //     return $this->morphMany(
-    //         Image::class, 'imageable'
-    //     )->orderBy('sort_order');
-    // }
+    /**
+     * Get all images for this product (polymorphic).
+     *
+     * @return MorphToMany
+     */
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Image::class, 'imageable')
+            ->withPivot('sort_order', 'is_primary', 'usage_context')
+            ->withTimestamps()
+            ->orderBy('sort_order');
+    }
 
     // /**
     //  * Get all categories for this product (polymorphic many-to-many).

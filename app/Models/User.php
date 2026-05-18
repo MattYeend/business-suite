@@ -24,7 +24,6 @@ use Spatie\Permission\Traits\HasRoles;
     'is_admin',
     'is_super_admin',
     'phone',
-    'avatar',
     'timezone',
     'locale',
     'team_id',
@@ -61,7 +60,6 @@ use Spatie\Permission\Traits\HasRoles;
  * @property bool $is_real
  * @property int|null $team_id
  * @property string|null $phone
- * @property string|null $avatar
  * @property string $timezone
  * @property string $locale
  * @property array|null $meta

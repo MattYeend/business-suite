@@ -10,13 +10,11 @@ class UserUpdaterService
     /**
      * Inject the required services into the updater service.
      *
-     * @param UserAvatarHandlerService $avatarHandler
      * @param UserRoleAssignmentService $roleAssignment
      * @param UserDataPreparationService $dataPreparation
      * @param UserLogService $logService
      */
     public function __construct(
-        protected UserAvatarHandlerService $avatarHandler,
         protected UserRoleAssignmentService $roleAssignment,
         protected UserDataPreparationService $dataPreparation,
         protected UserLogService $logService
@@ -43,7 +41,6 @@ class UserUpdaterService
             $actor = User::findOrFail($updatedBy);
 
             $this->updateUserData($user, $data, $updatedBy);
-            $this->handleAvatarUpdate($user, $data);
             $this->handleRolesUpdate($user, $data);
             $this->logService->logUpdate($user, $actor, $updatedBy);
 
@@ -71,23 +68,6 @@ class UserUpdaterService
         );
         $user->fill($fillableData);
         $user->save();
-    }
-
-    /**
-     * Handle avatar update if provided.
-     *
-     * @param  User $user
-     * @param  array $data
-     *
-     * @return void
-     */
-    protected function handleAvatarUpdate(User $user, array $data): void
-    {
-        if (! array_key_exists('avatar', $data)) {
-            return;
-        }
-
-        $this->avatarHandler->handleUpdate($user, $data['avatar']);
     }
 
     /**

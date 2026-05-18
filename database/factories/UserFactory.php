@@ -34,7 +34,6 @@ class UserFactory extends Factory
             'is_admin' => false,
             'is_super_admin' => false,
             'phone' => fake()->phoneNumber(),
-            'avatar' => null,
             'is_real' => false,
             'meta' => json_encode([
                 'department' => fake()->randomElement(['Sales', 'Marketing', 'Support', 'Engineering', 'HR']),

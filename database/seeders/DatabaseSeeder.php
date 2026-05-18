@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             BillOfMaterialSeeder::class,
             BillOfMaterialItemSeeder::class,
+            ImageSeeder::class,
         ]);
     }
 }

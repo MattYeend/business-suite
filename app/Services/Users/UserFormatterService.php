@@ -43,7 +43,6 @@ class UserFormatterService
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
-            'avatar' => $user->avatar,
         ];
     }
 

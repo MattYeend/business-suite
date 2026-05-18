@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
@@ -121,7 +122,8 @@ class Part extends Model
      */
     use HasFactory,
         SoftDeletes,
-        HasPartHelpers;
+        HasPartHelpers,
+        HasPartScopes;
 
     public const TYPE_RAW_MATERIAL = 'raw_material';
     public const TYPE_FINISHED_GOOD = 'finished_good';
@@ -135,7 +137,7 @@ class Part extends Model
     public const STATUS_OUT_OF_STOCK = 'out_of_stock';
 
     /**
-     * Get the user who created the pipeline.
+     * Get the user who created the part.
      *
      * @return BelongsTo
      */
@@ -145,7 +147,7 @@ class Part extends Model
     }
 
     /**
-     * Get the user who last updated the pipeline.
+     * Get the user who last updated the part.
      *
      * @return BelongsTo
      */
@@ -155,7 +157,7 @@ class Part extends Model
     }
 
     /**
-     * Get the user who deleted the pipeline.
+     * Get the user who deleted the part.
      *
      * @return BelongsTo
      */
@@ -165,13 +167,48 @@ class Part extends Model
     }
 
     /**
-     * Get the user who restored the pipeline.
+     * Get the user who restored the part.
      *
      * @return BelongsTo
      */
     public function restorer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'restored_by');
+    }
+
+    /**
+     * Get all images for this part.
+     *
+     * @return MorphToMany
+     */
+    public function images(): MorphToMany
+    {
+        return $this->morphToMany(Image::class, 'imageable')
+            ->withPivot('sort_order', 'is_primary', 'usage_context')
+            ->withTimestamps()
+            ->orderBy('sort_order');
+    }
+
+    /**
+     * Get the primary image for this part.
+     *
+     * @return MorphToMany
+     */
+    public function primaryImage(): MorphToMany
+    {
+        return $this->images()->wherePivot('is_primary', true);
+    }
+
+    /**
+     * Get images by usage context.
+     *
+     * @param string $context
+     *
+     * @return MorphToMany
+     */
+    public function imagesByContext(string $context): MorphToMany
+    {
+        return $this->images()->wherePivot('usage_context', $context);
     }
 
     /**

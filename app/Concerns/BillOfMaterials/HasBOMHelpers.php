@@ -28,61 +28,54 @@ use Illuminate\Support\Carbon;
  */
 trait HasBOMHelpers
 {
-    // /**
-    //  * Calculate total cost of this BOM.
-    //  *
-    //  * @return float
-    //  */
-    // public function calculateTotalCost(): float
-    // {
-    //     return $this->items()
-    //         ->with('part')
-    //         ->get()
-    //         ->sum(function ($item) {
-    //             return $item->quantity * ($item->part->cost_price ?? 0);
-    //         });
-    // }
+    /**
+     * Calculate total cost of this BOM.
+     *
+     * @return float
+     */
+    public function calculateTotalCost(): float
+    {
+        return $this->items()
+            ->with('part')
+            ->get()
+            ->sum(function ($item) {
+                return $item->quantity * ($item->part->cost_price ?? 0);
+            });
+    }
 
-    // /**
-    //  * Check if all parts are available for manufacturing.
-    //  *
-    //  * @param  int $manufacturingQuantity
-    //  *
-    //  * @return array
-    //  */
-    // public function checkPartAvailability(
-    //     int $manufacturingQuantity = 1
-    // ): array {
-    //     $availability = [
-    //         'can_manufacture' => true,
-    //         'parts' => [],
-    //     ];
+    /**
+     * Check if sufficient parts are available to manufacture the given
+     * quantity.
+     *
+     * @param int $manufacturingQuantity
+     *
+     * @return array
+     */
+    public function checkPartAvailability(
+        int $manufacturingQuantity = 1
+    ): array {
+        $availability = [
+            'can_manufacture' => true,
+            'parts' => [],
+        ];
 
-    //     $items = $this->items()->with('part')->get();
+        $items = $this->items()->with('part')->get();
 
-    //     foreach ($items as $item) {
-    //         $requiredQuantity = $item->quantity * $manufacturingQuantity;
-    //         $available = $item->part->quantity;
-    //         $sufficient = $available >= $requiredQuantity;
+        foreach ($items as $item) {
+            $partAvailability = $this->calculatePartAvailability(
+                $item,
+                $manufacturingQuantity
+            );
 
-    //         if (!$sufficient) {
-    //             $availability['can_manufacture'] = false;
-    //         }
+            if (! $partAvailability['sufficient']) {
+                $availability['can_manufacture'] = false;
+            }
 
-    //         $availability['parts'][] = [
-    //             'part_id' => $item->part_id,
-    //             'part_name' => $item->part->name,
-    //             'part_sku' => $item->part->sku,
-    //             'required_per_unit' => $item->quantity,
-    //             'required_total' => $requiredQuantity,
-    //             'available' => $available,
-    //             'sufficient' => $sufficient,
-    //             'shortage' => max(0, $requiredQuantity - $available),
-    //         ];
-    //     }
+            $availability['parts'][] = $partAvailability;
+        }
 
-    //     return $availability;
-    // }
+        return $availability;
+    }
 
     /**
      * Clone this BOM with a new version.
@@ -145,5 +138,33 @@ trait HasBOMHelpers
             ->count() + 1;
 
         return sprintf('%s-%s-%04d', $prefix, $date, $count);
+    }
+
+    /**
+     * Calculate availability details for a single BOM item.
+     *
+     * @param mixed $item
+     * @param int $manufacturingQuantity
+     *
+     * @return array
+     */
+    private function calculatePartAvailability(
+        $item,
+        int $manufacturingQuantity
+    ): array {
+        $requiredQuantity = $item->quantity * $manufacturingQuantity;
+        $available = $item->part->quantity;
+        $sufficient = $available >= $requiredQuantity;
+
+        return [
+            'part_id' => $item->part_id,
+            'part_name' => $item->part->name,
+            'part_sku' => $item->part->sku,
+            'required_per_unit' => $item->quantity,
+            'required_total' => $requiredQuantity,
+            'available' => $available,
+            'sufficient' => $sufficient,
+            'shortage' => max(0, $requiredQuantity - $available),
+        ];
     }
 }
