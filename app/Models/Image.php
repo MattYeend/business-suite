@@ -131,7 +131,9 @@ class Image extends Model
             return asset('storage/' . $this->file_path);
         }
 
-        return Storage::disk($this->disk)->url($this->file_path);
+        /** @var \Illuminate\Contracts\Filesystem\Cloud $disk */
+        $disk = Storage::disk($this->disk);
+        return $disk->url($this->file_path);
     }
 
     /**
