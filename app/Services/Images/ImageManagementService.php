@@ -16,12 +16,14 @@ class ImageManagementService
      * @param ImageUpdaterService $updater
      * @param ImageDeleterService $destructor
      * @param ImageRestorerService $restorer
+     * @param ImageUploadService $uploadService
      */
     public function __construct(
         protected ImageCreatorService $creator,
         protected ImageUpdaterService $updater,
         protected ImageDeleterService $destructor,
         protected ImageRestorerService $restorer,
+        protected ImageUploadService $uploadService,
     ) {
     }
 
@@ -32,13 +34,19 @@ class ImageManagementService
      *
      * @return Image
      */
-    public function store(
-        StoreImageRequest $request
-    ): Image {
-        return $this->creator->create(
-            $request->validated(),
-            $request->user()->id
-        );
+    public function store(StoreImageRequest $request): Image
+    {
+        $data = $request->validated();
+
+        if ($request->hasFile('file')) {
+            $fileData = $this->uploadService->upload(
+                $request->file('file'),
+                $data['disk'] ?? 'public'
+            );
+            $data = array_merge($data, $fileData);
+        }
+
+        return $this->creator->create($data, $request->user()->id);
     }
 
     /**
@@ -49,15 +57,19 @@ class ImageManagementService
      *
      * @return Image
      */
-    public function update(
-        UpdateImageRequest $request,
-        Image $image
-    ): Image {
-        return $this->updater->update(
-            $image,
-            $request->validated(),
-            $request->user()->id
-        );
+    public function update(UpdateImageRequest $request, Image $image): Image
+    {
+        $data = $request->validated();
+
+        if ($request->hasFile('file')) {
+            $fileData = $this->uploadService->upload(
+                $request->file('file'),
+                $data['disk'] ?? $image->disk ?? 'public'
+            );
+            $data = array_merge($data, $fileData);
+        }
+
+        return $this->updater->update($image, $data, $request->user()->id);
     }
 
     /**

@@ -3,6 +3,8 @@
 use App\Models\Image;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Tests\Concerns\CreatesUsers;
 
@@ -15,6 +17,9 @@ beforeEach(function () {
     setPermissionsTeamId(1);
 
     Role::firstOrCreate(['name' => 'admin']);
+    
+    // Fake the storage disk for file uploads
+    Storage::fake('public');
 });
 
 test('example', function () {
@@ -57,19 +62,29 @@ describe('store', function () {
     test('can create a image', function () {
         $user = adminUser();
 
+        $file = UploadedFile::fake()->image('test-image.jpg', 800, 600);
+
         $data = [
+            'file' => $file,
             'title' => 'Technology',
+            'alt_text' => 'A technology image',
         ];
 
         $response = $this->actingAs($user, 'sanctum')
-            ->postJson(route('images.store'), $data);
+            ->post(route('images.store'), $data);
 
         $response->assertCreated()
             ->assertJsonFragment(['title' => 'Technology']);
 
         $this->assertDatabaseHas('images', [
             'title' => 'Technology',
+            'alt_text' => 'A technology image',
         ]);
+        
+        // Get the created image to verify file was stored
+        $image = Image::where('title', 'Technology')->first();
+        expect($image)->not->toBeNull();
+        expect(Storage::disk('public')->exists($image->file_path))->toBeTrue();
     });
 
     test('validation fails with missing required fields', function () {
@@ -79,14 +94,17 @@ describe('store', function () {
             ->postJson(route('images.store'), []);
 
         $response->assertUnprocessable()
-            ->assertJsonValidationErrors(['title']);
+            ->assertJsonValidationErrors(['file']);
     });
 
     test('unauthorized user cannot create image', function () {
         $unauthorizedUser = User::factory()->create();
         
+        $file = UploadedFile::fake()->image('test-image.jpg');
+        
         $response = $this->actingAs($unauthorizedUser, 'sanctum')
-            ->postJson(route('images.store'), [
+            ->post(route('images.store'), [
+                'file' => $file,
                 'title' => 'Technology',
             ]);
 
@@ -163,18 +181,44 @@ describe('update', function () {
             ->assertJsonFragment(['title' => 'Patched Name']);
     });
 
-    test('validation fails with invalid data', function () {
+    test('can update image with new file', function () {
         $user = adminUser();
         $image = Image::factory()->create();
+        
+        $newFile = UploadedFile::fake()->image('new-image.jpg', 1000, 800);
 
         $response = $this->actingAs($user, 'sanctum')
-            ->putJson(
+            ->put(
                 route('images.update', $image),
-                ['title' => '']
+                [
+                    'file' => $newFile,
+                    'title' => 'Updated with new file'
+                ]
             );
 
-        $response->assertUnprocessable()
-            ->assertJsonValidationErrors(['title']);
+        $response->assertOk();
+        
+        // Refresh the image model to get updated data
+        $image->refresh();
+        
+        // Verify new file was stored using expect syntax
+        expect(Storage::disk('public')->exists($image->file_path))->toBeTrue();
+    });
+
+    test('validation fails with invalid file type', function () {
+        $user = adminUser();
+        $image = Image::factory()->create();
+        
+        $invalidFile = UploadedFile::fake()->create('document.pdf', 100);
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->putJson(  // Change to putJson for proper API testing
+                route('images.update', $image),
+                ['file' => $invalidFile]
+            );
+
+        $response->assertUnprocessable()  // Change to assertUnprocessable for JSON
+            ->assertJsonValidationErrors(['file']);
     });
 
     test('unauthorized user cannot update image', function () {
@@ -267,25 +311,10 @@ describe('restore', function () {
 });
 
 describe('forceDelete', function () {
-    test('can permanently delete a image', function () {
+    test('can permanently delete a soft deleted image', function () {
         $user = adminUser();
         $image = Image::factory()->create();
-        $image->delete();
-
-        $response = $this->actingAs($user, 'sanctum')
-            ->deleteJson(route('images.force-delete', $image->id));
-
-        $response->assertNoContent();
-
-        $this->assertDatabaseMissing('images', [
-            'id' => $image->id,
-        ]);
-    });
-
-    test('can force delete a non-soft-deleted image', function () {
-        $user = adminUser();
-        $image = Image::factory()->create();
-        $image->delete();
+        $image->delete(); // Must be soft deleted first
 
         $response = $this->actingAs($user, 'sanctum')
             ->deleteJson(route('images.force-delete', $image->id));
@@ -300,6 +329,7 @@ describe('forceDelete', function () {
     test('unauthorized user cannot force delete image', function () {
         $unauthorizedUser = User::factory()->create();
         $image = Image::factory()->create();
+        $image->delete();
         
         $response = $this->actingAs($unauthorizedUser, 'sanctum')
             ->deleteJson(route('images.force-delete', $image->id));
