@@ -7,6 +7,7 @@ use App\Http\Controllers\CompanyContactController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyIndustryController;
 use App\Http\Controllers\CompanyPhoneController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\PipelineController;
 use App\Http\Controllers\PipelineStageController;
@@ -619,6 +620,56 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete(
             '/{id}/force',
             [BillOfMaterialItemController::class, 'forceDelete']
+        )->name('force-delete');
+    });
+
+    // Image Management routes
+    Route::prefix('images')->name(
+        'images.'
+    )->group(function () {
+        Route::post(
+            '/bulk/delete',
+            [ImageController::class, 'bulkDelete']
+        )->name('bulk.delete');
+
+        Route::post(
+            '/bulk/restore',
+            [ImageController::class, 'bulkRestore']
+        )->name('bulk.restore');
+
+        Route::get(
+            '/',
+            [ImageController::class, 'index']
+        )->name('index');
+        Route::post(
+            '/',
+            [ImageController::class, 'store']
+        )->name('store');
+        Route::get(
+            '/{image}',
+            [ImageController::class, 'show']
+        )->name('show');
+        Route::put(
+            '/{image}',
+            [ImageController::class, 'update']
+        )->name('update');
+        Route::patch(
+            '/{image}',
+            [ImageController::class, 'update']
+        )->name('patch');
+        Route::delete(
+            '/{image}',
+            [ImageController::class, 'destroy']
+        )->name('destroy');
+
+        Route::post(
+            '/{id}/restore',
+            [ImageController::class, 'restore']
+        )->name('restore');
+
+        Route::delete(
+            '/{id}/force',
+            [ImageController::class, 'forceDelete']
         )->name('force-delete');
     });
 });
