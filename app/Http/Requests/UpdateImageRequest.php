@@ -42,7 +42,8 @@ class UpdateImageRequest extends FormRequest
     {
         return [
             'file.image' => 'The file must be an image.',
-            'file.mimes' => 'The image must be a file of type: jpeg, jpg, png, gif, webp, svg.',
+            'file.mimes' => 'The image must be a file of type:
+                 jpeg, jpg, png, gif, webp, svg.',
             'file.max' => 'The image may not be greater than 10MB.',
         ];
     }
