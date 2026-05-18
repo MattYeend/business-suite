@@ -138,7 +138,7 @@ class CompanyQueryService
     }
 
     /**
-     * Find a company company by ID with optional trashed records.
+     * Find a company by ID with optional trashed records.
      *
      * @param  int $id
      * @param  bool $withTrashed

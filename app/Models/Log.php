@@ -203,6 +203,18 @@ class Log extends Model
     public const ACTION_EXPORT_BILL_OF_MATERIAL_ITEM = 137;
     public const ACTION_BILL_OF_MATERIAL_ITEM_UPDATED_BY_CRON = 138;
 
+    // Image Management
+    public const ACTION_CREATE_IMAGE = 139;
+    public const ACTION_UPDATE_IMAGE = 140;
+    public const ACTION_DELETE_IMAGE = 141;
+    public const ACTION_SHOW_IMAGE = 142;
+    public const ACTION_FORCE_DELETE_IMAGE = 143;
+    public const ACTION_RESTORE_IMAGE = 144;
+    public const ACTION_IMPORT_IMAGE = 145;
+    public const ACTION_EXPORT_IMAGE = 146;
+    public const ACTION_IMAGE_UPDATED_BY_CRON = 147;
+    public const ACTION_IMAGE_UPLOADED = 148;
+
     // New Logging Actions should go here to be reviewed
     // by the development team for future releases.
     // Ensure to update the documentation accordingly.
