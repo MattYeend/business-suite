@@ -9,7 +9,7 @@ trait HasCompanyContactScopes
     /**
      * Scope to filter primary contacts.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -21,7 +21,7 @@ trait HasCompanyContactScopes
     /**
      * Scope to filter real contacts.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -33,8 +33,8 @@ trait HasCompanyContactScopes
     /**
      * Scope to filter contacts by company.
      *
-     * @param Builder $query
-     * @param int $companyId
+     * @param  Builder $query
+     * @param  int $companyId
      *
      * @return Builder
      */
@@ -46,7 +46,7 @@ trait HasCompanyContactScopes
     /**
      * Scope to filter contacts with email.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */
@@ -58,7 +58,7 @@ trait HasCompanyContactScopes
     /**
      * Scope to filter contacts with phone.
      *
-     * @param Builder $query
+     * @param  Builder $query
      *
      * @return Builder
      */

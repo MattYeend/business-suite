@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Database\Factories\ImageFactory;
+use Illuminate\Contracts\Filesystem\Cloud;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -131,7 +132,7 @@ class Image extends Model
             return asset('storage/' . $this->file_path);
         }
 
-        /** @var \Illuminate\Contracts\Filesystem\Cloud $disk */
+        /** @var Cloud $disk */
         $disk = Storage::disk($this->disk);
         return $disk->url($this->file_path);
     }
