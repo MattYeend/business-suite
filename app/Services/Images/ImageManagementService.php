@@ -36,15 +36,10 @@ class ImageManagementService
      */
     public function store(StoreImageRequest $request): Image
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('file')) {
-            $fileData = $this->uploadService->upload(
-                $request->file('file'),
-                $data['disk'] ?? 'public'
-            );
-            $data = array_merge($data, $fileData);
-        }
+        $data = $this->prepareDataWithFileUpload(
+            $request,
+            $request->validated()
+        );
 
         return $this->creator->create($data, $request->user()->id);
     }
@@ -59,15 +54,11 @@ class ImageManagementService
      */
     public function update(UpdateImageRequest $request, Image $image): Image
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('file')) {
-            $fileData = $this->uploadService->upload(
-                $request->file('file'),
-                $data['disk'] ?? $image->disk ?? 'public'
-            );
-            $data = array_merge($data, $fileData);
-        }
+        $data = $this->prepareDataWithFileUpload(
+            $request,
+            $request->validated(),
+            $image
+        );
 
         return $this->updater->update($image, $data, $request->user()->id);
     }
@@ -165,5 +156,29 @@ class ImageManagementService
         }
 
         return $deleted;
+    }
+
+    /**
+     * Prepare data with file upload if present.
+     *
+     * @param  StoreImageRequest|UpdateImageRequest $request
+     * @param  array $data
+     * @param  Image|null $image
+     *
+     * @return array
+     */
+    private function prepareDataWithFileUpload(
+        StoreImageRequest|UpdateImageRequest $request,
+        array $data,
+        ?Image $image = null
+    ): array {
+        if (! $request->hasFile('file')) {
+            return $data;
+        }
+
+        $disk = $data['disk'] ?? $image?->disk ?? 'public';
+        $fileData = $this->uploadService->upload($request->file('file'), $disk);
+
+        return array_merge($data, $fileData);
     }
 }
